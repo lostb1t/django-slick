@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+{% load admin_modify i18n bootstrap3 %}
+
+{% block breadcrumbs %}
+	{% if not is_popup %}
+		<li>
+			{{ cl.opts.verbose_name_plural|capfirst }}
+
+		</li>
+	{% endif %}
+{% endblock %}
+{% block content %}
+	<form id='{{ opts.model_name }}_form' action='' method='post'>
+		{% if errors %}
+			<p class='errornote'>
+				{% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+			</p>
+			<ul class='errorlist'>
+				{% for error in adminform.form.non_field_errors %}
+					<li>
+						{{ error }}
+
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+		{% block field_sets %}
+		{% for fieldset in adminform %}
+			<div class='col-md-6'>
+				{% include "admin/includes/fieldset.html" %}
+			</div>
+		{% endfor %}
+		{% endblock %}
+
+		{% block after_field_sets %}{% endblock %}
+
+		{% block inline_field_sets %}
+		{% for inline_admin_formset in inline_admin_formsets %}
+		{% include inline_admin_formset.opts.template %}
+		{% endfor %}
+		{% endblock %}
+
+		{% block after_related_objects %}{% endblock %}
+
+		<div class='form-actions sticky-bottom'>
+			{% block submit_buttons_bottom %}
+				{% submit_row %}
+
+			{% endblock %}
+		</div>
+		{% prepopulated_fields_js %}
+	</form>
+{% endblock %}

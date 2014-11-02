@@ -143,6 +143,28 @@ h1, h2, h3, h4, h5, h6 {
 	position: relative;
 }
 
+.sidebar .sub-menu:before {
+	content: '';
+	position: absolute;
+	left: 26px;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: #10181F;
+}
+
+.sidebar .sub-menu>li>a:before {
+	content: '\f10c';
+	font-family: FontAwesome;
+	position: absolute;
+	left: 0;
+	font-size: 7px;
+	color: #889097;
+	top: 50%;
+	margin-top: -4px;
+	margin-left: -6px;
+}
+
 /*
 	FORMS
 */

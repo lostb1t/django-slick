@@ -1,0 +1,4 @@
+include README.rst
+include LICENSE
+recursive-include slick/static *
+recursive-include slick/templates *

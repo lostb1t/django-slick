@@ -1,0 +1,25 @@
+{% load admin_modify i18n bootstrap3 %}
+
+<div class='panel aligned {{ fieldset.classes }}'>
+	<div class='panel-heading'>
+		<h4 class='panel-title'>
+			{% if fieldset.name %}
+				{{ fieldset.name }}
+
+			{% endif %}
+			{% if fieldset.description %}
+				<small>
+					{{ fieldset.description|safe }}
+				</small>
+			{% endif %}
+		</h4>
+	</div>
+	<div class='panel-body'>
+
+		{% for line in fieldset %}
+			{% for field in line %}
+				{% bootstrap_field field.field %}
+			{% endfor %}
+		{% endfor %}
+	</div>
+</div>

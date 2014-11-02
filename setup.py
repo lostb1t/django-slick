@@ -1,5 +1,5 @@
 import os
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
 def read(fname):
@@ -11,23 +11,24 @@ setup(
     long_description=read('README.txt'),
     author='Sjoerd Arendsen',
     author_email='subscribe@optixdesigns.com',
-    packages=find_packages(),
+    packages=['slick', 'slick.templatetags'],
     include_package_data=True,
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Web Environment',
+        'Development Status :: 2 - Pre-Alpha',
         'Framework :: Django',
+        'License :: Free for non-commercial use',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'Intended Audience :: System Administrators',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.1',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
+        'Environment :: Web Environment',
+        'Topic :: Software Development',
+        'Topic :: Software Development :: User Interfaces',
     ],
     zip_safe=False,
 )

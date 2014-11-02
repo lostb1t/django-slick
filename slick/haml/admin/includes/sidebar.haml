@@ -6,10 +6,10 @@
   .nav
     - for app in app_list
       %li
-        %a{:href => "{{ app.app_url }}"}
+        %a{:href => "#", :data-toggle => "collapse", :data-target => "#sub-menu-{{ app.name }}", :aria-expanded => "false", :data-parent => "#sidebar"}
           %span
             {{ app.name }}
-        %ul.sub-menu
+        %ul.sub-menu.collapse{:id => "sub-menu-{{ app.name }}"}
           - for model in app.models
             %li
               - if model.admin_url
@@ -18,3 +18,4 @@
               - else
                 %a{:gref => "#"}
                   {{ model.name }}
+

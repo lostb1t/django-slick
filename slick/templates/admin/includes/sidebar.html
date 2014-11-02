@@ -1,0 +1,33 @@
+{% load i18n slick_tags %}
+
+{% get_app_list as app_list %}
+
+{% if app_list %}
+  <div class='nav'>
+    {% for app in app_list %}
+      <li>
+        <a data-parent='#sidebar' data-toggle='collapse' href='#' data-target='#sub-menu-{{ app.name }}' aria-expanded='false'>
+          <span>
+            {{ app.name }}
+          </span>
+        </a>
+        <ul id='sub-menu-{{ app.name }}' class='sub-menu collapse'>
+          {% for model in app.models %}
+            <li>
+              {% if model.admin_url %}
+                <a href='{{ model.admin_url }}'>
+                  {{ model.name }}
+                </a>
+              {% else %}
+                <a gref='#'>
+                  {{ model.name }}
+
+                </a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </div>
+{% endif %}
