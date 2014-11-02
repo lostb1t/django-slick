@@ -1,0 +1,10 @@
+- load i18n
+
+.actions{:style => "display:inline-block;"}
+	- for field in action_form
+		- if field.label
+			%span{:style => "vertical-align:sub"} 
+			{{ field.label }}
+		{{ field }}
+	%button.btn.btn-default{:title => "{% trans ", :type => "submit", :name => "index", :value =>"{{ action_index|default:0 }}"}
+		- trans "Go"

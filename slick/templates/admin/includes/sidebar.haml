@@ -1,0 +1,20 @@
+- load i18n slick_tags
+
+- get_app_list as app_list
+
+- if app_list
+  .nav
+    - for app in app_list
+      %li
+        %a{:href => "{{ app.app_url }}"}
+          %span
+            {{ app.name }}
+        %ul.sub-menu
+          - for model in app.models
+            %li
+              - if model.admin_url
+                %a{:href => "{{ model.admin_url }}"}
+                  {{ model.name }}
+              - else
+                %a{:gref => "#"}
+                  {{ model.name }}

@@ -1,0 +1,15 @@
+- load i18n admin_urls
+
+.pull-left
+	- if show_delete_link
+		%a.btn.btn-danger.deletelink{:href => "delete/"} 
+			- trans "Delete"
+.pull-right
+	- if show_save_as_new
+		%input.btn.btn-default{:name => "_saveasnew", :type => "submit", :value => "{% trans 'Save as new' %}"}
+	- if show_save_and_add_another
+		%input.btn.btn-default{:name => "_addanother", :type => "submit", :value => "{% trans 'Save and add another' %}"}
+	- if show_save_and_continue
+		%input.btn.btn-default{:name => "_continue", :type => "submit", :value => "{% trans 'Save and continue editing' %}"}
+	- if show_save
+		%input.btn.btn-primary.default{:name => "_save", :type => "submit", :value => "{% trans 'Save' %}"}

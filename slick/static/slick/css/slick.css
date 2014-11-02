@@ -1,0 +1,152 @@
+html {
+	font-size: 10px;
+}
+
+body {
+	background: #d9e0e7; /* #f3f3f4 */
+	font-size: 12px;
+	font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #707478;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 500;
+	color: #242a30;
+}
+
+/*
+  CONTENT
+*/
+
+.content {
+	margin-left: 220px;
+	padding: 20px;
+}
+
+.page-header {
+	font-size: 24px;
+	margin: 0 0 20px;
+	padding: 0;
+	border: none;
+	line-height: 28px;
+}
+
+#breadcrumbs>li a {
+	color: #333;
+}
+
+#breadcrumbs>li+li:before {
+	padding: 0 5px;
+	color: #ccc;
+	content: "/\00a0";
+}
+
+/*
+	NAVBAR
+*/
+
+
+.navbar.navbar-default {
+	background: #fff;
+}
+.navbar {
+	border: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-shadow: 0 0 2px rgba(0,0,0,.3);
+	box-shadow: 0 0 2px rgba(0,0,0,.3);
+}
+
+/* 
+	MISC
+*/
+
+.sticky-bottom {
+	position: fixed;
+	right: 0;
+	left: 0;
+	bottom:0;
+	z-index: 1030;
+	width:100% - 220px;
+	left: 220px;
+	padding: 20px;
+}
+
+/*
+	PANEL
+*/
+
+.panel {
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.panel-body {
+	padding: 15px;
+}
+
+.panel-heading {
+	background: #242a30;
+	color: #fff;
+}
+
+.panel-title {
+	line-height: 20px;
+	font-size: 12px;
+}
+
+/*
+ SIDEBAR
+*/
+.sidebar {
+	width: 220px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	padding-top: 54px;
+	background: #2d353c;
+	z-index: 10;
+}
+
+.sidebar .nav>li>a {
+	padding: 8px 20px;
+	line-height: 20px;
+	color: #a8acb1;
+}
+
+.sidebar .nav>li>a:focus, 
+.sidebar .nav>li>a:hover {
+	background: #232a2f;
+	color: #a8acb1;
+}
+
+.sidebar .sub-menu {
+	list-style-type: none;
+	padding: 10px 0 10px 30px;
+	margin: 0;
+	background: #1a2229;
+	position: relative;
+}
+
+.sidebar .sub-menu>li>a {
+	padding: 5px 20px;
+	display: block;
+	font-weight: 300;
+	color: #889097;
+	text-decoration: none;
+	position: relative;
+}
+
+/*
+	FORMS
+*/
+.form-actions {
+
+	background-color: white;
+}

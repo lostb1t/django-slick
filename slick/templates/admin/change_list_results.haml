@@ -1,0 +1,21 @@
+.panel
+	.panel-heading
+
+	.panel-body
+		%table.table
+			%thead
+				%tr
+					- for header in result_headers
+						%th
+							{{ header.text|capfirst }}
+			%tbody
+				- for result in results
+					- if result.form.non_field_errors
+						%tr
+							%td{:colspan => "{{ result|length }}"}
+								{ result.form.non_field_errors }}
+					%tr{:colspan => "{{ result|length }}"}
+						- for item in result
+							%td
+								{{ item }}
+

@@ -1,0 +1,44 @@
+- load admin_static slick_tags
+!!!
+%html{lang: "{{LANGUAGE_CODE}}"}
+  %head
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}
+    %meta{content: "", name: "description"}
+    %meta{content: "", name: "author"}
+    %title Admin
+    %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", rel: "stylesheet"}
+    %link{href: "{% static 'slick/plugins/bootstrap-3.3.0/css/bootstrap.min.css' %}", rel: "stylesheet"}
+    %link{href: "{% static 'slick/css/slick.css' %}", rel: "stylesheet"}
+    %script{src: "{% static 'slick/plugins/jquery-1.9.1/jquery-1.9.1.min.js' %}"}
+
+  %body{class: ""}
+    #page-container
+      #header.header.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+          .navbar-header
+            %a.navbar-brand{:href => "index.html"}
+              %span.navbar-logo
+              %a.navbar-brand{:href => "{% url 'admin:index' %}"}
+                {{ site_header|default:_('Django administration') }}
+
+            %button.navbar-toggle{"data-click" => "sidebar-toggled", :type => "button"}
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+
+      #sidebar.sidebar
+        %div{data-scrollbar: "true", data-height: "100%"}
+          - include "admin/includes/sidebar.haml"
+      #content.content
+        %ul#breadcrumbs.pull-right.list-inline
+          - block breadcrumbs
+        - block page_header
+            %h1.page-header
+              - if title
+                {{ title|capfirst }}
+        .row 
+          - block content
+
+    %script{src: "{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}"}
+    %script{src: "{% static 'slick/js/slick.js' %}"}
