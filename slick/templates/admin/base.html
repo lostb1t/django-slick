@@ -18,13 +18,20 @@
       <div id='header' class='header navbar navbar-default navbar-fixed-top'>
         <div class='container-fluid'>
           <div class='navbar-header'>
-            <a class='navbar-brand' href='index.html'>
-              <span class='navbar-logo'></span>
-              <a class='navbar-brand' href='{% url 'admin:index' %}'>
-                {{ site_header|default:_('Django administration') }}
+            <h1>
+              <ul id='breadcrumbs' class='list-inline'>
+                {% block breadcrumbs %}
+                {% endblock %}
+                {% block page_title %}
+                  {% if title %}
+                    <li>
+                      {{ title|capfirst }}
 
-              </a>
-            </a>
+                    </li>
+                  {% endif %}
+                {% endblock %}
+              </ul>
+            </h1>
             <button class='navbar-toggle' data-click='sidebar-toggled' type='button'>
               <span class='icon-bar'></span>
               <span class='icon-bar'></span>
@@ -39,26 +46,20 @@
         </div>
       </div>
       <div id='content' class='content'>
-        <ul id='breadcrumbs' class='pull-right list-inline'>
-          {% block breadcrumbs %}
-          {% endblock %}
-        </ul>
-        {% block page_header %}
-            <h1 class='page-header'>
-              {% if title %}
-                {{ title|capfirst }}
-              {% endif %}
-            </h1>
-        {% endblock %}
         <div class='row'>
           {% block content %}
-
           {% endblock %}
-
         </div>
       </div>
     </div>
-    <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
-    <script src='{% static 'slick/js/slick.js' %}'></script>
+    {% block javascripts %}
+<script type='text/javascript'>
+// <![CDATA[
+        var slick = {};
+// ]]>
+</script>
+      <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
+      <script src='{% static 'slick/js/slick.js' %}'></script>
+    {% endblock %}
   </body>
 </html>

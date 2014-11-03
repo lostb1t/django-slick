@@ -1,10 +1,18 @@
 - extends "admin/base.html"
-- load admin_modify i18n bootstrap3
+- load admin_modify i18n bootstrap3 admin_urls
 
 - block breadcrumbs
 	- if not is_popup
 		%li 
-			{{ cl.opts.verbose_name_plural|capfirst }}
+			%a{:href => "{% url 'admin:app_list' app_label=opts.app_label %}"}
+				{% trans app_label|capfirst|escape %}
+		%li
+			- if has_change_permission
+				%a{:href => "{% url opts|admin_urlname:'changelist' %}"}
+					{{ opts.verbose_name_plural|capfirst }}
+			- else
+				{{ opts.verbose_name_plural|capfirst }}
+
 
 - block content
 	%form{:action => "", :method => "post", :id => "{{ opts.model_name }}_form"}
@@ -33,7 +41,7 @@
 
 		{% block after_related_objects %}{% endblock %}
 		
-		.form-actions.sticky-bottom
+		.form-actions.col-md-12
 			- block submit_buttons_bottom
 				- submit_row
 

@@ -4,6 +4,12 @@
 
 {% if app_list %}
   <div class='nav'>
+    <li class='nav-brand'>
+      <a href='{% url 'admin:index' %}'>
+        <span class='nav-logo'></span>
+        {{ site_header|default:_('Django administration') }}
+      </a>
+    </li>
     {% for app in app_list %}
       <li>
         <a data-parent='#sidebar' data-toggle='collapse' href='#' data-target='#sub-menu-{{ app.name }}' aria-expanded='false'>

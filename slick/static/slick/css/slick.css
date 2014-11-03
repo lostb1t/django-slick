@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	background: #d9e0e7; /* #f3f3f4 */
+	background: #ebeef0; /* #f3f3f4 */
 	font-size: 12px;
 	font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
 	color: #707478;
@@ -21,6 +21,7 @@ h1, h2, h3, h4, h5, h6 {
 .content {
 	margin-left: 220px;
 	padding: 20px;
+	margin-top:60px;
 }
 
 .page-header {
@@ -32,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #breadcrumbs>li a {
-	color: #333;
+	color: #96a7b6;;
 }
 
 #breadcrumbs>li+li:before {
@@ -56,6 +57,14 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 0;
 	-webkit-box-shadow: 0 0 2px rgba(0,0,0,.3);
 	box-shadow: 0 0 2px rgba(0,0,0,.3);
+}
+.navbar-fixed-top {
+	left: 220px;
+}
+
+.navbar-header h1 {
+	font-size: 18px;
+	line-height: 10px;
 }
 
 /* 
@@ -109,7 +118,6 @@ h1, h2, h3, h4, h5, h6 {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	padding-top: 54px;
 	background: #2d353c;
 	z-index: 10;
 }
@@ -124,6 +132,10 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar .nav>li>a:hover {
 	background: #232a2f;
 	color: #a8acb1;
+}
+
+.sidebar .nav>li.nav-brand {
+	padding:20px;
 }
 
 .sidebar .sub-menu {
@@ -169,6 +181,18 @@ h1, h2, h3, h4, h5, h6 {
 	FORMS
 */
 .form-actions {
+}
 
-	background-color: white;
+/* UI ELEMENTS */
+.btn {
+	font-weight: 300;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.btn.btn-primary {
+	color: #fff;
+	background: #348fe2;
+	border-color: #348fe2;
 }

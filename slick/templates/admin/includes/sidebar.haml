@@ -4,10 +4,6 @@
 
 - if app_list
   .nav
-    %li.nav-brand
-      %a{:href => "{% url 'admin:index' %}"}
-        %span.nav-logo
-        {{ site_header|default:_('Django administration') }}
     - for app in app_list
       %li
         %a{:href => "#", :data-toggle => "collapse", :data-target => "#sub-menu-{{ app.name }}", :aria-expanded => "false", :data-parent => "#sidebar"}

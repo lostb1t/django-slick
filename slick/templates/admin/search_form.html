@@ -1,0 +1,12 @@
+{% load i18n admin_static %}
+
+{% if cl.search_fields %}
+
+	<form id='changelist-search' action='' role='search' method='get'>
+		<input class='form-control search-query' type='text' name='{{ search_var }}' value='{{ cl.query }}' />
+		{% for pair in cl.params.items %}
+			{% ifnotequal pair.0 search_var %}<input type='hidden' name='' value='' />			{% endifnotequal %}
+		{% endfor %}
+	</form>
+{% endif %}
+
