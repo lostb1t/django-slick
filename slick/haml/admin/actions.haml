@@ -6,5 +6,5 @@
 			%span{:style => "vertical-align:sub"} 
 			{{ field.label }}
 		{{ field }}
-	%button.btn.btn-default{:title => "{% trans ", :type => "submit", :name => "index", :value =>"{{ action_index|default:0 }}"}
+	%button.btn.btn-default{:title => "{% trans 'GO' %}", :type => "submit", :name => "index", :value =>"{{ action_index|default:0 }}"}
 		- trans "Go"

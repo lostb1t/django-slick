@@ -14,13 +14,20 @@ var django = {
 		width: 'auto'
 	});
 
+	$('.selectpicker').selectpicker();
+
 	slick.initFilter = function() {
 		// Dont autoclose
-		$('.dropdown-menu-form').click(function (e) {
+		/*
+		$('.slk-filter .dropdown-menu').click(function (e) {
 			e.stopPropagation();
 		});
+		*/
+
 
 		$(".filter-choice").change(function() {
+			//console.log($(this).val());
+			//console.log($('.selectpicker').val())
 			location.href = $(this).val();
 		});
 	};

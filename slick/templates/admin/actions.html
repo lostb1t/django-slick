@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<div class='actions' style='display:inline-block;'>
+	{% for field in action_form %}
+		{% if field.label %}
+			<span style='vertical-align:sub'></span>
+			{{ field.label }}
+		{% endif %}
+		{{ field }}
+	{% endfor %}
+	<button class='btn btn-default' type='submit' name='index' value='{{ action_index|default:0 }}' title='{% trans 'GO' %}'>
+		{% trans "Go" %}
+	</button>
+</div>

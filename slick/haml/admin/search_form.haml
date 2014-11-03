@@ -1,11 +1,14 @@
 - load i18n admin_static
 
 - if cl.search_fields
+	.input-group
+		%input.form-control.search-query{:name => "{{ search_var }}", :type => "text", :value => "{{ cl.query }}", :placeholder => "{% trans 'Search' %}"}
+		%span.input-group-btn
+			%button.btn.btn-primary{:type => "button"}
+				{% trans 'Search' %}
 
-	%form#changelist-search{:action => "", :method => "get", :role => "search"}
-		%input.form-control.search-query{:name => "{{ search_var }}", :type => "text", :value => "{{ cl.query }}"}
-		{% for pair in cl.params.items %}
-			{% ifnotequal pair.0 search_var %}
-				%input{:name => "", :type => "hidden", :value => ""}>
-			{% endifnotequal %}
-		{% endfor %}
+	{% for pair in cl.params.items %}
+		{% ifnotequal pair.0 search_var %}
+			%input{:name => "", :type => "hidden", :value => ""}>
+		{% endifnotequal %}
+	{% endfor %}

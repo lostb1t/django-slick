@@ -8,7 +8,7 @@
     <meta content='' name='author' />
     <title>Admin</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' />
-    <link href='{% static 'slick/plugins/bootstrap-3.3.0/css/bootstrap.min.css' %}' rel='stylesheet' />
+    <link href='{% static 'slick/plugins/bootstrap-select-1.6.3/css/bootstrap-select.min.css' %}' rel='stylesheet' />
     <link href='{% static 'slick/css/slick.css' %}' rel='stylesheet' />
     <script src='{% static 'slick/plugins/jquery-1.9.1/jquery-1.9.1.min.js' %}'></script>
     <script src='{% static 'slick/plugins/bootstrap-3.3.0/js/bootstrap.min.js' %}'></script>
@@ -17,7 +17,7 @@
     <div id='page-container'>
       <div id='header' class='header navbar navbar-default navbar-fixed-top'>
         <div class='container-fluid'>
-          <div class='navbar-header'>
+          <div class='navbar-header pull-left'>
             <h1>
               <ul id='breadcrumbs' class='list-inline'>
                 {% block breadcrumbs %}
@@ -32,12 +32,19 @@
                 {% endblock %}
               </ul>
             </h1>
-            <button class='navbar-toggle' data-click='sidebar-toggled' type='button'>
-              <span class='icon-bar'></span>
-              <span class='icon-bar'></span>
-              <span class='icon-bar'></span>
-            </button>
           </div>
+         {% block object-tools %}
+          <div class='nav navbar-nav navbar-right'>
+            <ul class='list-inline'>
+              {% block object-tools-items %}
+
+
+              {% endblock %}
+
+
+            </ul>
+          </div>
+         {% endblock %}
         </div>
       </div>
       <div id='sidebar' class='sidebar'>
@@ -46,19 +53,19 @@
         </div>
       </div>
       <div id='content' class='content'>
-        <div class='row'>
           {% block content %}
           {% endblock %}
-        </div>
       </div>
     </div>
     {% block javascripts %}
 <script type='text/javascript'>
 // <![CDATA[
         var slick = {};
+
 // ]]>
 </script>
       <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
+      <script src='{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}'></script>
       <script src='{% static 'slick/js/slick.js' %}'></script>
     {% endblock %}
   </body>

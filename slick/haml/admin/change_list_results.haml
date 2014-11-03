@@ -13,6 +13,5 @@
 						{ result.form.non_field_errors }}
 			%tr{:colspan => "{{ result|length }}"}
 				- for item in result
-					%td
-						{{ item }}
+					{{ item }}
 

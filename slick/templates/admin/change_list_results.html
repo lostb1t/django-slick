@@ -19,10 +19,8 @@
 			{% endif %}
 			<tr colspan='{{ result|length }}'>
 				{% for item in result %}
-					<td>
-						{{ item }}
+					{{ item }}
 
-					</td>
 				{% endfor %}
 			</tr>
 		{% endfor %}

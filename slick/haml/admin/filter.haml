@@ -1,11 +1,14 @@
 - load i18n
+	
+.input-group
 
-.grp-module
- 	.grp-row
-		%label 
-    		{% blocktrans with title|capfirst as filter_title %}{{ filter_title }}{% endblocktrans %}
 
-		%select.filter-choice
+		%select.selectpicker.filter-choice.span{:data-header => "{% blocktrans with title|capfirst as filter_title %}{{ filter_title }}{% endblocktrans %}"}
 			- for choice in choices
-				%option{:value => "{{ choice.query_string|iriencode }}"}
-					{{ choice.display }}
+				- if choice.selected
+					%option{:value => "{{ choice.query_string|iriencode }}", :selected => 'selected'} 
+						{{ choice.display }}
+
+				- else
+					%option{:value => "{{ choice.query_string|iriencode }}"}
+						{{ choice.display }}

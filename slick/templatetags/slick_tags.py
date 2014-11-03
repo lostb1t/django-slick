@@ -1,3 +1,5 @@
+import re
+
 from django import template
 from django.conf import settings
 from django.contrib import admin
@@ -7,6 +9,14 @@ from django.utils.text import capfirst
 site = admin.site
 
 register = template.Library()
+
+
+@register.simple_tag
+def active_path(request, pattern):
+    import re
+    if re.search(pattern, request.path):
+        return True
+    return False
 
 
 @register.assignment_tag(takes_context=True)

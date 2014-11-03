@@ -5,11 +5,11 @@
 	{{ block.super }}
 <script type='text/javascript'>
 // <![CDATA[
-        (function($) {
-            $(document).ready(function() {
-                slick.initFilter();
-            });
-        })(slk.jQuery);
+		(function($) {
+			$(document).ready(function() {
+				slick.initFilter();
+			});
+		})(slk.jQuery);
 
 // ]]>
 </script>
@@ -35,41 +35,40 @@
 
 	</li>
 {% endblock %}
-{% block object-tools %}
+{% block object-tools-items %}
+	{% if has_add_permission %}
+		<li>
+			<a class='btn btn-primary btn' href='{% url cl.opts|admin_urlname:'add' %}'>
+				{% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
 
+			</a>
+		</li>
+	{% endif %}
 {% endblock %}
-
 {% block content %}
 	<div class='row'>
 		{% block result_list %}
 			<div class='col-md-12'>
 				{% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-				<div class='panel'>
+				<div class='panel panel-inverse'>
 					<div class='panel-heading'></div>
 					<div class='panel-body'>
 						<div class='row'>
-							<div class='col-lg-6'>
-								<div class='input-group'>
-									<div class='input-group-btn'>
-										{% if cl.has_filters %}
-											<button class='btn btn-default dropdown-toggle' data-toggle='dropdown'>
-												{% trans 'Filter' %}
-												<span class='caret'></span>
-											</button>
-											<ul class='dropdown-menu dropdown-menu-form'>
-													{% for spec in cl.filter_specs %}
-														{% admin_list_filter cl spec %}
-													{% endfor %}
-
-											</ul>
-										{% endif %}
-									</div>
-									{% block search %}
-										{% search_form cl %}
-
-									{% endblock %}
-								</div>
+							<div class='col-lg-12'>
+								{% block search %}
+									{% search_form cl %}
+								{% endblock %}
 							</div>
+						</div>
+						<div class='row slk-filter margin-top-10'>
+							{% if cl.has_filters %}
+								{% for spec in cl.filter_specs %}
+								<div class='col-md-4 col-sm-2'>
+									{% admin_list_filter cl spec %}
+								</div>
+								{% endfor %}
+
+							{% endif %}
 						</div>
 						{% result_list cl %}
 

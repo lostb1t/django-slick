@@ -1,16 +1,20 @@
 {% load i18n %}
 
-<div class='grp-module'>
-  <div class='grp-row'></div>
-		<label>
-      {% blocktrans with title|capfirst as filter_title %}{{ filter_title }}{% endblocktrans %}
+<div class='input-group'>
 
-		</label>
-		<select class='filter-choice'>
+
+		<select class='selectpicker filter-choice span' data-header='{% blocktrans with title|capfirst as filter_title %}{{ filter_title }}{% endblocktrans %}'>
 			{% for choice in choices %}
-				<option value='{{ choice.query_string|iriencode }}'>
-					{{ choice.display }}
-				</option>
+				{% if choice.selected %}
+					<option selected='selected' value='{{ choice.query_string|iriencode }}'>
+						{{ choice.display }}
+
+					</option>
+				{% else %}
+					<option value='{{ choice.query_string|iriencode }}'>
+						{{ choice.display }}
+					</option>
+				{% endif %}
 			{% endfor %}
 		</select>
 </div>
