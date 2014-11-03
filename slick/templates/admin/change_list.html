@@ -60,12 +60,11 @@
 								{% endblock %}
 							</div>
 						</div>
-						<div class='row slk-filter margin-top-10'>
+						<div class='row-fluid slk-filter margin-top-10'>
 							{% if cl.has_filters %}
 								{% for spec in cl.filter_specs %}
-								<div class='col-md-4 col-sm-2'>
+
 									{% admin_list_filter cl spec %}
-								</div>
 								{% endfor %}
 
 							{% endif %}

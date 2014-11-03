@@ -1,7 +1,5 @@
 {% load i18n %}
 
-<div class='input-group'>
-
 
 		<select class='selectpicker filter-choice span' data-header='{% blocktrans with title|capfirst as filter_title %}{{ filter_title }}{% endblocktrans %}'>
 			{% for choice in choices %}
@@ -17,4 +15,3 @@
 				{% endif %}
 			{% endfor %}
 		</select>
-</div>

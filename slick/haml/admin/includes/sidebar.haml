@@ -8,18 +8,24 @@
       %a{:href => "{% url 'admin:index' %}"}
         %span.nav-logo
         {{ site_header|default:_('Django administration') }}
+    %li.nav-header
+      {% trans "Navigation" %}
     - for app in app_list
-      %li
+      - is_active_path app.admin_url 1 1 as active
+      %li{:class => "{% if active %}active{% endif %}"}
+        
         %a{:href => "#", :data-toggle => "collapse", :data-target => "#sub-menu-{{ app.name }}", :aria-expanded => "false", :data-parent => "#sidebar"}
+          %b.caret.pull-right
           %span
             {{ app.name }}
-        %ul.sub-menu.collapse{:id => "sub-menu-{{ app.name }}"}
+        %ul.sub-menu.collapse{:id => "sub-menu-{{ app.name }}", :class => "{% if active %}in{% endif %}"}
           - for model in app.models
-            %li
+            - is_active_path model.admin_url 1 1 as active
+            %li{:class => "{% if active %}active{% endif %}"}
               - if model.admin_url
                 %a{:href => "{{ model.admin_url }}"}
                   {{ model.name }}
               - else
-                %a{:gref => "#"}
+                %a{:href => "#"}
                   {{ model.name }}
 

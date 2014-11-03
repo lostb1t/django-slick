@@ -5,17 +5,33 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
+from django.core.urlresolvers import reverse
 
 site = admin.site
 
 register = template.Library()
 
 
-@register.simple_tag
-def active_path(request, pattern):
-    import re
-    if re.search(pattern, request.path):
+@register.assignment_tag(takes_context=True)
+def is_active_path(context, name, by_path=False, on_subpath=False):
+    """ Return the string 'active' current request.path is same as name
+    
+    Keyword aruguments:
+    request  -- Django request object
+    name     -- name of the url or the actual path
+    by_path  -- True if name contains a url instead of url name
+    on_subpath  -- True if active applies to items on the subpath
+    """
+    request = context["request"]
+
+    if by_path:
+        path = name
+    else:
+        path = reverse(name)
+
+    if request.path == path or (on_subpath and request.path.startswith(path)):
         return True
+ 
     return False
 
 
@@ -43,6 +59,7 @@ def get_app_list(context):
                     app_dict[app_label] = {
                         'name': app_label.title(),
                         'app_url': app_label + '/',
+                        'admin_url': mark_safe('/admin/%s/' % (app_label)),
                         'has_module_perms': has_module_perms,
                         'models': [model_dict],
                     }
