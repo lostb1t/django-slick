@@ -1,4 +1,4 @@
-{% load admin_modify i18n bootstrap3 %}
+{% load admin_modify i18n %}
 
 <div class='panel panel-inverse aligned {{ fieldset.classes }}'>
 	<div class='panel-heading'>
@@ -18,7 +18,7 @@
 
 		{% for line in fieldset %}
 			{% for field in line %}
-				{% bootstrap_field field.field %}
+				{{ field.field }}
 			{% endfor %}
 		{% endfor %}
 	</div>

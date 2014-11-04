@@ -1,4 +1,4 @@
-- load admin_modify i18n bootstrap3
+- load admin_modify i18n
 
 .panel.panel-inverse.aligned{:class => "{{ fieldset.classes }}"}
 	.panel-heading
@@ -13,4 +13,4 @@
 
 		- for line in fieldset
 			- for field in line
-				- bootstrap_field field.field
+				{{ field.field }}

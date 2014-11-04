@@ -1,5 +1,5 @@
 - extends "admin/base.html"
-- load admin_modify i18n bootstrap3 admin_urls
+- load admin_modify i18n admin_urls
 
 - block breadcrumbs
 	- if not is_popup
@@ -27,7 +27,7 @@
 
 			{% block field_sets %}
 			{% for fieldset in adminform %}
-				.col-md-6
+				.col-md-12.col-lg-6
 					{% include "admin/includes/fieldset.html" %}
 			{% endfor %}
 			{% endblock %}

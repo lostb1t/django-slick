@@ -52,7 +52,9 @@ def get_app_list(context):
                     'name': capfirst(model._meta.verbose_name_plural),
                     'admin_url': mark_safe('/admin/%s/%s/' % (app_label, model.__name__.lower())),
                     'perms': perms,
+                    'description': model_admin.description if hasattr(model_admin, 'description') else None
                 }
+
                 if app_label in app_dict:
                     app_dict[app_label]['models'].append(model_dict)
                 else:
