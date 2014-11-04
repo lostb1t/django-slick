@@ -7,13 +7,27 @@
     <meta content='' name='description' />
     <meta content='' name='author' />
     <title>Admin</title>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' />
-    <link href='{% static 'slick/plugins/bootstrap-select-1.6.3/css/bootstrap-select.min.css' %}' rel='stylesheet' />
-    <link href='{% static 'slick/css/slick.css' %}' rel='stylesheet' />
     {% block stylesheets %}
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' />
+      <link href='{% static 'slick/plugins/bootstrap-select-1.6.3/css/bootstrap-select.min.css' %}' rel='stylesheet' />
+      <link href='{% static 'slick/css/slick.css' %}' rel='stylesheet' />
     {% endblock %}
-    <script src='{% static 'slick/plugins/jquery-1.9.1/jquery-1.9.1.min.js' %}'></script>
-    <script src='{% static 'slick/plugins/bootstrap-3.3.0/js/bootstrap.min.js' %}'></script>
+    {% block javascripts %}
+<script type='text/javascript'>
+// <![CDATA[
+        var slick = {};
+// ]]>
+</script>
+      <script src='{% static 'slick/plugins/jquery-1.9.1/jquery-1.9.1.min.js' %}'></script>
+      <script src='{% static 'slick/plugins/bootstrap-3.3.0/js/bootstrap.min.js' %}'></script>
+      <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
+      <script src='{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}'></script>
+      <script src='{% static 'slick/js/slick.js' %}'></script>
+    {% endblock %}
+    {% block extrahead %}
+
+    {% endblock %}
+
   </head>
   <body>
     <div id='page-container'>
@@ -56,19 +70,12 @@
       </div>
       <div id='content' class='content'>
           {% block content %}
+
           {% endblock %}
+
       </div>
     </div>
-    {% block javascripts %}
-<script type='text/javascript'>
-// <![CDATA[
-        var slick = {};
-
-// ]]>
-</script>
-      <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
-      <script src='{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}'></script>
-      <script src='{% static 'slick/js/slick.js' %}'></script>
+    {% block footer %}
     {% endblock %}
   </body>
 </html>

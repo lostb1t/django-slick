@@ -1,6 +1,12 @@
 - extends "admin/base.html"
 - load admin_modify i18n admin_urls
 
+
+- block javascripts
+    {{ block.super }}
+    {{ media }}
+
+
 - block breadcrumbs
     - if not is_popup
         %li 
@@ -34,8 +40,9 @@
                                 {{ fieldset.name }}
 
                         - if fieldset.description
-                            %small 
-                                {{ fieldset.description|safe }}
+                            %p
+                                %small 
+                                    {{ fieldset.description|safe }}
 
                     .col-md-9.col-lg-9
                         {% include "admin/includes/fieldset.html" %}
