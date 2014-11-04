@@ -8,6 +8,14 @@
 	background: #2d353c
 	z-index: 10
 
+	@media (max-width: $screen-sm-min)
+		left: -210px
+		position: absolute
+		z-index: 9999
+
+	&.toggled
+		left: 0
+
 	.nav
 		>li>a
 			padding: 8px 20px
@@ -21,6 +29,14 @@
 
 			.caret
 				margin-top: 9px
+			i
+				float: left
+				margin-right: 15px
+				width: 14px
+				text-align: center
+				line-height: 22px
+				font-size: 12px
+
 
 		>li.nav-brand
 			padding: 17px 20px

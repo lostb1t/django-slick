@@ -28,6 +28,17 @@
         </li>
     {% endif %}
 {% endblock %}
+{% block object-tools-items %}
+    {% if has_add_permission %}
+        <li>
+            <a class='btn btn-primary btn' type='submit' name='_save'>
+                {% trans 'Save' %}
+
+
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
 {% block content %}
     <div class='row-fluid'>
         <form id='{{ opts.model_name }}_form' action='' role='form' method='post'>

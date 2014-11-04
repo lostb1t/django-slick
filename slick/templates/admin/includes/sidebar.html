@@ -17,13 +17,14 @@
       {% is_active_path app.admin_url 1 1 as active %}
       <li class='{% if active %}active{% endif %}'>
 
-        <a data-parent='#sidebar' data-toggle='collapse' href='#' data-target='#sub-menu-{{ app.name }}' aria-expanded='false'>
+        <a data-parent='#sidebar' data-toggle='collapse' href='#' data-target='#sub-menu-{{ app.name|lower }}' aria-expanded='false'>
           <b class='caret pull-right'></b>
+          <i class='fa fa-app-default fa-app-{{app.name|lower}}'></i>
           <span>
             {{ app.name }}
           </span>
         </a>
-        <ul id='sub-menu-{{ app.name }}' class='sub-menu collapse {% if active %}in{% endif %}'>
+        <ul id='sub-menu-{{ app.name|lower }}' class='sub-menu collapse {% if active %}in{% endif %}'>
           {% for model in app.models %}
             {% is_active_path model.admin_url 1 1 as active %}
             <li class='{% if active %}active{% endif %}'>

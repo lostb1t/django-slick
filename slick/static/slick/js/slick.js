@@ -31,5 +31,13 @@ var django = {
 			location.href = $(this).val();
 		});
 	};
+    
+    slick.initSidebar = function() {
+    	$("[data-click='sidebar-toggle']").click(function (e) {
+			e.stopPropagation();
+			$( "#sidebar" ).toggleClass( "toggled" );
+		});
+    };
+	
 
 })(slk.jQuery);

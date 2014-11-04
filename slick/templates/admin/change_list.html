@@ -17,6 +17,7 @@
 {% block breadcrumbs %}
 	{% if not is_popup %}
 		<li>
+			<i class='fa fa-app-default fa-app-{{cl.opts.app_label|lower}} fa-fw'></i>
 			<a href='{% url 'admin:app_list' app_label=cl.opts.app_label %}'>
 				{% trans app_label|capfirst|escape %}
 			</a>

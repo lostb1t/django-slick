@@ -19,6 +19,10 @@ h1, h2, h3, h4, h5, h6
 	padding: 20px
 	margin-top: 60px
 
+	@media (max-width: $screen-sm-min)
+		margin-left: 0
+		margin-top: 100px
+
 
 .page-header
 	font-size: 24px
@@ -36,6 +40,9 @@ h1, h2, h3, h4, h5, h6
 	padding: 0 5px
 	color: #ccc
 	content: "/\00a0"
+
+	@media (max-width: $screen-sm-min)
+		padding: 0
 
 
 
@@ -57,16 +64,29 @@ h1, h2, h3, h4, h5, h6
 .navbar-fixed-top
 	left: 210px
 
+	@media (max-width: $screen-sm-min)
+		left: 0
+
 
 .navbar-header
 	height: 56px
 
+	@media (max-width: $screen-sm-min)
+		border-bottom: 1px solid #eee
 
 	h1
 		font-size: 18px
 		line-height: 57px
 		margin-top: 0
 		margin-bottom: 0
+		float: left
+
+		@media (max-width: $screen-md-min)
+			font-size: 12px
+
+		@media (max-width: $screen-sm-min)
+			line-height: 37px
+			padding: 10px
 
 		ul	
 			margin-bottom: 0
@@ -74,9 +94,18 @@ h1, h2, h3, h4, h5, h6
 .navbar-right
 	margin: 14px 0px
 
+	@media (max-width: $screen-sm-min)
+		float: right
+		margin: 6px
+
 	ul
 		margin-bottom: 0
 
+.navbar-toggle 
+	margin-top: 10px
+	margin-bottom: 10px
+	padding: 10px
+	border: none
 
 
 //	MISC
@@ -100,6 +129,13 @@ h1, h2, h3, h4, h5, h6
 			border-top-left-radius: 0px
 	a.list-group-item
 		color: #555
+
+.list-inline
+	>li
+		display: inline-block
+		padding-left: 5px
+		padding-right: 0px
+
 
 
 // Helpers
@@ -125,6 +161,19 @@ h1, h2, h3, h4, h5, h6
 	border-top-left-radius: 0
 	border-bottom-right-radius: 0
 	border-bottom-left-radius: 0
+
+// Custom Font awesome classes
+
+.fa-app-default:before
+	content: '\f10c' // circle-o
+
+.fa-app-auth:before
+	content: '\f0c0'
+
+.fa-app-flatpages:before
+	content: '\f02d'
+
+
 
 //	PANEL
 
@@ -154,4 +203,6 @@ h1, h2, h3, h4, h5, h6
 
 
 // UI ELEMENTS
+
+
 

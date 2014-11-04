@@ -23,6 +23,16 @@
       <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
       <script src='{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}'></script>
       <script src='{% static 'slick/js/slick.js' %}'></script>
+<script type='text/javascript'>
+// <![CDATA[
+        (function($) {
+          $(document).ready(function() {
+            slick.initSidebar();
+          });
+        })(slk.jQuery);
+
+// ]]>
+</script>
     {% endblock %}
     {% block extrahead %}
 
@@ -33,7 +43,7 @@
     <div id='page-container'>
       <div id='header' class='header navbar navbar-default navbar-fixed-top'>
         <div class='container-fluid'>
-          <div class='navbar-header pull-left'>
+          <div class='navbar-header'>
             <h1>
               <ul id='breadcrumbs' class='list-inline'>
                 {% block breadcrumbs %}
@@ -42,21 +52,23 @@
                   {% if title %}
                     <li>
                       {{ title|capfirst }}
-
                     </li>
                   {% endif %}
                 {% endblock %}
               </ul>
             </h1>
+            <button class='navbar-toggle' data-click='sidebar-toggle' type='button'>
+              <span class='icon-bar'></span>
+              <span class='icon-bar'></span>
+              <span class='icon-bar'></span>
+            </button>
           </div>
          {% block object-tools %}
           <div class='nav navbar-nav navbar-right'>
             <ul class='list-inline'>
               {% block object-tools-items %}
 
-
               {% endblock %}
-
 
             </ul>
           </div>

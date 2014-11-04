@@ -20,6 +20,13 @@
                 {{ opts.verbose_name_plural|capfirst }}
 
 
+- block object-tools-items
+    - if has_add_permission
+        %li
+            %a.btn.btn-primary.btn{:name => "_save", :type => "submit"}
+                {% trans 'Save' %}
+
+
 - block content
     .row-fluid
         %form{:action => "", :method => "post", :id => "{{ opts.model_name }}_form", :role => "form"}
