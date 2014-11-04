@@ -69,3 +69,36 @@ def get_app_list(context):
     app_list = app_dict.values()
     app_list.sort(lambda x, y: cmp(x['name'], y['name']))
     return app_list
+
+
+@register.filter(name='render_field')
+def render_field(field, attributes):
+    ''' render field. Allow adding attributes '''
+    attrs = {}
+    definition = attributes.split(',')
+ 
+    for d in definition:
+        if ':' not in d:
+            attrs['class'] = d
+        else:
+            t, v = d.split(':')
+            attrs[t] = v
+ 
+    return field.as_widget(attrs=attrs)
+
+
+@register.filter(name='render_label')
+def render_label(field, attributes):
+    ''' render label. Allow adding attributes '''
+    attrs = {}
+    definition = attributes.split(',')
+ 
+    for d in definition:
+        if ':' not in d:
+            attrs['class'] = d
+        else:
+            t, v = d.split(':')
+            attrs[t] = v
+    #print dir(field)
+    return field.field.label_tag(attrs=attrs)
+

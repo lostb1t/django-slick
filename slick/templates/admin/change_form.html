@@ -2,65 +2,87 @@
 {% load admin_modify i18n admin_urls %}
 
 {% block breadcrumbs %}
-	{% if not is_popup %}
-		<li>
-			<a href='{% url 'admin:app_list' app_label=opts.app_label %}'>
-				{% trans app_label|capfirst|escape %}
-			</a>
-		</li>
-		<li>
-			{% if has_change_permission %}
-				<a href='{% url opts|admin_urlname:'changelist' %}'>
-					{{ opts.verbose_name_plural|capfirst }}
-				</a>
-			{% else %}
-				{{ opts.verbose_name_plural|capfirst }}
+    {% if not is_popup %}
+        <li>
+            <a href='{% url 'admin:app_list' app_label=opts.app_label %}'>
+                {% trans app_label|capfirst|escape %}
+            </a>
+        </li>
+        <li>
+            {% if has_change_permission %}
+                <a href='{% url opts|admin_urlname:'changelist' %}'>
+                    {{ opts.verbose_name_plural|capfirst }}
+                </a>
+            {% else %}
+                {{ opts.verbose_name_plural|capfirst }}
 
 
-			{% endif %}
-		</li>
-	{% endif %}
+            {% endif %}
+        </li>
+    {% endif %}
 {% endblock %}
 {% block content %}
-    <div class='row-fluid'></div>
-		<form id='{{ opts.model_name }}_form' action='' method='post'>
-			{% if errors %}
-				<p class='errornote'>
-					{% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
-				</p>
-				<ul class='errorlist'>
-					{% for error in adminform.form.non_field_errors %}
-						<li>
-							{{ error }}
+    <div class='row-fluid'>
+        <form id='{{ opts.model_name }}_form' action='' role='form' method='post'>
+            {% if errors %}
+                <p class='errornote'>
+                    {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+                </p>
+                <ul class='errorlist'>
+                    {% for error in adminform.form.non_field_errors %}
+                        <li>
+                            {{ error }}
 
-						</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
-			{% block field_sets %}
-			{% for fieldset in adminform %}
-				<div class='col-md-12 col-lg-6'>
-					{% include "admin/includes/fieldset.html" %}
-				</div>
-			{% endfor %}
-			{% endblock %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% block field_sets %}
+            {% for fieldset in adminform %}
+                {% if fieldset.name or fieldset.description %}
+                    <div class='col-md-3 col-lg-3'>
+                        {% if fieldset.name %}
+                            <h4>
+                                {{ fieldset.name }}
 
-			{% block after_field_sets %}{% endblock %}
+                            </h4>
+                        {% endif %}
+                        {% if fieldset.description %}
+                            <small>
+                                {{ fieldset.description|safe }}
 
-			{% block inline_field_sets %}
-			{% for inline_admin_formset in inline_admin_formsets %}
-			{% include inline_admin_formset.opts.template %}
-			{% endfor %}
-			{% endblock %}
+                            </small>
+                        {% endif %}
+                    </div>
+                    <div class='col-md-9 col-lg-9'>
+                        {% include "admin/includes/fieldset.html" %}
+                    </div>
+                {% else %}
+                    <div class='col-md-12'>
+                        {% include "admin/includes/fieldset.html" %}
 
-			{% block after_related_objects %}{% endblock %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% endblock %}
 
-			<div class='form-actions col-md-12'>
-				{% block submit_buttons_bottom %}
-					{% submit_row %}
+            {% block after_field_sets %}{% endblock %}
 
-				{% endblock %}
-			</div>
-			{% prepopulated_fields_js %}
-		</form>
+            {% block inline_field_sets %}
+            {% for inline_admin_formset in inline_admin_formsets %}
+            {% include inline_admin_formset.opts.template %}
+            {% endfor %}
+            {% endblock %}
+
+            {% block after_related_objects %}{% endblock %}
+
+            <div class='form-actions col-md-12'>
+                {% block submit_buttons_bottom %}
+                    {% submit_row %}
+
+                {% endblock %}
+            </div>
+            {% prepopulated_fields_js %}
+        </form>
+    </div>
 {% endblock %}

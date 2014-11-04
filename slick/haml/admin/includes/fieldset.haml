@@ -1,16 +1,8 @@
 - load admin_modify i18n
 
 .panel.panel-inverse.aligned{:class => "{{ fieldset.classes }}"}
-	.panel-heading
-		%h4.panel-title
-			- if fieldset.name
-				{{ fieldset.name }}
-
-			- if fieldset.description
-				%small 
-					{{ fieldset.description|safe }}
 	.panel-body
-
 		- for line in fieldset
-			- for field in line
-				{{ field.field }}
+				- for field in line
+					.form-group
+						- include "admin/includes/field.html"

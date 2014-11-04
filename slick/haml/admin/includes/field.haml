@@ -1,0 +1,26 @@
+- load slick_tags
+
+- if field.is_checkbox
+
+    {{ field|render_label:"class:col-md-3"  }}
+    .col-md-9
+        {{ field.field|render_field:"class:form-control" }}
+        - if field.field.help_text
+            %span.help-block
+                {{ field.field.help_text|safe }}
+- else
+
+    {{ field.label_tag }}
+
+    - if field.is_readonly
+        <p>{{ field.contents }}</p>
+    - else
+        {{ field.field|render_field:"class:form-control" }}
+
+        - if field.errors
+            %span.text-danger
+                {{ field.errors|striptags }}
+
+    - if field.field.help_text
+        %span.help-block
+            {{ field.field.help_text|safe }}
