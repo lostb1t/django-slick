@@ -13,6 +13,7 @@ setup(
     author='Sjoerd Arendsen',
     author_email='subscribe@optixdesigns.com',
     packages=['slick', 'slick.templatetags'],
+    url='https://github.com/docc/django-slick/',
     include_package_data=True,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
