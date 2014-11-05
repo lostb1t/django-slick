@@ -3,6 +3,8 @@
 .panel.panel-inverse.aligned{:class => "{{ fieldset.classes }}"}
 	.panel-body
 		- for line in fieldset
-				- for field in line
-					.form-group
-						- include "admin/includes/field.html"
+			- for field in line
+				.form-group{:class => "{% if not field.is_readonly and field.errors %}has-error{% endif %}"}
+					- include "admin/includes/field.html"
+
+
