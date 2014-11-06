@@ -30,7 +30,9 @@
 				{% trans 'Save' %}
 
 
+
 - block content
+
 	.row
 		%form{:action => "", :method => "post", :id => "{{ opts.model_name }}{{ opts.module_name }}_form", :role => "form"}
 			- csrf_token
@@ -47,7 +49,7 @@
 			{% block field_sets %}
 			{% for fieldset in adminform %}
 				- if fieldset.name or fieldset.description
-					.col-md-3.col-lg-3
+					.col-md-2.col-lg-3
 						- if fieldset.name
 							%h4
 								{{ fieldset.name }}
@@ -57,7 +59,7 @@
 								%small 
 									{{ fieldset.description|safe }}
 
-					.col-md-9.col-lg-9
+					.col-md-10.col-lg-9
 						{% include "admin/includes/fieldset.html" %}
 				- else
 					.col-md-12

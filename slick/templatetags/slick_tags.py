@@ -7,9 +7,16 @@ from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.core.urlresolvers import reverse
 
+from ..settings import ADMIN_TITLE
+
 site = admin.site
 
 register = template.Library()
+
+
+@register.simple_tag()
+def slick_admin_title():
+    return ADMIN_TITLE
 
 
 @register.assignment_tag(takes_context=True)
@@ -69,6 +76,20 @@ def get_app_list(context):
     app_list = app_dict.values()
     app_list.sort(lambda x, y: cmp(x['name'], y['name']))
     return app_list
+
+
+#@register.filter(name='slick_field')
+@register.inclusion_tag('slick/field.html')
+def slick_field(field, **kwargs):
+    """
+    Render a field
+
+    kwargs:
+        - show_label
+    """
+    context = kwargs.copy()
+    context['field'] = field
+    return context
 
 
 @register.filter(name='render_field')

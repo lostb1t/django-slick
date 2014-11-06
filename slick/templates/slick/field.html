@@ -1,0 +1,40 @@
+{% load slick_tags %}
+
+{% if field.is_checkbox %}
+	<div class='checkbox'>
+		<label>
+			{{ field.field }} {{ field.label_tag }}
+		</label>
+		{% if field.field.help_text %}
+			<span class='help-block'>
+				{{ field.field.help_text|safe }}
+			</span>
+		{% endif %}
+	</div>
+{% elif field.is_select %}
+	hoi
+{% else %}
+	<div class='form-group {% if not field.is_readonly and field.errors %}has-error{% endif %}'>
+		{% if show_label != False %}
+			{{ field.label_tag }}
+
+		{% endif %}
+		{% if field.is_readonly %}
+			<p>{{ field.contents }}</p>
+		{% else %}
+			{{ field.field|render_field:"class:form-control" }}
+
+			{% if field.errors %}
+				<span class='text-danger'>
+					{{ field.errors|striptags }}
+
+				</span>
+			{% endif %}
+		{% endif %}
+		{% if field.field.help_text %}
+			<span class='help-block'>
+				{{ field.field.help_text|safe }}
+			</span>
+		{% endif %}
+	</div>
+{% endif %}

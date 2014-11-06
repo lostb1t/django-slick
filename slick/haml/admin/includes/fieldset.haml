@@ -1,10 +1,9 @@
-- load admin_modify i18n
+- load admin_modify i18n slick_tags
 
 .panel.panel-inverse.aligned{:class => "{{ fieldset.classes }}"}
 	.panel-body
 		- for line in fieldset
 			- for field in line
-				.form-group{:class => "{% if not field.is_readonly and field.errors %}has-error{% endif %}"}
-					- include "admin/includes/field.html"
+				- slick_field field
 
-
+%hr

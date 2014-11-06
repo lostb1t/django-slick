@@ -1,4 +1,4 @@
-{% load i18n admin_static admin_modify %}
+{% load i18n admin_static admin_modify slick_tags %}
 
 <div id='{{ inline_admin_formset.formset.prefix }}-group' class='inline-group'>
 	<div class='tabular inline-related {% if forloop.last %}last-related{% endif %}'>
@@ -77,7 +77,7 @@
 												{% if field.is_readonly %}
 													<p>{{ field.contents|linebreaksbr }}</p>
 												{% else %}
-													{{ field.field }}
+													{% slick_field field show_label=False %}
 
 												{% endif %}
 											</td>
@@ -103,3 +103,4 @@
 		</div>
 	</div>
 </div>
+<hr />

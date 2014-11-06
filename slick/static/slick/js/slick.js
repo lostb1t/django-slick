@@ -17,19 +17,13 @@ var django = {
 	$('.selectpicker').selectpicker();
 
 	slick.initFilter = function() {
-		// Dont autoclose
-		/*
-		$('.slk-filter .dropdown-menu').click(function (e) {
-			e.stopPropagation();
-		});
-		*/
-
-
 		$(".filter-choice").change(function() {
-			//console.log($(this).val());
-			//console.log($('.selectpicker').val())
 			location.href = $(this).val();
 		});
+	};
+
+	slick.initSearchbar = function() {
+
 	};
     
     slick.initSidebar = function() {

@@ -4,10 +4,8 @@
 
 - if app_list
   .nav
-    %li.nav-brand
-      %a{:href => "{% url 'admin:index' %}"}
-        %span.nav-logo
-        {{ site_header|default:_('Django administration') }}
+    %li.nav-account
+      - firstof user.get_short_name user.get_username
     %li.nav-header
       {% trans "Navigation" %}
     - for app in app_list

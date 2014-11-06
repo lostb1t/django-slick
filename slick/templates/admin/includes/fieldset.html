@@ -1,15 +1,13 @@
-{% load admin_modify i18n %}
+{% load admin_modify i18n slick_tags %}
 
 <div class='panel panel-inverse aligned {{ fieldset.classes }}'>
 	<div class='panel-body'>
 		{% for line in fieldset %}
 			{% for field in line %}
-				<div class='form-group {% if not field.is_readonly and field.errors %}has-error{% endif %}'>
-					{% include "admin/includes/field.html" %}
+				{% slick_field field %}
 
-
-				</div>
 			{% endfor %}
 		{% endfor %}
 	</div>
 </div>
+<hr />

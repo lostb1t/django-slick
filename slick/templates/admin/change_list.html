@@ -40,7 +40,7 @@
 	{% if has_add_permission %}
 		<li>
 			<a class='btn btn-primary btn' href='{% url cl.opts|admin_urlname:'add' %}'>
-				{% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+				{% blocktrans with cl.opts.verbose_name|capfirst as name %}Add {{ name }}{% endblocktrans %}
 
 			</a>
 		</li>
@@ -52,7 +52,10 @@
 			<div class='col-md-12'>
 				{% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
 				<div class='panel panel-inverse'>
-					<div class='panel-heading'></div>
+					<div class='panel-heading'>
+						{{ cl.opts.verbose_name_plural|capfirst }}
+
+					</div>
 					<div class='panel-body'>
 						<div class='row'>
 							<div class='col-lg-12'>

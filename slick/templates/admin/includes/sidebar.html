@@ -4,11 +4,8 @@
 
 {% if app_list %}
   <div class='nav'>
-    <li class='nav-brand'>
-      <a href='{% url 'admin:index' %}'>
-        <span class='nav-logo'></span>
-        {{ site_header|default:_('Django administration') }}
-      </a>
+    <li class='nav-account'>
+      {% firstof user.get_short_name user.get_username %}
     </li>
     <li class='nav-header'>
       {% trans "Navigation" %}

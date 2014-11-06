@@ -34,13 +34,10 @@
       #header.header.navbar.navbar-default.navbar-fixed-top
         .container-fluid
           .navbar-header
-            %h1
-              %ul#breadcrumbs.list-inline
-                - block breadcrumbs
-                - block page_title
-                  - if title
-                    %li
-                      {{ title|capfirst }}
+            - block branding
+              %a.navbar-brand
+                - block admin_title
+                  - slick_admin_title
             %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
               %span.icon-bar
               %span.icon-bar
@@ -54,7 +51,20 @@
       #sidebar.sidebar
         %div{data-scrollbar: "true", data-height: "100%"}
           - include "admin/includes/sidebar.html"
+      
       #content.content
+          %ul#breadcrumbs.list-inline.pull-right
+            - block breadcrumbs
+            - if title
+              %li
+                {{ title|capfirst }}
+
+          %h1.content-title
+            - block content_title
+              - if title
+                {{ title }}
+
           - block content
+            
     
     - block footer

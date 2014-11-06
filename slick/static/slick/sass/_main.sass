@@ -23,6 +23,16 @@ h1, h2, h3, h4, h5, h6
 		margin-left: 0
 		margin-top: 100px
 
+	hr
+		border-top-color: #e6e6e6
+
+	.content-title
+		font-size: 24px
+		margin: 0 0 20px
+		padding: 0
+		border: none
+		line-height: 28px
+
 
 .page-header
 	font-size: 24px
@@ -32,8 +42,12 @@ h1, h2, h3, h4, h5, h6
 	line-height: 28px
 
 
-#breadcrumbs>li a
-	color: #96a7b6
+#breadcrumbs
+	>li
+		line-height: 28px
+		color: $gray-light
+		a
+			color: $gray-dark
 
 
 #breadcrumbs>li+li:before
@@ -54,6 +68,7 @@ h1, h2, h3, h4, h5, h6
 	background: #fff
 
 .navbar
+	min-height: 55px
 	border: none
 	-webkit-border-radius: 0
 	-moz-border-radius: 0
@@ -61,45 +76,44 @@ h1, h2, h3, h4, h5, h6
 	-webkit-box-shadow: 0 0 2px rgba(0,0,0,.3)
 	box-shadow: 0 0 2px rgba(0,0,0,.3)
 
-.navbar-fixed-top
-	left: 210px
-
-	@media (max-width: $screen-sm-min)
-		left: 0
-
-
-.navbar-header
-	height: 56px
-
-	@media (max-width: $screen-sm-min)
-		border-bottom: 1px solid #eee
-
-	h1
-		font-size: 18px
-		line-height: 57px
-		margin-top: 0
-		margin-bottom: 0
-		float: left
-
-		@media (max-width: $screen-md-min)
-			font-size: 12px
+#header
+	.navbar-header
+		height: 55px
 
 		@media (max-width: $screen-sm-min)
-			line-height: 37px
-			padding: 10px
+			border-bottom: 1px solid #eee
 
-		ul	
+		h1
+			font-size: 18px
+			line-height: 55px
+			margin-top: 0
+			margin-bottom: 0
+			float: left
+
+			@media (max-width: $screen-md-min)
+				font-size: 12px
+
+			@media (max-width: $screen-sm-min)
+				line-height: 37px
+				padding: 10px
+
+			ul	
+				margin-bottom: 0
+
+	.navbar-right
+		margin: 12px 0px
+
+		@media (max-width: $screen-sm-min)
+			float: right
+			margin: 6px
+
+		ul
 			margin-bottom: 0
 
-.navbar-right
-	margin: 14px 0px
-
-	@media (max-width: $screen-sm-min)
-		float: right
-		margin: 6px
-
-	ul
-		margin-bottom: 0
+.navbar-brand
+	width: 210px
+	height: 55px
+	line-height: 20px
 
 .navbar-toggle 
 	margin-top: 10px
@@ -172,7 +186,6 @@ h1, h2, h3, h4, h5, h6
 
 .fa-app-flatpages:before
 	content: '\f02d'
-
 
 
 //	PANEL

@@ -1,10 +1,10 @@
 {% load i18n admin_static %}
 
 {% if cl.search_fields %}
-	<div class='input-group'>
+	<div class='input-group input-group-sm'>
 		<input class='form-control search-query' placeholder='{% trans 'Search' %}' type='text' name='{{ search_var }}' value='{{ cl.query }}' />
 		<span class='input-group-btn'>
-			<button class='btn btn-primary' type='button'>
+			<button class='btn btn-default' type='button'>
 				{% trans 'Search' %}
 
 			</button>
