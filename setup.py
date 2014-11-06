@@ -7,7 +7,7 @@ def read(fname):
 
 setup(
     name='django-slick',
-    version='0.1.1',
+    version=__import__('slick').VERSION,
     description='Slick responsive theme for the Django admin interface.',
     long_description=read('README.rst'),
     author='Sjoerd Arendsen',
