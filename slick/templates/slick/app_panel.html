@@ -1,0 +1,40 @@
+{% load i18n slick_tags log %}
+
+<div id='panel-{{ app.name|lower }}' class='panel panel-inverse collapse'>
+	<div class='panel-heading'>
+		<div class='btn-group btn-group-xxs'>
+			<a class='btn' data-click='panel-collapse'>
+				<span class='fa-stack'>
+					<i class='fa fa-circle fa-stack-2x'></i>
+					<i class='fa fa-minus fa-stack-1x fa-inverse'></i>
+				</span>
+			</a>
+		</div>
+		<div class='panel-title'>
+			<a href='{{app.app_url}}'>
+				{% trans app.name %}
+			</a>
+		</div>
+	</div>
+	<div class='panel-body padding-0'>
+		<ul class='list-group'>
+			{% for model in app.models %}
+				<li class='list-group-item'>
+					{% if model.admin_url %}
+						<a href='{{model.admin_url}}'>
+							{{ model.name }}
+						</a>
+					{% else %}
+						{{ model.name }}
+
+					{% endif %}
+					{% if model.description %}
+						<small>
+							{{model.description}}
+						</small>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

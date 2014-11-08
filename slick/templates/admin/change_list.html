@@ -77,6 +77,11 @@
 
 					</div>
 					{% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+					<div class='panel-footer'>
+						{% block pagination %}
+							{% pagination cl %}
+						{% endblock %}
+					</div>
 				</div>
 			</div>
 		{% endblock %}

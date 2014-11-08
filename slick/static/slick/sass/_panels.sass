@@ -3,9 +3,24 @@
 	-webkit-box-shadow: none
 	box-shadow: none
 
+	&.collapse
+		display: block
+		visibility: visible
+
+		.btn-collapse
+			display: block
+
+	.btn-collapse
+		display: none
+
+	.panel-body
+
 	.panel-heading
+		min-height: 40px
+
 		.panel-title
 			color: #fff
+			font-size: 12px
 		.navbar
 			margin-bottom: 0
 			min-height: 0
@@ -15,6 +30,16 @@
 			
 			border-top: 0
 			border-bottom: 0
+		.btn-group
+			float: right
+
+	.collapsed
+		display: none
+		visibility: hidden
+
+	.panel-footer
+		.pagination
+			margin: 0
 
 .panel-inverse
 	@include panel-variant($panel-inverse-border, $panel-inverse-text, $panel-inverse-heading-bg, $panel-inverse-border)

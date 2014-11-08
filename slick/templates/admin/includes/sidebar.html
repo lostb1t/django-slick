@@ -4,9 +4,11 @@
 
 {% if app_list %}
   <div class='nav'>
-    <li class='nav-account'>
-      {% firstof user.get_short_name user.get_username %}
-    </li>
+    {% if user.is_authenticated and user.is_staff %}
+      <li class='nav-account'>
+        {% firstof user.get_short_name user.get_username %}
+      </li>
+    {% endif %}
     <li class='nav-header'>
       {% trans "Navigation" %}
     </li>

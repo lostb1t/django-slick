@@ -1,6 +1,12 @@
 - load admin_modify i18n slick_tags
 
 .panel.panel-inverse.aligned{:class => "{{ fieldset.classes }}"}
+	.panel-heading
+		.btn-group.btn-group-xxs
+			%a.btn{:data-click => "panel-collapse"}
+				%span.fa-stack
+					%i.fa.fa-circle.fa-stack-2x
+					%i.fa.fa-minus.fa-stack-1x.fa-inverse
 	.panel-body
 		- for line in fieldset
 			- for field in line

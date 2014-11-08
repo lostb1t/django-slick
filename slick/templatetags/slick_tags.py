@@ -1,11 +1,14 @@
 import re
 
 from django import template
+from django.contrib.admin.helpers import AdminField
 from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.core.urlresolvers import reverse
+from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 
 from ..settings import ADMIN_TITLE
 
@@ -78,6 +81,31 @@ def get_app_list(context):
     return app_list
 
 
+
+@register.filter
+def slick_input_type(field):
+    """
+    Return input type to use for field
+    """
+
+    try:
+        widget = field.field.widget
+    except:
+        raise ValueError("Expected a Field, got a %s" % type(field))
+
+    if isinstance(widget, TextInput):
+        return u'text'
+    if isinstance(widget, CheckboxInput):
+        return u'checkbox'
+    if isinstance(widget, CheckboxSelectMultiple):
+        return u'multicheckbox'
+    if isinstance(widget, RadioSelect):
+        return u'radioset'
+    if isinstance(widget, RelatedFieldWidgetWrapper):
+        return u'select'
+    return u'default'
+
+
 #@register.filter(name='slick_field')
 @register.inclusion_tag('slick/field.html')
 def slick_field(field, **kwargs):
@@ -89,6 +117,7 @@ def slick_field(field, **kwargs):
     """
     context = kwargs.copy()
     context['field'] = field
+    context['input_type'] = slick_input_type(field.field)
     return context
 
 
@@ -122,4 +151,5 @@ def render_label(field, attributes):
             attrs[t] = v
     #print dir(field)
     return field.field.label_tag(attrs=attrs)
+
 

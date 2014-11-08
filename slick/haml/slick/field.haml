@@ -7,8 +7,6 @@
 		- if field.field.help_text
 			%span.help-block
 				{{ field.field.help_text|safe }}
-- elif field.is_select
-	hoi
 - else
 	.form-group{:class => "{% if not field.is_readonly and field.errors %}has-error{% endif %}"}
 		- if show_label != False
@@ -17,7 +15,10 @@
 		- if field.is_readonly
 			<p>{{ field.contents }}</p>
 		- else
-			{{ field.field|render_field:"class:form-control" }}
+			- if input_type == "select"
+				{{ field.field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
+			- else
+				{{ field.field|render_field:"class:form-control" }}
 
 			- if field.errors
 				%span.text-danger

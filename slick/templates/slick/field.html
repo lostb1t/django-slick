@@ -11,8 +11,6 @@
 			</span>
 		{% endif %}
 	</div>
-{% elif field.is_select %}
-	hoi
 {% else %}
 	<div class='form-group {% if not field.is_readonly and field.errors %}has-error{% endif %}'>
 		{% if show_label != False %}
@@ -22,8 +20,12 @@
 		{% if field.is_readonly %}
 			<p>{{ field.contents }}</p>
 		{% else %}
-			{{ field.field|render_field:"class:form-control" }}
+			{% if input_type == "select" %}
+				{{ field.field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
+			{% else %}
+				{{ field.field|render_field:"class:form-control" }}
 
+			{% endif %}
 			{% if field.errors %}
 				<span class='text-danger'>
 					{{ field.errors|striptags }}

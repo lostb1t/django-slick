@@ -4,8 +4,9 @@
 
 - if app_list
   .nav
-    %li.nav-account
-      - firstof user.get_short_name user.get_username
+    - if user.is_authenticated and user.is_staff
+      %li.nav-account
+        - firstof user.get_short_name user.get_username
     %li.nav-header
       {% trans "Navigation" %}
     - for app in app_list

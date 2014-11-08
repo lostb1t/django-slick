@@ -1,6 +1,16 @@
 {% load admin_modify i18n slick_tags %}
 
 <div class='panel panel-inverse aligned {{ fieldset.classes }}'>
+	<div class='panel-heading'>
+		<div class='btn-group btn-group-xxs'>
+			<a class='btn' data-click='panel-collapse'>
+				<span class='fa-stack'>
+					<i class='fa fa-circle fa-stack-2x'></i>
+					<i class='fa fa-minus fa-stack-1x fa-inverse'></i>
+				</span>
+			</a>
+		</div>
+	</div>
 	<div class='panel-body'>
 		{% for line in fieldset %}
 			{% for field in line %}

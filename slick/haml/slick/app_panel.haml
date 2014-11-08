@@ -1,0 +1,25 @@
+- load i18n slick_tags log
+
+.panel.panel-inverse.collapse{:id => "panel-{{ app.name|lower }}"}
+	.panel-heading
+		.btn-group.btn-group-xxs
+			%a.btn{:data-click => "panel-collapse"}
+				%span.fa-stack
+					%i.fa.fa-circle.fa-stack-2x
+					%i.fa.fa-minus.fa-stack-1x.fa-inverse
+		.panel-title
+			%a{:href => "{{app.app_url}}"}
+				- trans app.name
+	.panel-body.padding-0
+		%ul.list-group
+			- for model in app.models
+				%li.list-group-item
+					- if model.admin_url
+						%a{:href => "{{model.admin_url}}"}
+							{{ model.name }}
+					- else
+						{{ model.name }}
+
+					- if model.description
+						%small
+							{{model.description}}

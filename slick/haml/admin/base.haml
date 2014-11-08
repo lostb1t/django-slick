@@ -15,14 +15,18 @@
       :javascript
         var slick = {};
       %script{src: "{% static 'slick/plugins/jquery-1.9.1/jquery-1.9.1.min.js' %}"}
+      %script{src: "{% static 'slick/plugins/html5sortable/html.sortable.min.js' %}"}
+      %script{src: "{% static 'slick/plugins/jquery-cookie-1.4.1/jquery.cookie.js' %}"}
       %script{src: "{% static 'slick/plugins/bootstrap-3.3.0/js/bootstrap.min.js' %}"}
       %script{src: "{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}"}
       %script{src: "{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}"}
+      %script{src: "{% static 'slick/plugins/bootstrap3-dialog/js/bootstrap-dialog.js' %}"}
       %script{src: "{% static 'slick/js/slick.js' %}"}
 
       :javascript
         (function($) {
           $(document).ready(function() {
+            slick.init();
             slick.initSidebar();
           });
         })(slk.jQuery);
@@ -31,40 +35,49 @@
 
   %body{class: ""}
     #page-container
-      #header.header.navbar.navbar-default.navbar-fixed-top
-        .container-fluid
-          .navbar-header
-            - block branding
-              %a.navbar-brand
-                - block admin_title
-                  - slick_admin_title
-            %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-           
-         - block object-tools
-          .nav.navbar-nav.navbar-right
-            %ul.list-inline
-              - block object-tools-items
+      - if not is_popup
+        #header.header.navbar.navbar-default.navbar-fixed-top
+          .container-fluid
+            .navbar-header
+              - block branding
+                %a.navbar-brand{:href => "{% url 'admin:index' %}"}
+                  - block admin_title
+                    - slick_admin_title
 
-      #sidebar.sidebar
-        %div{data-scrollbar: "true", data-height: "100%"}
-          - include "admin/includes/sidebar.html"
+              %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
+                %span.icon-bar
+                %span.icon-bar
+                %span.icon-bar
+             
+           - block object-tools
+            .nav.navbar-nav.navbar-right
+              %ul.list-inline
+                - block object-tools-items
+
+        #sidebar.sidebar
+          %div{data-scrollbar: "true", data-height: "100%"}
+            - include "admin/includes/sidebar.html"
       
       #content.content
-          %ul#breadcrumbs.list-inline.pull-right
-            - block breadcrumbs
+        - block messages
+          - if messages
+            
+              - for message in messages
+                .note{:class => "{% if message.tags %}note-{{ message.tags }}{% endif %}"}
+                  {{ message }}
+
+        %ul#breadcrumbs.list-inline.pull-right
+          - block breadcrumbs
+          - if title
+            %li
+              {{ title|capfirst }}
+
+        %h1.content-title
+          - block content_title
             - if title
-              %li
-                {{ title|capfirst }}
+              {{ title }}
 
-          %h1.content-title
-            - block content_title
-              - if title
-                {{ title }}
-
-          - block content
+        - block content
             
     
     - block footer
