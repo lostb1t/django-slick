@@ -35,11 +35,11 @@
 		- block result_list
 			.col-md-12
 				{% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-				.panel.panel-inverse
+				.panel.panel-default
 					.panel-heading
 						{{ cl.opts.verbose_name_plural|capfirst }}
 
-					.panel-body
+					.panel-body.padding-15
 						.row
 							.col-lg-12
 								- block search

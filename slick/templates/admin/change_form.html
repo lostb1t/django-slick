@@ -46,7 +46,6 @@
 	{% endif %}
 {% endblock %}
 {% block content %}
-
 	<div class='row'>
 		<form id='{{ opts.model_name }}{{ opts.module_name }}_form' action='' role='form' method='post'>
 			{% csrf_token %}
@@ -120,4 +119,3 @@
 		</form>
 	</div>
 {% endblock %}
-

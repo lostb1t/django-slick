@@ -1,11 +1,11 @@
 {% load slick_tags %}
 
-{% if field.is_checkbox %}
+{% if input_type == "checkbox" %}
 	<div class='checkbox'>
 		<label>
-			{{ field.field }} {{ field.label_tag }}
+			{{ field }} {{ field.label_tag }}
 		</label>
-		{% if field.field.help_text %}
+		{% if field.help_text %}
 			<span class='help-block'>
 				{{ field.field.help_text|safe }}
 			</span>
@@ -21,9 +21,9 @@
 			<p>{{ field.contents }}</p>
 		{% else %}
 			{% if input_type == "select" %}
-				{{ field.field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
+				{{ field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
 			{% else %}
-				{{ field.field|render_field:"class:form-control" }}
+				{{ field|render_field:"class:form-control" }}
 
 			{% endif %}
 			{% if field.errors %}

@@ -4,34 +4,37 @@
 - block content
 	- get_app_list as app_list
 			
-			- for app in app_list
-				{% if not forloop.counter|divisibleby:2 %}
-					<div class="row sortable" data-sortable-id="dashboard">
-				{% endif %}	
-				.col-md-6
-					- include "slick/app_panel.html"
-				{% if forloop.counter|divisibleby:2 %}
-					</div>
-				{% endif %}	
+			
+			.row.portlets{:data-portlets-id => "dashboard"}
+				.col-md-4{:portlet => "portlet"}
+					- for app in app_list|slice:"0:5"
+						- include "slick/app_panel.html"
+				.col-md-4
+					- for app in app_list|slice:"5:10"
+						- include "slick/app_panel.html"
+				.col-md-4
+					- for app in app_list|slice:"10:15"
+						- include "slick/app_panel.html"					
 
-			.row.sortable{:data-sortable-id => "dashboard"}
-				.col-md-6
-					.panel.panel-inverse{:id => "panel_log_list"}
-						.panel-heading
-							.panel-title
-								- trans 'My Actions'
-						%ul.list-group
-							- get_admin_log 10 as admin_log for_user user
-								- for entry in admin_log
-									%li.list-group-item
-										%i{:class => "{% if entry.is_addition %} fa fa-plus-circle{% endif %}{% if entry.is_change %}fa fa-edit{% endif %}{% if entry.is_deletion %}fa fa-remove{% endif %}"}
-										- if model.admin_url
-											%a{:href => "{{ entry.get_admin_url }}"}
+			-#
+				.row
+					.col-md-4
+						{% slickpanel title='My Actions' %}
+							%ul.list-group
+								- get_admin_log 10 as admin_log for_user user
+									- for entry in admin_log
+										%li.list-group-item
+											%i{:class => "{% if entry.is_addition %} fa fa-plus-circle{% endif %}{% if entry.is_change %}fa fa-edit{% endif %}{% if entry.is_deletion %}fa fa-remove{% endif %}"}
+											- if model.admin_url
+												%a{:href => "{{ entry.get_admin_url }}"}
+													{{ entry.object_repr }}
+											- else
 												{{ entry.object_repr }}
-										- else
-											{{ entry.object_repr }}
 
-										%small
-											- trans entry.content_type.name 
+											%small
+												- trans entry.content_type.name 
+
+						{% endslickpanel %}
+
 
 

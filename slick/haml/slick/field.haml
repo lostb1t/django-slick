@@ -1,10 +1,10 @@
 - load slick_tags
 
-- if field.is_checkbox
+- if input_type == "checkbox"
 	.checkbox
 		%label
-			{{ field.field }} {{ field.label_tag }}
-		- if field.field.help_text
+			{{ field }} {{ field.label_tag }}
+		- if field.help_text
 			%span.help-block
 				{{ field.field.help_text|safe }}
 - else
@@ -16,9 +16,9 @@
 			<p>{{ field.contents }}</p>
 		- else
 			- if input_type == "select"
-				{{ field.field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
+				{{ field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
 			- else
-				{{ field.field|render_field:"class:form-control" }}
+				{{ field|render_field:"class:form-control" }}
 
 			- if field.errors
 				%span.text-danger

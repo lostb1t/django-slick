@@ -9,6 +9,10 @@ from django.utils.text import capfirst
 from django.core.urlresolvers import reverse
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
+from django.template.loader import render_to_string
+
+from classytags.arguments import Argument, MultiKeywordArgument, KeywordArgument
+from classytags.core import Tag, Options
 
 from ..settings import ADMIN_TITLE
 
@@ -106,7 +110,56 @@ def slick_input_type(field):
     return u'default'
 
 
-#@register.filter(name='slick_field')
+class BasePanel(Tag):
+
+    def render_tag(self, context, title, classes, **kwargs):
+
+        nodelist = kwargs.pop('nodelist')
+        body = nodelist.render(context)
+
+        panel_context = self.get_panel_context(kwargs)
+        panel_context['body'] = body
+        panel_context['title'] = title.get('title', None)
+        panel_context['classes'] = classes.get('classes', None)
+
+        t = template.loader.get_template(self.template)
+        c = template.Context(kwargs)
+
+        return t.render(c)
+
+    def get_panel_context(self, arguments):
+        return arguments
+
+
+class SlickPanel(BasePanel):
+    name = 'panel'
+    template = 'slick/panel.html'
+    options = Options(
+        KeywordArgument('title', required=False),
+        KeywordArgument('classes', required=False, resolve=True),
+        MultiKeywordArgument('kw', required=False),
+        blocks=[('endslickpanel', 'nodelist')],
+    )
+
+    def get_panel_context(self, arguments):
+        #kw = arguments.pop('kw')
+        #arguments['state'] = kw.get('state', 'default')
+        return arguments
+
+register.tag('slickpanel', SlickPanel)
+
+
+@register.inclusion_tag('slick/form.html')
+def slick_form(form, **kwargs):
+    """
+    Render a form
+
+    """
+    context = kwargs.copy()
+    context['form'] = form
+    return context
+
+
 @register.inclusion_tag('slick/field.html')
 def slick_field(field, **kwargs):
     """
@@ -116,8 +169,18 @@ def slick_field(field, **kwargs):
         - show_label
     """
     context = kwargs.copy()
-    context['field'] = field
-    context['input_type'] = slick_input_type(field.field)
+    
+    #print type(field.field)
+    
+    if isinstance(field, AdminField):
+        real_field = field.field
+    else:
+        real_field = field
+
+    context['field'] = real_field
+    #print type(real_field)
+
+    context['input_type'] = slick_input_type(real_field)
     return context
 
 
@@ -133,6 +196,11 @@ def render_field(field, attributes):
         else:
             t, v = d.split(':')
             attrs[t] = v
+
+    if isinstance(field, AdminField):
+        return field.field.as_widget(attrs=attrs)
+    else:
+        return field.as_widget(attrs=attrs)
  
     return field.as_widget(attrs=attrs)
 
@@ -149,7 +217,7 @@ def render_label(field, attributes):
         else:
             t, v = d.split(':')
             attrs[t] = v
-    #print dir(field)
+
     return field.field.label_tag(attrs=attrs)
 
 

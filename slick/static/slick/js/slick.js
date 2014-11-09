@@ -54,9 +54,9 @@ var django = {
 	}
 
 	slick.handleDraggablePanel = function() {
-	    var e = ".row.sortable > [class*=col]";
+	    var e = ".portlets > [class*=col]";
 	    var t = ".panel-heading";
-	    var n = ".row.sortable > [class*=col]";
+	    var n = ".portlets > [class*=col]";
 	    
 	    $(e).sortable({
 	        handle: t,
@@ -77,8 +77,8 @@ var django = {
 		function getID(selector) {
 			$p = $(selector).parent();
 
-			if($("[data-sortable-id]", $p)) {
-				return "sortable-" + $p.attr('data-sortable-id');
+			if($("[data-portlets-id]", $p)) {
+				return "portlet-" + $p.attr('data-portlets-id');
 			}
 			return false;
 		}

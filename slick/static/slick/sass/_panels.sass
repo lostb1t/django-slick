@@ -1,5 +1,5 @@
 .panel
-	border: none
+	
 	-webkit-box-shadow: none
 	box-shadow: none
 
@@ -13,13 +13,12 @@
 	.btn-collapse
 		display: none
 
-	.panel-body
 
 	.panel-heading
 		min-height: 40px
 
 		.panel-title
-			color: #fff
+			
 			font-size: 12px
 		.navbar
 			margin-bottom: 0
@@ -40,6 +39,15 @@
 	.panel-footer
 		.pagination
 			margin: 0
+
+	.list-group-item
+		border: 0
+
+.panel-default
+	border-top-width: 3px
+	.panel-heading
+		border-bottom: 0
+
 
 .panel-inverse
 	@include panel-variant($panel-inverse-border, $panel-inverse-text, $panel-inverse-heading-bg, $panel-inverse-border)
