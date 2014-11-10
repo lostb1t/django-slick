@@ -41,7 +41,7 @@
 
 					.panel-body.padding-15
 						.row
-							.col-lg-12
+							.col-md-12
 								- block search
 									- search_form cl
 						.row-fluid.slk-filter.margin-top-10
@@ -50,10 +50,14 @@
 								
 									{% admin_list_filter cl spec %}
 								{% endfor %}
-						
-						- result_list cl
-					
-					{% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+						.row
+							.col-md-12
+								- result_list cl
+						- if action_form
+							.row
+								.col-md-12
+									- admin_actions
+
 					.panel-footer
 						- block pagination
 							- pagination cl

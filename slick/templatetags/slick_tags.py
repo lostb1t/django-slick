@@ -8,13 +8,15 @@ from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.core.urlresolvers import reverse
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
-from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
+from django.contrib.admin import widgets
 from django.template.loader import render_to_string
 
 from classytags.arguments import Argument, MultiKeywordArgument, KeywordArgument
 from classytags.core import Tag, Options
+from classytags.helpers import InclusionTag
 
 from ..settings import ADMIN_TITLE
+from ..widgets import FilteredSelectMultiple
 
 site = admin.site
 
@@ -105,14 +107,19 @@ def slick_input_type(field):
         return u'multicheckbox'
     if isinstance(widget, RadioSelect):
         return u'radioset'
-    if isinstance(widget, RelatedFieldWidgetWrapper):
+
+    '''
+    if isinstance(widget, widgets.RelatedFieldWidgetWrapper):
+        #print widget.widget
         return u'select'
+    '''
+    
     return u'default'
 
 
 class BasePanel(Tag):
 
-    def render_tag(self, context, title, classes, **kwargs):
+    def render_tag(self, context, title, classes, collapse, **kwargs):
 
         nodelist = kwargs.pop('nodelist')
         body = nodelist.render(context)
@@ -121,6 +128,8 @@ class BasePanel(Tag):
         panel_context['body'] = body
         panel_context['title'] = title.get('title', None)
         panel_context['classes'] = classes.get('classes', None)
+        #print panel_context['collapse']
+        panel_context['collapse'] = collapse.get('collapse', None)
 
         t = template.loader.get_template(self.template)
         c = template.Context(kwargs)
@@ -136,14 +145,13 @@ class SlickPanel(BasePanel):
     template = 'slick/panel.html'
     options = Options(
         KeywordArgument('title', required=False),
-        KeywordArgument('classes', required=False, resolve=True),
+        KeywordArgument('classes', required=False),
+        KeywordArgument('collapse', required=False),
         MultiKeywordArgument('kw', required=False),
         blocks=[('endslickpanel', 'nodelist')],
     )
 
     def get_panel_context(self, arguments):
-        #kw = arguments.pop('kw')
-        #arguments['state'] = kw.get('state', 'default')
         return arguments
 
 register.tag('slickpanel', SlickPanel)
@@ -170,22 +178,24 @@ def slick_field(field, **kwargs):
     """
     context = kwargs.copy()
     
-    #print type(field.field)
-    
     if isinstance(field, AdminField):
         real_field = field.field
     else:
         real_field = field
 
-    context['field'] = real_field
-    #print type(real_field)
+    if isinstance(real_field.field.widget, widgets.RelatedFieldWidgetWrapper):
+        # Replace FilteredSelectMultiple for related fields with our own
+        if isinstance(real_field.field.widget.widget, widgets.FilteredSelectMultiple):
+            widget = real_field.field.widget.widget
+            real_field.field.widget.widget = FilteredSelectMultiple(verbose_name=widget.verbose_name, is_stacked=widget.is_stacked)
 
+    context['field'] = real_field
     context['input_type'] = slick_input_type(real_field)
     return context
 
 
-@register.filter(name='render_field')
-def render_field(field, attributes):
+@register.filter(name='addattrs')
+def addattrs(field, attributes):
     ''' render field. Allow adding attributes '''
     attrs = {}
     definition = attributes.split(',')
@@ -201,9 +211,22 @@ def render_field(field, attributes):
         return field.field.as_widget(attrs=attrs)
     else:
         return field.as_widget(attrs=attrs)
- 
-    return field.as_widget(attrs=attrs)
 
+"""
+class RenderField(Tag):
+     options = Options(
+        MultiKeywordArgument('classes', required=False),
+        MultiKeywordArgument('kwargs', required=False),
+    )
+
+    def render_tag(self, context, name, **kwargs):
+        if isinstance(field, AdminField):
+            return field.field.as_widget(attrs=attrs)
+        else:
+            return field.as_widget(attrs=attrs)
+
+register.tag('render_field', RenderField)
+"""
 
 @register.filter(name='render_label')
 def render_label(field, attributes):

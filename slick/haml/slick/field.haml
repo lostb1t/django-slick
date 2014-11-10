@@ -15,10 +15,11 @@
 		- if field.is_readonly
 			<p>{{ field.contents }}</p>
 		- else
+
 			- if input_type == "select"
-				{{ field|render_field:"class:form-control,class:selectpicker,data-live-search:true" }}
+				{{ field|addattrs:"class:form-control,class:selectpicker,data-live-search:true" }}
 			- else
-				{{ field|render_field:"class:form-control" }}
+				{{ field|addattrs:"class:form-control" }}
 
 			- if field.errors
 				%span.text-danger

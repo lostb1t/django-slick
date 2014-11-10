@@ -1,9 +1,9 @@
 - load i18n slick_tags
 
-.panel.panel-default.collapse{:id => "panel-{{ name|lower }}", :class => "{{classes}}"}
+.panel.panel-default.collapse{:id => "panel-{{ name|lower }}", :class => "{{classes}}", :data-collapse-group => "test"}
 	.panel-heading
 		.btn-group.btn-group-xxs
-		    - if collapse
+			- if collapse
 				%a.btn{:data-click => "panel-collapse"}
 					%span.fa-stack
 						%i.fa.fa-circle.fa-stack-2x

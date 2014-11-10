@@ -1,11 +1,16 @@
 - extends "admin/base.html"
-- load admin_modify i18n admin_urls
+- load admin_modify i18n admin_urls admin_static
 
 
 - block javascripts
 	{{ block.super }}
+	<script src='{% url 'admin:jsi18n' %}'></script>
 	{{ media }}
 
+
+- block stylesheets
+	{{ block.super }}
+	
 
 - block breadcrumbs
 	- if not is_popup

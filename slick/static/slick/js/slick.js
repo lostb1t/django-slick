@@ -130,7 +130,9 @@ var django = {
 	};
 
 	slick.initSearchbar = function() {
-
+		$(".search").change(function() {
+			location.href = $(this).val();
+		});
 	};
     
     slick.initSidebar = function() {
