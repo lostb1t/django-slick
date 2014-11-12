@@ -1,0 +1,24 @@
+- load i18n slick_tags
+
+
+.nav{:ng-controller => "sidebar"}
+  - if user.is_authenticated and user.is_staff
+    %li.nav-account
+      - firstof user.get_short_name user.get_username
+  %li.nav-header
+    {% trans "Navigation" %}
+
+  %li{:ng-repeat => "app in apps"}        
+    %a{:data-toggle => "collapse", :data-target => "{% verbatim %}#sub-menu-{{ app.app_label }}{% endverbatim %}", :aria-expanded => "false", :data-parent => "#sidebar"}
+      %b.caret.pull-right
+      %i{:class => "fa fa-app-default fa-app-{{app.name|lower}}"}
+      %span
+        - verbatim
+          {{app.name}}
+        - endverbatim
+    %ul.sub-menu.collapse{:id => "{% verbatim %}sub-menu-{{ app.app_label }}{% endverbatim %}", :class => "{% if active %}in{% endif %}"}
+        %li{:ng-repeat => "model in app.models"}
+          %a{:ui-sref => "{% verbatim %}ListView({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\" }){% endverbatim %}"}
+            - verbatim
+              {{model.name}}
+            - endverbatim

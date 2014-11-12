@@ -1,0 +1,7 @@
+%ul
+	%li{:ng-hide => "objects.length"}
+		Nothing to see
+	%li{:ng-repeat => "object in objects"}
+		%a{:ui-sref => "UpdateView({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\", pk: \"{{object.pk}}\" })"}
+			{{object}}
+		
