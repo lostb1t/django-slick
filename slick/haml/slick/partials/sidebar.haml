@@ -18,7 +18,7 @@
         - endverbatim
     %ul.sub-menu.collapse{:id => "{% verbatim %}sub-menu-{{ app.app_label }}{% endverbatim %}", :class => "{% if active %}in{% endif %}"}
         %li{:ng-repeat => "model in app.models"}
-          %a{:ui-sref => "{% verbatim %}ListView({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\" }){% endverbatim %}"}
+          %a{:ui-sref => "{% verbatim %}objects.list({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\" }){% endverbatim %}"}
             - verbatim
               {{model.name}}
             - endverbatim

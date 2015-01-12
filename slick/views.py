@@ -4,7 +4,7 @@ from django.http import HttpResponse
 #from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
-from django.views.generic.base import ContextMixin, View
+from django.views.generic.base import ContextMixin
 from django.views.generic import TemplateView
 from django.utils.encoding import force_text
 from django.contrib.contenttypes.models import ContentType
@@ -14,8 +14,10 @@ from django.views.generic import View
 from django.contrib.admin.util import (lookup_field, display_for_field, display_for_value, label_for_field)
 
 from djangular.views.crud import NgCRUDView
+from django_remote_forms.forms import RemoteForm
 
-from . import encoders
+from . import encoders, register, SlickModelViewSet
+from .registery import NotRegistered
 
 
 class JSONResponseMixin(object):
@@ -151,11 +153,12 @@ class AppAPIView(View, JSONResponseMixin):
         data = self.app_list(**kwargs)
         return data
 
-
-class ModelAdminAPIView(NgCRUDView):
+"""
+class ModelSlickAPIView(NgCRUDView):
     ''' View for an registered ModelAdmin '''
 
     def dispatch(self, request, *args, **kwargs):
+        request.GET = request.GET.dict().copy()
         if 'app_label' in kwargs and 'model' in kwargs:
             try:
                 model_class = ContentType.objects.get(app_label=kwargs['app_label'], model=kwargs['model']).model_class()
@@ -169,16 +172,45 @@ class ModelAdminAPIView(NgCRUDView):
         if "pk" in kwargs:
             request.GET['pk'] = kwargs['pk']
 
-        return super(ModelAdminAPIView, self).dispatch(request, *args, **kwargs)
+        return super(ModelSlickAPIView, self).dispatch(request, *args, **kwargs)
+"""
 
-    '''
-    def get_context_data(self, **kwargs):
-        context = super(Model, self).get_context_data(**kwargs)
-        #print kwargs
-        model_class = ContentType.objects.get(app_label=kwargs['app_label'], model=kwargs['model']).model_class()
-        model_admin = site._registry[model_class]
+#from .slick import Slick
 
-        context = model_admin.queryset(self.request)
-        return context
-    '''
+def model_router(request, app_label=None, model=None, pk=None):
+    if app_label and model:
+        try:
+            model_class = ContentType.objects.get(app_label=app_label, model=model).model_class()
+        except:
+            raise
+
+        if register.is_registered(model_class):
+            slick_instance = register.get_from_register(model_class)
+        else:
+            raise NotRegistered('The model %s is not registered' % model_class.__name__)
+
+        return SlickModelViewSet.as_view()
+            #print slick_instance
+
+'''
+class ModelSlickAPIView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if 'app_label' in kwargs and 'model' in kwargs:
+            try:
+                model_class = ContentType.objects.get(app_label=kwargs['app_label'], model=kwargs['model']).model_class()
+            except:
+                raise
+
+            if register.is_registered(model_class):
+                slick_instance = register.get_from_register(model_class)
+            else:
+                raise NotRegistered('The model %s is not registered' % model_class.__name__)
+
+            return SlickModelViewSet.as_view()
+            #print slick_instance
+'''
+
+
+
+
 

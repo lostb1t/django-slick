@@ -1,7 +1,15 @@
-%ul
-	%li{:ng-hide => "objects.length"}
-		Nothing to see
-	%li{:ng-repeat => "object in objects"}
-		%a{:ui-sref => "UpdateView({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\", pk: \"{{object.pk}}\" })"}
-			{{object}}
-		
+#objects-listing
+	.panel.panel-default
+		.panel-body.padding-0
+			%table.table.table-striped
+				%tbody			
+					%tr{:ng-hide => "objects.length"}
+						%td
+							Nothing to see
+					%tr{:ng-repeat => "object in objects", :ui-sref-active => "active"}
+							%td{:ng-repeat => "value in object"}
+								%a{:ui-sref => "objects.list.detail({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\", pk: \"{{object.pk}}\" })"}
+									{{value}}
+
+
+<div id="objects-listing-detail" ui-view="detail"></div>
