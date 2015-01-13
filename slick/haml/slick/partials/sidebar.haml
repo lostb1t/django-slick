@@ -11,7 +11,7 @@
   %li{:ng-repeat => "app in apps"}        
     %a{:data-toggle => "collapse", :data-target => "{% verbatim %}#sub-menu-{{ app.app_label }}{% endverbatim %}", :aria-expanded => "false", :data-parent => "#sidebar"}
       %b.caret.pull-right
-      %i{:class => "fa fa-app-default fa-app-{{app.name|lower}}"}
+      %i{:class => "fa fa-app-default fa-app-{% verbatim %}{{app.name|lowercase}}{% endverbatim %}"}
       %span
         - verbatim
           {{app.name}}

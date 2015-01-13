@@ -7,44 +7,25 @@
     <meta content='width=device-width, initial-scale=1.0' name='viewport' />
     <meta content='' name='description' />
     <meta content='' name='author' />
-    <title>Admin</title>
+    <title>Slick</title>
     {% block stylesheets %}
       <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' />
       <link href='{% static 'slick/plugins/bootstrap-select-1.6.3/css/bootstrap-select.min.css' %}' rel='stylesheet' />
       <link href='{% static 'slick/css/slick.css' %}' rel='stylesheet' />
     {% endblock %}
     {% block javascripts %}
-<script type='text/javascript'>
-// <![CDATA[
-        var slick = {};
-// ]]>
-</script>
-      <script src='{% static 'slick/plugins/jquery-1.9.1/jquery-1.9.1.min.js' %}'></script>
-      <script src='{% static 'slick/plugins/html5sortable/html.sortable.min.js' %}'></script>
-      <script src='{% static 'slick/plugins/jquery-cookie-1.4.1/jquery.cookie.js' %}'></script>
-      <script src='{% static 'slick/plugins/bootstrap-3.3.0/js/bootstrap.min.js' %}'></script>
+      <script src='http://code.jquery.com/jquery-2.1.1.min.js'></script>
       <script src='{% static 'slick/plugins/jquery-slimscroll-1.3.0/jquery.slimscroll.min.js' %}'></script>
-      <script src='{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}'></script>
-      <script src='{% static 'slick/plugins/bootstrap3-dialog/js/bootstrap-dialog.js' %}'></script>
-      <script src='{% static 'slick/js/slick.js' %}'></script>
+      <script src='{% static 'slick/plugins/bootstrap-3.3.0/js/bootstrap.min.js' %}'></script>
       <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js'></script>
       <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-resource.min.js'></script>
+      <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-sanitize.min.js'></script>
       <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js'></script>
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-formly/1.0.0/formly.min.js'></script>
-      <script src='{% static 'slick/js/angular-formly-templates-bootstrap.min.js' %}'></script>
-<script type='text/javascript'>
-// <![CDATA[
-        STATIC_URL = "{{ STATIC_URL|escapejs  }}";
-
-        (function($) {
-          $(document).ready(function() {
-            //slick.init();
-            //slick.initSidebar();
-          });
-        })(slk.jQuery);
-
-// ]]>
-</script>
+      <script src='{% static 'slick/js/tv4.min.js' %}'></script>
+      <script src='{% static 'slick/js/ObjectPath.js' %}'></script>
+      <script src='{% static 'slick/js/schema-form.min.js' %}'></script>
+      <script src='{% static 'slick/js/angular-slimscroll.js' %}'></script>
+      <script src='{% static 'slick/js/bootstrap-decorator.min.js' %}'></script>
     {% endblock %}
     {% block extrahead %}
 
@@ -56,7 +37,6 @@
 
       {% if not is_popup %}
         <div id='header' class='header navbar navbar-default navbar-fixed-top'>
-          <div class='container-fluid'>
             <div class='navbar-header'>
               {% block branding %}
                 <a class='navbar-brand'>
@@ -76,20 +56,19 @@
             <div class='nav navbar-nav navbar-right'>
               <ul class='list-inline'>
                 {% block object-tools-items %}
-
                 {% endblock %}
-
               </ul>
             </div>
            {% endblock %}
-          </div>
         </div>
-        <div id='sidebar' class='sidebar'>
-          <div data-scrollbar='true' data-height='100%'>
-            {% include "slick/partials/sidebar.html" %}
+        <aside class='aside'>
+          <div id='sidebar' class='sidebar'>
+            <div class='scroll-body' slimscroll='{railVisible: true, height: auto}'>
+              {% include "slick/partials/sidebar.html" %}
 
+            </div>
           </div>
-        </div>
+        </aside>
       {% endif %}
       <div id='content' class='content'>
 

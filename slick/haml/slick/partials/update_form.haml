@@ -1,3 +1,4 @@
-{{test}}
 
-<formly-form model="formData" fields="formFields"></formly-form>
+<div ng-controller="FormController">
+    <form name="ModelForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(ModelForm)"></form>
+</div>

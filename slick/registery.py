@@ -4,7 +4,7 @@ from django.utils import six
 
 from rest_framework import routers
 
-from . import SlickModelViewSet
+from .viewsets import SlickModelViewSet, SlickUserViewSet
 
 
 class AlreadyRegistered(Exception):
@@ -53,9 +53,6 @@ class SlickRegister(object):
         router = routers.SimpleRouter()
 
         for model, slick_class in six.iteritems(self._registry):
-            #print type(slick_class)
-            #slick_class.model = model
-            #print slick_class.model
             router.register(r'api/%s/%s' % (model._meta.app_label, model.__name__.lower()), slick_class, model.__name__.lower())
         
         return router.urls
@@ -64,5 +61,6 @@ class SlickRegister(object):
 register = SlickRegister()
 
 
-register.register(User)
+register.register(User, SlickUserViewSet)
 register.register(Group)
+

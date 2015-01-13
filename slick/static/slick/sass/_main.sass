@@ -15,14 +15,20 @@ a
 	font-weight: normal
 
 
+#page-container
+	position: relative
+	width: 100%
+	height: 100%
+
 
 //  CONTENT
 
 
 .content
-	margin-left: 210px
-	padding: 20px
-	margin-top: 60px
+	margin-left: $aside-width
+	padding: 0px
+	margin-top: 55px
+	position: relative
 
 	@media (max-width: $screen-sm-min)
 		margin-left: 0
@@ -83,7 +89,9 @@ a
 
 #header
 	.navbar-header
+		width: 180px
 		height: 55px
+		background-color: $brand-primary
 
 		@media (max-width: $screen-sm-min)
 			border-bottom: 1px solid #eee
@@ -115,12 +123,13 @@ a
 		ul
 			margin-bottom: 0
 
-.navbar-brand
-	width: 210px
-	height: 55px
-	line-height: 24px
-	padding: 15px 20px
-	font-size: 18px
+.navbar-default 
+	.navbar-brand
+		color: white
+		height: 55px
+		line-height: 24px
+		padding: 15px 20px
+		font-size: 18px
 
 .navbar-toggle 
 	margin-top: 10px
@@ -130,13 +139,6 @@ a
 
 // LAYOUT
 
-#objects-listing
-	width: 50%
-	float: left
-
-#objects-listing-detail
-	width: 50%
-	float: left
 
 
 //	MISC

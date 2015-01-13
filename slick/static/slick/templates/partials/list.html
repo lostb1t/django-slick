@@ -1,25 +1,26 @@
-<div id='objects-listing'>
-	<div class='panel panel-default'>
-		<div class='panel-body padding-0'>
-			<table class='table table-striped'>
-				<tbody>
-					<tr ng-hide='objects.length'>
-						<td>
-							Nothing to see
-						</td>
-					</tr>
-					<tr ng-repeat='object in objects' ui-sref-active='active'>
-							<td ng-repeat='value in object'>
-								<a ui-sref='objects.list.detail({ app_label: "{{app.app_label}}", model: "{{model.name}}", pk: "{{object.pk}}" })'>
-									{{value}}
+	<div class='listing'>
+		<div id='sidelisting' class='col-lg-6 padding-0 col1'>
+
+					<table class='table table-striped'>
+						<tbody>
+							<tr ng-hide='objects.length'>
+								<td>
+									Nothing to see
+								</td>
+							</tr>
+							<tr ng-repeat='object in objects' ui-sref-active='active'>
+									<td ng-repeat='value in object'>
+										<a ui-sref='objects.list.detail({ app_label: "{{app.app_label}}", model: "{{model.name}}", pk: "{{object.pk}}" })'>
+											{{value}}
 
 
-								</a>
-							</td>
-					</tr>
-				</tbody>
-			</table>
+										</a>
+									</td>
+							</tr>
+						</tbody>
+					</table>
+		</div>
+		<div class='col-lg-6 col2'>
+			<div id="objects-listing-detail" ui-view="detail"></div>
 		</div>
 	</div>
-</div>
-<div id="objects-listing-detail" ui-view="detail"></div>

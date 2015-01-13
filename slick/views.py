@@ -1,6 +1,8 @@
 import json
 
 from django.http import HttpResponse
+from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 #from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
@@ -15,32 +17,11 @@ from django.contrib.admin.util import (lookup_field, display_for_field, display_
 
 from djangular.views.crud import NgCRUDView
 from django_remote_forms.forms import RemoteForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from . import encoders, register, SlickModelViewSet
 from .registery import NotRegistered
-
-
-class JSONResponseMixin(object):
-    encoder_class = encoders.JSONEncoder
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
-
-    def get_context_data(self, **kwargs):
-        return {}
-
-    def render_to_response(self, context):
-        "Returns a JSON response containing 'context' as payload"
-        return self.get_json_response(self.convert_context_to_json(context))
-
-    def get_json_response(self, content):
-        return HttpResponse(content, content_type="application/json")
-
-    def convert_context_to_json(self, context):
-        "Convert the context dictionary into a JSON object"
-        #json_context = context.copy()
-        return json.dumps(context, cls=self.encoder_class)
 
 
 class Home(TemplateView):
@@ -119,8 +100,10 @@ class App(View, JSONResponseMixin):
         return context
 """
 
-class AppAPIView(View, JSONResponseMixin):
-    def app_list(self, **kwargs):
+# TODO add caching, permissions
+class SlickAppView(APIView):
+    def get(self, request, *args, **kwargs):
+        #print kwargs
         applications = ['auth', 'budofit']
 
         if 'app_label' in kwargs:
@@ -146,36 +129,19 @@ class AppAPIView(View, JSONResponseMixin):
             app_list.append(app_dict)
 
         if 'app_label' in kwargs:
-            return app_list[0]
-        return app_list
+            return Response(app_list[0])
 
-    def get_context_data(self, **kwargs):
-        data = self.app_list(**kwargs)
-        return data
+        return Response(app_list)
 
-"""
-class ModelSlickAPIView(NgCRUDView):
-    ''' View for an registered ModelAdmin '''
 
-    def dispatch(self, request, *args, **kwargs):
-        request.GET = request.GET.dict().copy()
-        if 'app_label' in kwargs and 'model' in kwargs:
-            try:
-                model_class = ContentType.objects.get(app_label=kwargs['app_label'], model=kwargs['model']).model_class()
-            except:
-                return self.error_json_response("Not a valid/registered ModelAdmin")
+class SlickSettingsView(APIView):
+    def get(self, request, *args, **kwargs):
+        settings_dict = {
+            "STATIC_URL": staticfiles_storage.url('')
+        }
 
-            self.model = model_class
-            #self.fields = model_admin.list_display
-            #self.ordering = model_admin.get_ordering(request)
+        return Response(settings_dict)
 
-        if "pk" in kwargs:
-            request.GET['pk'] = kwargs['pk']
-
-        return super(ModelSlickAPIView, self).dispatch(request, *args, **kwargs)
-"""
-
-#from .slick import Slick
 
 def model_router(request, app_label=None, model=None, pk=None):
     if app_label and model:
@@ -190,27 +156,6 @@ def model_router(request, app_label=None, model=None, pk=None):
             raise NotRegistered('The model %s is not registered' % model_class.__name__)
 
         return SlickModelViewSet.as_view()
-            #print slick_instance
-
-'''
-class ModelSlickAPIView(View):
-    def dispatch(self, request, *args, **kwargs):
-        if 'app_label' in kwargs and 'model' in kwargs:
-            try:
-                model_class = ContentType.objects.get(app_label=kwargs['app_label'], model=kwargs['model']).model_class()
-            except:
-                raise
-
-            if register.is_registered(model_class):
-                slick_instance = register.get_from_register(model_class)
-            else:
-                raise NotRegistered('The model %s is not registered' % model_class.__name__)
-
-            return SlickModelViewSet.as_view()
-            #print slick_instance
-'''
-
-
 
 
 
