@@ -1,21 +1,64 @@
 
 
-var slick = angular.module('slick', ['ngResource', 'ngSanitize', 'ui.router', 'schemaForm', 'ui.slimscroll'])
-    .run(function($http, $rootScope, $state, $stateParams, Api) {
+var slick = angular.module('slick', ['ngResource', 'ngSanitize', 'ui.router', 'schemaForm', 'ui.bootstrap', 'cgBusy'])
+    .run(function($rootScope, $state, $stateParams, $timeout, Api, SETTINGS) {
+
+        //console.log("sup");
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        //SETTINGS['TEMPLATE_BASE_PATH'] = '/static/slick/templates/';
 
-        var response = Api.Settings.get();
-        response.$promise.then(function(data) {
+        //console.log('APP_CONFIG is: ' + JSON.stringify(SETTINGS))
+        /*
+        // Set some configuration
+        Api.Settings.get().$promise.then(function(data) {
             $rootScope.settings = data;
+            $rootScope.settings['TEMPLATE_BASE_PATH'] = '/static/slick/templates/';
+            Api.Apps.query().$promise.then(
+                // success
+                function(response) {
+                    $rootScope.apps = data;
+                    console.log(response);
+                    //$timeout.cancel(timeoutPromise);
+                }
+            );
         });
+        // Bit of a hack. We have to wait for everything to resolve.
+        $timeout(function () {
+            ready = true;
+            console.log("ready");
+            // Or add some error handling stuff here
+        }, 2000);
+        console.log("haha");
+        */
+
+    }).value('cgBusyDefaults', {
+          message:'Loading Stuff',
+          backdrop: true,
+          delay: 300,
     });
+
+
+
+slick.directive('pageheading', function ($rootScope, SETTINGS) {
+    return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: SETTINGS['STATIC_URL'] + "slick/templates/directives/pageheading.html",
+        controller: ['$scope', '$filter', function ($scope, $filter) {
+
+        }]
+    }
+});
 
 // TODO limit methods for endpoints
 slick.factory("Api", function($resource) {
     return {
         Settings: $resource("/admin/api/settings/"),
-        Models:  $resource("/admin/api/:app_label/:model/:pk/", { app_label: '@_app_label', model: '@_model', pk: '@_pk'}, { 
+        Models:  $resource("/admin/api/:app_label/:model/:pk/", { app_label: '@app_label', model: '@model', pk: '@pk'}, { 
+            update: {
+              method: 'PUT'
+            },
             schema: {
                 method: 'GET',
                 isArray: false,
@@ -32,13 +75,13 @@ slick.factory("Api", function($resource) {
 
 });
 
-slick.config(function ($stateProvider, $urlRouterProvider, $resourceProvider) {
+slick.config(function ($stateProvider, $urlRouterProvider, $resourceProvider, SETTINGS) {
     $urlRouterProvider.otherwise('/');
 
     // TODO base on django setting
     $resourceProvider.defaults.stripTrailingSlashes = false;
 
-    var template_base_path = '/static/slick/templates/';
+    var template_base_path = SETTINGS['STATIC_URL'] + 'slick/templates/';
 
     $stateProvider
       .state('objects', {
@@ -49,32 +92,45 @@ slick.config(function ($stateProvider, $urlRouterProvider, $resourceProvider) {
       .state('objects.list', {
         url: '',
         parent: 'objects',
+        templateUrl: template_base_path + 'partials/list.html',
+        controller: 'ListViewCtrl',
+        /*
         views: {
             '': {
                 templateUrl: template_base_path + 'partials/list.html',
                 controller: 'ListViewCtrl'
             }  
         }
+        */
       })
       .state('objects.list.detail', {
         parent: 'objects.list',
         url: '/:pk',
-        /*
+        templateUrl: template_base_path + 'partials/detail.html',
+        controller: 'UpdateViewCtrl',
         resolve: {
-            formData: function($stateParams, Api) {
-                return Api.Models.get({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk});
+            model: function($stateParams, Api) {
+                var resource = Api.Models.get({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk});
+                return resource.$promise;
             },
-            formFields: function($stateParams, ModelResource) {
-                return Api.Models.schema({ app_label: $stateParams.app_label, model: $stateParams.model});
+            schema: function($stateParams, Api) {
+                var resource = Api.Models.schema({ app_label: $stateParams.app_label, model: $stateParams.model });
+                return resource.$promise;
+            },
+            form: function($stateParams, Api) {
+                var resource = Api.Models.form({ app_label: $stateParams.app_label, model: $stateParams.model });
+                return resource.$promise;
             },
         },
-        */
+        /*
         views: {
             'detail@objects.list': {
-                templateUrl: template_base_path + 'partials/update_form.html',
-                controller: 'UpdateViewCtrl'
+                templateUrl: template_base_path + 'partials/detail.html',
+                controller: 'UpdateViewCtrl',
+
             }
         }
+        */
       });
 
  });
@@ -90,6 +146,8 @@ slick.controller('ListViewCtrl', function($scope, $rootScope, $state, $statePara
         angular.forEach(data['models'], function(model, key) {
             if (angular.equals(model.name, $stateParams.model)) {
                 $scope.model = model;
+                //console.log(model);
+                $scope.page_title = model.plural;
             }
         });
     })
@@ -105,81 +163,51 @@ slick.controller('ListViewCtrl', function($scope, $rootScope, $state, $statePara
 });
 
 
-slick.controller('FormController', function($scope, $stateParams, $sce, Api) {
-    console.log("FormController called");
+slick.controller('UpdateViewCtrl', function($scope, $stateParams, $sce, Api, model, schema, form) {
+    console.log("UpdateViewCtrl called");
+    //console.log(schema);
     
-    /*
-    var response = Api.Models.update_form({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk});
-    response.$promise.then(function(data) {
-        $scope.form = $sce.trustAsHtml(data.form);
+    $scope.model = model;
+    $scope.schema = schema;
+    form.push({
+      type: "submit",
+      title: "Save",
     });
-    */
-
-    var response = Api.Models.get({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk});
-    response.$promise.then(function(data) {
-        $scope.model = data;
-    });
-
-    var response = Api.Models.schema({ app_label: $stateParams.app_label, model: $stateParams.model});
-    response.$promise.then(function(data) {
-       $scope.schema = data;
-    });
-
-    var response = Api.Models.form({ app_label: $stateParams.app_label, model: $stateParams.model});
-    response.$promise.then(function(data) {
-        var form = data;
-        form.push({
-          type: "submit",
-          title: "Save"
-        });
-        $scope.form = form;
-    });
+    $scope.form = form;
 
     $scope.onSubmit = function(form) {
         // First we broadcast an event so all fields validate themselves
         $scope.$broadcast('schemaFormValidate');
-        console.log("called");
+        $scope.alerts = [];
+
         // Then we check if the form is valid
         if (form.$valid) {
             //console.log($scope.model);
-            $scope.model.$save();
-            //Api.Models.$save({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk}, $scope.model);
-          // ... do whatever you need to do with your data.
+            $scope.myPromise = $scope.model.$update({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk}).then(
+                //success
+                function(response) {
+                    $scope.alerts.push({ type: 'success', msg: "Great success!"});
+                },
+                //error
+                function(response) {
+                    
+                    // Loop through error messages
+                    angular.forEach(response.data, function(value, key) {
+                        angular.forEach(value, function(message, message_key) {
+                            $scope.alerts.push({ type: 'danger', msg: key + ": " + message});
+                        });
+                    });
+                    return;
+                }
+            );
         }
     };
 
 });
 
-
-slick.controller('UpdateViewCtrl', function($scope, $stateParams, $sce, Api) {
-    console.log("UpdateViewCtrl called");
-    //$scope.formData = formData;
-    //$scope.formFields = formFields;
-
-
-
-    /*
-    var response = ModelResource.schema({ app_label: $stateParams.app_label, model: $stateParams.model});
-    response.$promise.then(function(data) {
-        //$scope.formData = {};
-        $scope.formFields = data;
-    });
-
-    
-    var response = ModelResource.get({ app_label: $stateParams.app_label, model: $stateParams.model, pk: $stateParams.pk});
-    response.$promise.then(function(data) {
-        $scope.formData = data;
-    });
-    */
-
-});
-
-slick.controller("sidebar", function ($scope, $stateParams, Api) {
+slick.controller("SidebarController", function ($scope, $rootScope, $stateParams, Api, APPS) {
     console.log("sidebar called");
 
-    Api.Apps.query(function(data) {
-        //console.log(data);
-        $scope.apps = data;
-    })
+    $scope.apps = APPS;
 });
 

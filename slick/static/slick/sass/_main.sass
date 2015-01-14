@@ -7,28 +7,27 @@ body
 
 h1, h2, h3, h4, h5, h6
 	font-weight: 500
-	color: #242a30
-
 
 a
 	color: $btn-success-bg
 	font-weight: normal
 
 
-#page-container
+#wrapper
 	position: relative
 	width: 100%
 	height: 100%
+
+
+#page-wrapper
+	margin-left: $aside-width
 
 
 //  CONTENT
 
 
 .content
-	margin-left: $aside-width
-	padding: 0px
-	margin-top: 55px
-	position: relative
+	padding: 20px 20px
 
 	@media (max-width: $screen-sm-min)
 		margin-left: 0
@@ -44,14 +43,10 @@ a
 		border: none
 		line-height: 28px
 
-
-.page-header
-	font-size: 24px
-	margin: 0 0 20px
-	padding: 0
-	border: none
-	line-height: 28px
-
+.page-heading 
+	border-top: 4px solid #e7eaec
+	padding: 0px 10px 20px 10px
+	background-color: white
 
 #breadcrumbs
 	>li
@@ -59,7 +54,6 @@ a
 		color: $gray-light
 		a
 			color: $gray-dark
-
 
 #breadcrumbs>li+li:before
 	padding: 0 5px

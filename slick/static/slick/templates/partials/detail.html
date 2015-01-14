@@ -1,0 +1,10 @@
+<div pageheading></div>
+	<div class='row'>
+		<div class='col-lg-12'>
+			<div cg-busy="myPromise">
+
+				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+				<form name="ModelForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(ModelForm)"></form>
+
+		</div>
+	</div>

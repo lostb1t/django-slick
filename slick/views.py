@@ -125,7 +125,7 @@ class SlickAppView(APIView):
             app = get_app(application)
             app_dict['app_label'] = application
             app_dict['name'] = application.title()
-            app_dict['models'] = [{'name': model.__name__.lower(),} for model in get_models(app)]
+            app_dict['models'] = [{'name': model.__name__.lower(), "plural": model._meta.verbose_name_plural} for model in get_models(app)]
             app_list.append(app_dict)
 
         if 'app_label' in kwargs:

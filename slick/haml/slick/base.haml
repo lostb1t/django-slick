@@ -10,7 +10,7 @@
     %title Slick
     - block stylesheets
       %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", rel: "stylesheet"}
-      %link{href: "{% static 'slick/plugins/bootstrap-select-1.6.3/css/bootstrap-select.min.css' %}", rel: "stylesheet"}
+      %link{href: "//cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css", rel: "stylesheet"}
       %link{href: "{% static 'slick/css/slick.css' %}", rel: "stylesheet"}
     - block javascripts
       %script{src: "http://code.jquery.com/jquery-2.1.1.min.js"}
@@ -19,7 +19,9 @@
       %script{src: "//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"}
       %script{src: "//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-resource.min.js"}
       %script{src: "//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-sanitize.min.js"}
-      %script{src: "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"}
+      %script{src: "//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"}
+      %script{src: "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"}
+      %script{src: "//cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.js"}
       %script{src: "{% static 'slick/js/tv4.min.js' %}"}
       %script{src: "{% static 'slick/js/ObjectPath.js' %}"}
       %script{src: "{% static 'slick/js/schema-form.min.js' %}"}
@@ -29,49 +31,41 @@
     - block extrahead
 
   %body{:ng-app => "slick"}
-    #page-container
+    #wrapper
       
-      - if not is_popup
-        #header.header.navbar.navbar-default.navbar-fixed-top
-            .navbar-header
-              - block branding
-                %a.navbar-brand{}
-                  - block admin_title
-                    - slick_admin_title
+      %aside.aside
+        #sidebar.sidebar
+          <div ng-controller='SidebarController'>
+            <div ng-include="'/static/slick/templates/partials/sidebar.html'"></div>
+          </div>
+      #page-wrapper
+        - if not is_popup
+          #header.header.navbar.navbar-default.navbar-fixed-top
+              .navbar-header
+                - block branding
+                  %a.navbar-brand{}
+                    - block admin_title
+                      - slick_admin_title
 
-              %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
-                %span.icon-bar
-                %span.icon-bar
-                %span.icon-bar
-             
-           - block object-tools
-            .nav.navbar-nav.navbar-right
-              %ul.list-inline
-                - block object-tools-items
-        %aside.aside
-          #sidebar.sidebar
-            %div.scroll-body{:slimscroll => "{railVisible: true, height: auto}"}
-              - include "slick/partials/sidebar.html"
-      
-      #content.content
+                %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
+                  %span.icon-bar
+                  %span.icon-bar
+                  %span.icon-bar
+               
+             - block object-tools
+              .nav.navbar-nav.navbar-right
+                %ul.list-inline
+                  - block object-tools-items
+        
+        #content.content
 
-        - block messages
-          - if messages
-            
-              - for message in messages
-                .note{:class => "{% if message.tags %}note-{{ message.tags }}{% endif %}"}
-                  {{ message }}
+          - block messages
+            - if messages
+              
+                - for message in messages
+                  .note{:class => "{% if message.tags %}note-{{ message.tags }}{% endif %}"}
+                    {{ message }}
 
-        %ul#breadcrumbs.list-inline.pull-right
-          - block breadcrumbs
-          - if title
-            %li
-              {{ title|capfirst }}
-
-        %h1.content-title
-          - block content_title
-            - if title
-              {{ title }}
 
         <div ui-view></div>
         - block content
