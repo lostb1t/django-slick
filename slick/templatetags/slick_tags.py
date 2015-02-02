@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 
 from django import template
 from django.contrib.admin.helpers import AdminField
@@ -26,6 +27,23 @@ register = template.Library()
 @register.simple_tag()
 def slick_admin_title():
     return ADMIN_TITLE
+
+
+@register.tag
+def capture(parser, token):
+    nodelist = parser.parse(('endcapture',))
+    parser.delete_first_token()
+    varname = token.contents.split()[1]
+    return CaptureNode(nodelist, varname)
+ 
+class CaptureNode(template.Node):
+    def __init__(self, nodelist, varname):
+        self.nodelist = nodelist
+        self.varname = varname
+ 
+    def render(self, context):
+        context[self.varname] = self.nodelist.render(context)
+        return ''
 
 
 @register.assignment_tag(takes_context=True)
@@ -119,43 +137,109 @@ def slick_input_type(field):
 
 class BasePanel(Tag):
 
-    def render_tag(self, context, title, classes, collapse, **kwargs):
+    def render_tag(self, context, title, classes, tabs, **kwargs):
 
         nodelist = kwargs.pop('nodelist')
         body = nodelist.render(context)
+        tabs_dict = None
+        if tabs:
+            tabs = tabs.split(",")
+            tabs_dict = OrderedDict()
+            for tab in tabs:
+                k, v = tab.split(":")
+                tabs_dict[k] = v
 
-        panel_context = self.get_panel_context(kwargs)
-        panel_context['body'] = body
-        panel_context['title'] = title.get('title', None)
-        panel_context['classes'] = classes.get('classes', None)
-        #print panel_context['collapse']
-        panel_context['collapse'] = collapse.get('collapse', None)
+        context['panel_body'] = body
+        context['panel_title'] = title
+        context['panel_classes'] = classes
+        context['panel_tabs'] = tabs_dict or None
 
         t = template.loader.get_template(self.template)
-        c = template.Context(kwargs)
+        c = template.Context(context)
 
         return t.render(c)
 
-    def get_panel_context(self, arguments):
-        return arguments
-
-
 class SlickPanel(BasePanel):
     name = 'panel'
-    template = 'slick/panel.html'
+    template = 'slick/partials/panel.haml'
     options = Options(
-        KeywordArgument('title', required=False),
-        KeywordArgument('classes', required=False),
-        KeywordArgument('collapse', required=False),
-        MultiKeywordArgument('kw', required=False),
+        Argument('title', default=None, required=False),
+        Argument('classes', default=None, required=False),
+        Argument('tabs', default=None, required=False),
         blocks=[('endslickpanel', 'nodelist')],
     )
 
-    def get_panel_context(self, arguments):
-        return arguments
-
 register.tag('slickpanel', SlickPanel)
 
+class SlickTabs(Tag):
+    name = 'panel'
+    template = 'slick/partials/tab.haml'
+    options = Options(
+        MultiKeywordArgument('tabs', splitter=':', resolve=True),
+    )
+    def render_tag(self, context, tabs, **kwargs):
+        #print tabs
+        tabs_dict = OrderedDict()
+        #print tabs
+        if tabs:
+            for k, v in tabs.items():
+                #print {a.split("=")[0]: a.split("=")[1] for a in k.split(";")}
+                attributes = {a.split("=")[0]: a.split("=")[1] for a in k.split(";")}
+                attributes['id'] = attributes['title'].lower()
+                attributes['content'] = v
+                tabs_dict[attributes['id']] = attributes
+                #for 
+                #print attributes['title']
+                #tabs_dict
+        #print tabs_dict
+        '''
+              tabs_dict[]
+            tabs = tabs.split(",")
+            tabs_dict = OrderedDict()
+            for tab in tabs:
+                k, v = tab.split(":")
+                tabs_dict[k] = v
+        '''
+
+        context['tabs'] = tabs_dict
+        t = template.loader.get_template(self.template)
+        c = template.Context(context)
+
+        return t.render(c)
+
+register.tag('slicktabs', SlickTabs)
+
+
+class BlockTest(Tag):
+    options = Options(
+        Argument('name', resolve=False),
+        blocks=[('sup', 'nodelist'), ('endblocktest', 'nodelist')],
+    )
+
+    def render_tag(self, context, **kwargs):
+        pass
+
+register.tag('blocktest', BlockTest)
+
+'''
+@register.inclusion_tag('slick/partials/tab.haml')
+def SlickTab(*args, **kwargs):
+    """
+    Render a form
+    """
+    context = kwargs.copy()
+    if args:
+        tabs = OrderedDict()
+        i = 0
+        for tab in args:
+            #print tab
+            tabs[i] = tab
+            i += 1
+            #k, v = tab.split("
+    #print tabs
+    context['tabs'] = tabs
+    return context
+'''
 
 @register.inclusion_tag('slick/form.html')
 def slick_form(form, **kwargs):
@@ -243,4 +327,29 @@ def render_label(field, attributes):
 
     return field.field.label_tag(attrs=attrs)
 
+# TODO Put in template suggestion for application.model
+@register.simple_tag
+def slick_render_action(action, *args, **kwargs): 
+    #print action
+    if action.action_object_object_id is not None and action.action_object is None:
+        return ''
 
+    if action.action_object is None:
+        if action.verb.lower() in ['closed', 'reopened']:
+            class_name = 'status'
+        else:
+            class_name = "action"
+    else:
+        class_name = action.action_object.__class__.__name__.lower()
+    return render_to_string("slick/actions/%s.html" % class_name, {'action': action})
+
+
+@register.assignment_tag
+def slick_get_class_name(obj):
+    return obj.__class__.__name__.lower()
+
+'''
+@register.filter
+def slick_action_verbose_time(datetime):
+    return datetime.timesince
+'''

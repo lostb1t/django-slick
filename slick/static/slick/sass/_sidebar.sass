@@ -1,7 +1,7 @@
 
-.aside
+.sidebar
 	position: fixed
-	margin-top: 55px
+	margin-top: 50px
 	width: $aside-width
 	left: 0
 	top: 0
@@ -13,36 +13,36 @@
 		position: absolute
 		z-index: 9999
 
-	.sidebar
+	.sidebar-nav
 		height: 100%
 		overflow-y: auto
-		background: #2d353c
-		
-
+		background-color: #2f343b
 
 		&.toggled
 			left: 0
 
 		.nav
-			>li>a
-				padding: 8px 20px
-				line-height: 20px
-				color: #a8acb1
+			>li
+				border-bottom: 0px
+				>a
+					font-weight: 300
+					padding: 12px 20px
+					color: #acaeb1
+					-webkit-transition: background-color .5s,color .5s,box-shadow .5s
+					transition: background-color .5s,color .5s,box-shadow .5s
 
-				&:focus,
-				&:hover
-					background: #232a2f
-					color: #a8acb1
+					&:focus,
+					&:hover,
+					&:active,
+					&.active,
+						background: #232a2f
+						color: white
+					
+					//.caret
+					//	margin-top: 9px
+					i
+						padding: 0 10px 0 0
 
-				.caret
-					margin-top: 9px
-				i
-					float: left
-					margin-right: 15px
-					width: 14px
-					text-align: center
-					line-height: 22px
-					font-size: 12px
 
 
 			>li.nav-account
@@ -51,7 +51,6 @@
 				height: 57px
 				font-size: 18px
 				font-weight: 500
-
 				a
 					padding: 0
 

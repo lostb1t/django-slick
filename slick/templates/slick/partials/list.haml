@@ -1,0 +1,14 @@
+
+%div{:ui-view => ""}
+	%div{:pageheading => ""}
+	.row
+		.listing.col-lg-12
+			%table.table.table-striped
+				%tbody			
+					%tr{:ng-hide => "objects.length"}
+						%td
+							Nothing to see
+					%tr{:ng-repeat => "object in objects", :ui-sref-active => "active"}
+							%td{:ng-repeat => "value in object"}
+								%a{:ui-sref => "objects.list.detail({ app_label: \"{{app.app_label}}\", model: \"{{model.name}}\", pk: \"{{object.pk}}\" })"}
+									{{value}}

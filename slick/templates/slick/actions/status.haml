@@ -1,0 +1,16 @@
+- load humanize
+
+.row.action
+	.col-sm-12
+		.padding-5
+			- if action.verb == 'reopened'
+				%span.fa-stack.fa-lg
+					%i.fa.fa-circle.fa-stack-2x{:style => "color:#DCDDDD"}
+					%i.fa.fa-unlock-alt.fa-stack-1x
+			- else
+				%span.fa-stack.fa-lg
+					%i.fa.fa-circle.fa-stack-2x{:style => "color:#DCDDDD"}
+					%i.fa.fa-times-circle.fa-stack-1x
+			{{ action.actor }} {{ action.verb }} {{ action.target|truncatechars:20 }} {{ action.timestamp|naturaltime }}
+
+

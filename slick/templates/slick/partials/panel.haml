@@ -1,0 +1,27 @@
+{% load i18n slick_tags %}
+
+.panel.collapse{:class => "{{panel_classes}}", "data-collapse-group" => "test", :id => "panel-{{ name|lower }}"}
+  .panel-heading
+    .btn-group.btn-group-xxs
+      {% if collapse %}
+      %a.btn{"data-click" => "panel-collapse"}
+        %span.fa-stack
+          %i.fa.fa-circle.fa-stack-2x
+          %i.fa.fa-minus.fa-stack-1x.fa-inverse
+      {% endif %}
+      {% if panel_tabs %}
+        %ul.nav.nav-tabs
+          {% for key, value in panel_tabs.items %}
+            %li{:class => "{% if forloop.first %}active{% endif %}"}
+              %a{:data-toggle => "tab", :href => "{{value}}"}= key
+          {% endfor %}
+      {% endif %}
+    {% if panel_title %}
+    %h3.panel-title
+    
+        {% trans panel_title %}
+    {% endif %}
+  {% if panel_body %}
+  .panel-body
+    {{ panel_body }}
+  {% endif %}

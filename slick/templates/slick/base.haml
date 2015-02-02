@@ -1,0 +1,70 @@
+- load static activelink
+!!!
+%html{lang: "{{LANGUAGE_CODE}}"}
+  %head
+
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}
+    %meta{content: "", name: "description"}
+    %meta{content: "", name: "author"}
+    %title Slick
+    - block stylesheets
+      %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", rel: "stylesheet"}
+      %link{href: "{% static 'slick/css/slick.css' %}", rel: "stylesheet"}
+    
+    - block extrahead
+
+  %body{:class => "{% block body-class %}{% endblock %}"}
+    #wrapper
+      - block aside
+        %aside.aside
+          #sidebar.sidebar
+            .sidebar-nav
+              - block sidebar-content
+                - include "slick/partials/sidebar.haml"
+      #page-wrapper
+        - if not is_popup
+          #header.header.navbar.navbar-default.navbar-fixed-top
+              .navbar-header
+                - block branding
+                  %a.navbar-brand{}
+                    - block brand-logo
+                      %img.brand-logo{:src => "{% static 'slick/img/brand.png' %}"}
+                    .brand-title
+                      - block brand-title
+                        Django Slick
+
+                %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
+                  %span.icon-bar
+                  %span.icon-bar
+                  %span.icon-bar
+               
+             - block object-tools
+              .nav.navbar-nav.navbar-right
+                %ul.list-inline
+                  - block object-tools-items
+        
+        .page-heading
+          .row
+            - block page-heading
+              .col-sm-12
+                %h2
+                  - block page-heading-title
+
+
+        #content.content
+
+          - block messages
+            - if messages
+              
+                - for message in messages
+                  .note{:class => "{% if message.tags %}note-{{ message.tags }}{% endif %}"}
+                    {{ message }}
+
+
+          - block content
+    - block javascripts
+      %script{src: "//code.jquery.com/jquery-1.11.2.min.js"}
+      %script{src: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"}
+      %script{src: "{% static 'slick/js/slick.js' %}"}
+    - block footer

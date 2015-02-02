@@ -3,6 +3,7 @@
 body
 	background: #ebeef0
 	color: #707478
+	-webkit-font-smoothing: antialiased!important
 
 
 h1, h2, h3, h4, h5, h6
@@ -21,6 +22,13 @@ a
 
 #page-wrapper
 	margin-left: $aside-width
+	padding: 0px
+	margin-top: 50px
+
+body
+	&.no-sidebar
+		#page-wrapper
+			margin-left: 0
 
 
 //  CONTENT
@@ -45,8 +53,11 @@ a
 
 .page-heading 
 	border-top: 4px solid #e7eaec
-	padding: 0px 10px 20px 10px
-	background-color: white
+	//background-color: white
+	padding: 0px 20px 0px 20px
+	h2
+		font-size: 2.2em
+		font-weight: 100
 
 #breadcrumbs
 	>li
@@ -71,9 +82,10 @@ a
 
 .navbar.navbar-default
 	background: #fff
+	margin: 0
 
 .navbar
-	min-height: 55px
+	min-height: 50px
 	border: none
 	-webkit-border-radius: 0
 	-moz-border-radius: 0
@@ -81,49 +93,60 @@ a
 	-webkit-box-shadow: 0 0 2px rgba(0,0,0,.3)
 	box-shadow: 0 0 2px rgba(0,0,0,.3)
 
-#header
-	.navbar-header
-		width: 180px
-		height: 55px
-		background-color: $brand-primary
+
+.navbar-header
+	width: $aside-width
+	height: 50px
+	background-color: #2f343b
+
+	@media (max-width: $screen-sm-min)
+		border-bottom: 1px solid #eee
+
+	h1
+		font-size: 18px
+		line-height: 50px
+		margin-top: 0
+		margin-bottom: 0
+		float: left
+
+		@media (max-width: $screen-md-min)
+			font-size: 12px
 
 		@media (max-width: $screen-sm-min)
-			border-bottom: 1px solid #eee
+			line-height: 37px
+			padding: 10px
 
-		h1
-			font-size: 18px
-			line-height: 55px
-			margin-top: 0
+		ul	
 			margin-bottom: 0
-			float: left
 
-			@media (max-width: $screen-md-min)
-				font-size: 12px
+.navbar-right
+	margin: 12px 0px
 
-			@media (max-width: $screen-sm-min)
-				line-height: 37px
-				padding: 10px
+	@media (max-width: $screen-sm-min)
+		float: right
+		margin: 6px
 
-			ul	
-				margin-bottom: 0
-
-	.navbar-right
-		margin: 12px 0px
-
-		@media (max-width: $screen-sm-min)
-			float: right
-			margin: 6px
-
-		ul
-			margin-bottom: 0
+	ul
+		margin-bottom: 0
 
 .navbar-default 
 	.navbar-brand
 		color: white
-		height: 55px
+		height: 50px
 		line-height: 24px
-		padding: 15px 20px
+		padding: 12px 20px
 		font-size: 18px
+		font-weight: 500
+		.brand-logo
+			height: 25px
+			width: 25px
+			float: left
+			margin-right: 15px
+		.brand-title
+			float: left
+
+		&:hover
+			color: white
 
 .navbar-toggle 
 	margin-top: 10px
@@ -207,12 +230,22 @@ a
 
 .padding-0
 	padding: 0em
-.padding-05
+.padding-5
 	padding: 0.5em
 .padding-10
 	padding: 1.0em
 .padding-15
 	padding: 1.5em
+
+
+.padding-left-5
+	padding-left: 0.5em
+
+.padding-left-10
+	padding-left: 1.0em
+
+.padding-left-15
+	padding-left: 1.5em
 
 .no-border-radius
 	border-top-right-radius: 0
@@ -232,34 +265,28 @@ a
 	content: '\f02d'
 
 
-//	PANEL
-
-/*
-	.panel
-		border: none
-		-webkit-box-shadow: none
-		box-shadow: none
-		-webkit-border-radius: 3px
-		-moz-border-radius: 3px
-		border-radius: 3px
-
-
-	.panel-body
-		padding: 15px
-
-
-	.panel-heading
-		background: #242a30
-		color: #fff
-
-
-	.panel-title
-		line-height: 20px
-		font-size: 12px
-
-
 
 // UI ELEMENTS
 
 
+.issue-title-link
+	display: inline-block
+	margin-bottom: 4px
+	padding-right: 3px
+	font-size: 15px
+	font-weight: bold
+	color: $gray 
+	line-height: 1.2
+	word-break: break-word
 
+.timeline-container
+	&:before
+		display: block
+		content: ""
+		position: absolute
+		top: 0
+		bottom: 0
+		left: 36px
+		width: 2px
+		background-color: #DCDDDD
+		z-index: -1
