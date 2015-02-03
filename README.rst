@@ -2,7 +2,7 @@
 Django Slick
 ===========
 
-**Slick responsive theme for the Django admin interface**.
+**Slick responsive theme for the Django**.
 
 
 License

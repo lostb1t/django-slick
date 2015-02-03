@@ -16,17 +16,11 @@ from classytags.arguments import Argument, MultiKeywordArgument, KeywordArgument
 from classytags.core import Tag, Options
 from classytags.helpers import InclusionTag
 
-from ..settings import ADMIN_TITLE
 from ..widgets import FilteredSelectMultiple
 
 site = admin.site
 
 register = template.Library()
-
-
-@register.simple_tag()
-def slick_admin_title():
-    return ADMIN_TITLE
 
 
 @register.tag
