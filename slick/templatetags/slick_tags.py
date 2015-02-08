@@ -25,6 +25,13 @@ site = admin.site
 register = template.Library()
 
 
+@register.filter
+def pkslug(obj):
+    if "slug" in obj.__dict__:
+        return obj.slug
+    return obj.pk
+
+
 @register.tag
 def capture(parser, token):
     nodelist = parser.parse(('endcapture',))
