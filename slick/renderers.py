@@ -1,6 +1,6 @@
 from django.forms import (
     TextInput, DateInput, FileInput, CheckboxInput,
-    ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple
+    ClearableFileInput, Select, RadioSelect, CheckboxSelectMultiple, SelectMultiple
 )
 from django.forms.extras import SelectDateWidget
 from django.utils.html import conditional_escape, strip_tags
@@ -17,7 +17,9 @@ class FieldRenderer(BaseFieldRenderer):
     def __init__(self, field, *args, **kwargs):
         super(FieldRenderer, self).__init__(field, *args, **kwargs)
         
-        if isinstance(self.widget, CheckboxSelectMultiple):
+        #print self.widget
+        #if isinstance(self.widget, CheckboxSelectMultiple):
+        if isinstance(self.widget, (CheckboxSelectMultiple, SelectMultiple)):   # hehehe
             widget = self.widget
             self.widget = PrettyCheckboxSelectMultiple()
             self.widget.attrs = self.initial_attrs
@@ -28,7 +30,6 @@ class FieldRenderer(BaseFieldRenderer):
         if isinstance(self.widget, RadioSelect):
             html = self.list_to_class(html, 'radio')
         elif isinstance(self.widget, CheckboxSelectMultiple):
-            #print html
             html = self.list_to_class(html, 'checkbox')
         elif isinstance(self.widget, SelectDateWidget):
             html = self.fix_date_select_input(html)

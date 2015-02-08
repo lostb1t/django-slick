@@ -1,11 +1,11 @@
 - load activelink
 
-  .nav
+  %ul.nav
     %li.nav-header
       Navigation
     %li{:class => "{% ifactive 'dashboard' %}active{% endifactive %}"}
       %a
         %b.caret.pull-right
         %i{:class => "fa fa-app-default"}
-        %span
+        %span.nav-title
           test

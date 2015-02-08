@@ -1,45 +1,37 @@
-from django.db.models.signals import post_save
 
-# http://stackoverflow.com/questions/110803/dirty-fields-in-django/11011415#11011415
-class DirtyFieldsMixin(object):
-    def __init__(self, *args, **kwargs):
-        super(DirtyFieldsMixin, self).__init__(*args, **kwargs)
-        #post_save.connect(self._reset_state, sender=self.__class__, dispatch_uid='%s._reset_state' % self.__class__.__name__)
-        self._reset_state()
 
-    def _as_dict(self):
+class ModelDict(object):
+    @staticmethod
+    def to_dict(instance):
         fields =  dict([
-            (f.attname, getattr(self, f.attname))
-            for f in self._meta.local_fields
+            (f.attname, getattr(instance, f.attname))
+            for f in instance._meta.local_fields
         ])
         m2m_fields = dict([
             (f.attname, set([
-                obj.id for obj in getattr(self, f.attname).all()
+                obj.id for obj in getattr(instance, f.attname).all()
             ]))
-            for f in self._meta.local_many_to_many
+            for f in instance._meta.local_many_to_many
         ])
-        return fields, m2m_fields
+        fields.update(m2m_fields)
+        return fields
 
-    def _reset_state(self, *args, **kwargs):
-        self._original_state, self._original_m2m_state = self._as_dict()
-
-    def get_dirty_fields(self):
-        new_state, new_m2m_state = self._as_dict()
+    @staticmethod
+    def compare_dicts(dict1, dict2):
+        #old_state, old_m2m_state = self._as_dict(self.instance1)
+        #new_state, new_m2m_state = self._as_dict(self.instance2)
         changed_fields = dict([
             (key, value)
-            for key, value in self._original_state.iteritems()
-            if value != new_state[key]
+            for key, value in dict1.iteritems()
+            if value != dict2[key]
         ])
+        '''
         changed_m2m_fields = dict([
             (key, value)
-            for key, value in self._original_m2m_state.iteritems()
+            for key, value in old_m2m_state.iteritems()
             if sorted(value) != sorted(new_m2m_state[key])
         ])
+        '''
         #print changed_fields
-        changed_fields.update(changed_m2m_fields)
+        #changed_fields.update(changed_m2m_fields)
         return changed_fields
-
-
-
-def send_notifications():
-    pass

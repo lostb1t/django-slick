@@ -3,6 +3,8 @@ from collections import OrderedDict
 
 from django import template
 from django.contrib.admin.helpers import AdminField
+from django.core import serializers
+from django.forms.models import model_to_dict
 from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
@@ -341,6 +343,15 @@ def slick_render_action(action, *args, **kwargs):
 @register.assignment_tag
 def slick_get_class_name(obj):
     return obj.__class__.__name__.lower()
+
+
+@register.inclusion_tag('slick/partials/object_as_table.html', takes_context=True)
+def slick_render_as_table(context, obj, **kwargs):
+    #object_dict = model_to_dict(object)
+    object_dict = serializers.serialize( "python", [obj,])
+
+    #print object_dict[0]
+    return {'object_dict': object_dict[0]}
 
 '''
 @register.filter

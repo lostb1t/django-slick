@@ -6,4 +6,4 @@
 			%span.fa-stack.fa-lg
 				%i.fa.fa-circle.fa-stack-2x{:style => "color:#DCDDDD"}
 				%i.fa.fa-tag.fa-stack-1x
-			{{ action.actor }} {{ action.verb }} {{ action.action_object.as_label }} label to {{ action.target|truncatechars:20 }} {{ action.timestamp|naturaltime }}
+			{{ action.actor }} {{ action.verb }} {{ action.action_object.as_label|safe }} label to {{ action.target|truncatechars:20 }} {{ action.timestamp|naturaltime }}

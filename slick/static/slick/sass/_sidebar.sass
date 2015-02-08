@@ -1,108 +1,178 @@
 
+
 .sidebar
-	position: fixed
-	margin-top: 50px
-	width: $aside-width
-	left: 0
-	top: 0
-	bottom: 0
-	z-index: 10
+    position: fixed
+    margin-top: 50px
+    width: $aside-width
+    left: 0
+    top: 0
+    bottom: 0
+    z-index: 10
 
-	@media (max-width: $screen-sm-min)
-		left: -210px
-		position: absolute
-		z-index: 9999
+    @media (max-width: $screen-sm-min)
+        left: -210px
+        position: absolute
+        z-index: 9999
 
-	.sidebar-nav
-		height: 100%
-		overflow-y: auto
-		background-color: #2f343b
+    .sidebar-nav
+        height: 100%
+        overflow-y: auto
+        background-color: #2f343b
 
-		&.toggled
-			left: 0
+        &.toggled
+            left: 0
 
-		.nav
-			>li
-				border-bottom: 0px
-				>a
-					font-weight: 300
-					padding: 12px 20px
-					color: #acaeb1
-					-webkit-transition: background-color .5s,color .5s,box-shadow .5s
-					transition: background-color .5s,color .5s,box-shadow .5s
+        .nav
+            ul
+                list-style: none
+                padding: 0
+            li
+                border-bottom: 0px
 
-					&:focus,
-					&:hover,
-					&:active,
-					&.active,
-						background: #232a2f
-						color: white
-					
-					//.caret
-					//	margin-top: 9px
-					i
-						padding: 0 10px 0 0
+                &.active
+                    //font-weight: 600
+                    //background: #232a2f
+                    > a
+                        font-weight: 600
+                        color: white
 
 
+                a
+                    display: block
+                    font-weight: 300
+                    padding: 12px 20px
+                    color: #acaeb1
+                    -webkit-transition: background-color .5s,color .5s,box-shadow .5s
+                    transition: background-color .5s,color .5s,box-shadow .5s
 
-			>li.nav-account
-				padding: 17px 20px
-				background-color: #1a2229
-				height: 57px
-				font-size: 18px
-				font-weight: 500
-				a
-					padding: 0
+                    &:focus,
+                    &:hover,
+                    &:active,
+                    &.active,
+                        //font-weight: 600
+                        background: #232a2f
+                        color: white
+                        text-decoration: none
 
-			li.nav-header
-				margin: 0
-				padding: 10px 20px
-				line-height: 20px
-				font-size: 11px
-				color: #6d7983
+                    i
+                        padding: 0 10px 0 0
 
-			>li.active>a
-				background-color: $btn-success-bg
-				color: $btn-success-color
+                li
+                    a
+                        padding: 12px 20px 12px 45px
 
-		.sub-menu
-			list-style-type: none
-			padding: 10px 0 10px 30px
-			margin: 0
-			background: #1a2229
-			position: relative
+            .menu-popover
+                left: 40px !important
+                background-color: #232a2f
+                border: 0
+                border-radius: 0 0 0 0
+                box-shadow: none
+                //display: block !important
+                width: $aside-width - $aside-width-sm
+                padding: 0
+                
+                .popover-title
+                    background-color: #2f343b
+                    border: 0
+                    border-radius: 0
+                    font-weight: 300
+                    padding: 12px 20px
+                    color: #acaeb1
+                
+                .popover-content
+                    padding: 0
 
-			>li>a
-				padding: 5px 20px
-				display: block
-				font-weight: 300
-				color: #889097
-				text-decoration: none
-				position: relative
+                li
+                    &.active
+                        a
+                            background-color: transparent
+                    a
+                        background-color: transparent
 
-				&:before
-					content: '\f10c'
-					font-family: FontAwesome
-					position: absolute
-					left: 0
-					font-size: 7px
-					color: #889097
-					top: 50%
-					margin-top: -4px
-					margin-left: -6px
+            >li.nav-account
+                padding: 17px 20px
+                background-color: #1a2229
+                height: 57px
+                font-size: 18px
+                font-weight: 500
+                a
+                    padding: 0
 
-			>li.active>a
-				color: #fff
+            li.nav-header
+                margin: 0
+                padding: 10px 20px
+                line-height: 20px
+                font-size: 11px
+                color: #6d7983
+  
 
-				&:before
-					color: $btn-success-bg
 
-			&:before
-				content: ''
-				position: absolute
-				left: 26px
-				top: 0
-				bottom: 0
-				width: 2px
-				background: #10181F
+
+        // .sub-menu
+        //  list-style-type: none
+        //  padding: 10px 0 10px 30px
+        //  margin: 0
+        //  background: #1a2229
+        //  position: relative
+
+        //  >li>a
+        //      padding: 5px 20px
+        //      display: block
+        //      font-weight: 300
+        //      color: #889097
+        //      text-decoration: none
+        //      position: relative
+
+        //      &:before
+        //          content: '\f10c'
+        //          font-family: FontAwesome
+        //          position: absolute
+        //          left: 0
+        //          font-size: 7px
+        //          color: #889097
+        //          top: 50%
+        //          margin-top: -4px
+        //          margin-left: -6px
+
+        //  >li.active>a
+        //      color: #fff
+
+        //      &:before
+        //          color: $btn-success-bg
+
+        //  &:before
+        //      content: ''
+        //      position: absolute
+        //      left: 26px
+        //      top: 0
+        //      bottom: 0
+        //      width: 2px
+        //      background: #10181F
+
+// Side bar sm overrides
+
+.sidebar-sm
+    .sidebar
+        width: $aside-width-sm
+        .nav-title
+            display: none
+        .nav-header
+            display: none
+        .arrow
+            display: none
+
+        .submenu
+            display: none
+
+        .nav
+            > li
+                &.active
+                    //font-weight: 600
+                    background: $brand-primary
+                    a
+                        &:focus,
+                        &:hover,
+                        &:active,
+                        &.active,
+                            background-color: transparent
 
