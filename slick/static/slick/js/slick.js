@@ -40,24 +40,32 @@
 
   		})
   		.on("hidden.bs.popover", function() {
-  			//console.log('hidden');
-            //e.removeClass("hover");
-        }).on("mouseenter", function() {	// TODO add check if popover is already in progress to be hidden, otherwise ...twitching..
+            $(e).removeClass("hover");
+        }).on("mouseenter", function() {
 		    var _this = this;
-		    popover_elements.not(this).popover('hide');
-		    $(_this).popover("show");
-		    $(".popover").on("mouseleave", function () {
-		        $(_this).popover('hide');
-		    }, 500);
+		    
+		    popover_elements.not(e).popover('hide');
+		    $(e).not(".hover").popover("show");
+		    $(e).addClass("hover");
+
+		    var id = e.data('bs.popover').tip().attr("id");
+		    var popover = e.data('bs.popover').tip();
+
+		    $("#" + id).mouseleave(function () {
+		    	setTimeout(function() { 
+			    	if ($(".popover").length) {
+			    		e.popover('hide');
+			    	}
+		    	}, 300);
+		    });
+
+			
         }).on("mouseleave", function () {
 		    var _this = this;
-		    setTimeout(function () {
-		        if (!$(".popover:hover").length) {
-		            $(_this).popover("hide");
-		        }
-		    }, 500);
+
     	});
 	})
+
 
 	popover_menu_toggle = function () {
 		if ($("body").hasClass('sidebar-sm')) {
