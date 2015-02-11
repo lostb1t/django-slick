@@ -2,17 +2,33 @@ from django.utils.datastructures import SortedDict
 
 from viewsets import ViewSet as VS, ViewSetListView, ViewSetCreateView, ViewSetDetailView, ViewSetUpdateView, ViewSetDeleteView
 from viewsets.mixins.manager import ViewSetMixin as VSM
+from viewsets.mixins.actions import ActionMixin
+from viewsets.mixins.filter import FilterMixin
+from viewsets.mixins.search import SearchMixin
+from viewsets.views import ActionListView
+
 from guardian.shortcuts import get_objects_for_user
+
+from .mixins import ListMixin
+
+
+class AdminListView(FilterMixin, SearchMixin, ListMixin, ActionListView):
+    paginate_by = 25
 
 
 class ViewSetMixin(VSM):
     list_detail_link = "slick:detail"
 
 
+class ViewSetListView(ViewSetMixin, AdminListView):
+    paginate_by = 25
+
+
 class ViewSet(VS):
     default_app = "slick"
     mixin = ViewSetMixin
     queryset = None
+
 
     '''
     def get_urls(self):

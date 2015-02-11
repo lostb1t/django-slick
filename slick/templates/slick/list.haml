@@ -52,7 +52,7 @@
                                                 %em.fa.fa-check
                                             {{ item.display }}
                         
-
+               
                 {% if search %}
                     <form class="pull-right">
                         <div class="form-group">
@@ -64,90 +64,9 @@
                         </div>
                     </form>
                 {% endif %}
-
-
-                {% if actions %}
-                    <form action="." method="post">
-                {% endif %}
-
-
-            {% block list_detail %}
-                {% if headers and rows %}
-                    {% if object_list %}
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                {% if actions %}
-                                    <th>
-                                        <input type="checkbox" class="all">
-                                    </th>
-                                {% endif %}
-                                {% for header in headers %}
-                                    <th>{{ header|safe }}</th>
-                                {% endfor %}
-                            </tr>
-                            </thead>
-                            {% for object, row in rows %}
-                                <tr>
-                                    {% if actions %}
-                                        <td><input type="checkbox"
-                                                   value="{{ object.pk }}"
-                                                   name="{{ selected_name }}"></td>
-                                    {% endif %}
-                                    {% for cell in row %}
-                                        <td>{{ cell }}</td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    {% else %}
-                        {% if request.META.QUERY_STRING %}
-                            <div>
-                              <em>
-                                {% blocktrans with vnp=opts.verbose_name_plural %}No {{ vnp }} match your search{% endblocktrans %}
-                              </em>
-                            </div>
-                        {% else %}
-                            {% block list_empty %}
-                                <div>
-                                  <em>
-                                    {% blocktrans with vnp=opts.verbose_name_plural %}Sorry, there are no {{ vnp }} at this time.{% endblocktrans %}
-                                  </em>
-                                </div>
-                            {% endblock list_empty %}
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                    {% if object_list %}
-                        <table class="table table-striped table-bordered">
-                            {% block list_detail_header %}{% endblock list_detail_header %}
-                            {% for object in object_list %}
-                                {% block list_detail_item %}
-                                    <tr>
-                                        <td>
-                                            <a href="{% url 'slick:detail' object|pkslug %}">{{ object }}</a>
-                                        </td>
-                                    </tr>
-                                {% endblock %}
-                            {% endfor %}
-                        </table>
-                    {% else %}
-                        {% if request.META.QUERY_STRING %}
-                            <div>
-                              <em>
-                                {% blocktrans with vnp=opts.verbose_name_plural %}No {{ vnp }} match your search{% endblocktrans %}
-                              </em>
-                            </div>
-                        {% else %}
-                                <div>
-                                  <em>
-                                    {% blocktrans with vnp=opts.verbose_name_plural %}Sorry, there are no {{ vnp }} at this time.{% endblocktrans %}
-                                  </em>
-                                </div>
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-            {% endblock list_detail %}
+                .clearfix
+                - include "slick/partials/list.html"
+            
 
             .panel-footer
                 {% if object_list and actions %}
