@@ -35,3 +35,18 @@ class ModelDict(object):
         #print changed_fields
         #changed_fields.update(changed_m2m_fields)
         return changed_fields
+
+
+def action_object_name(action):
+    if action.action_object_object_id is not None and action.action_object is None:
+        return None
+
+    if action.action_object is None:
+        if action.verb.lower() in ['closed', 'reopened']:
+            class_name = 'status'
+        else:
+            class_name = "action"
+    else:
+        class_name = action.action_object.__class__.__name__.lower()
+
+    return class_name
