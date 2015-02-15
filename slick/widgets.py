@@ -82,3 +82,24 @@ class PrettyCheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):
     renderer = CheckboxFieldRenderer
     _empty_value = []
 
+
+from django.forms import Textarea
+from django.template import Context
+from django.template.loader import get_template
+
+
+class MarkdownWidget(Textarea):
+    def __init__(self, attrs=None):
+        default_attrs = {
+            'data-provide': 'markdown',
+            'data-iconlibrary': "fa",
+            'data-savable': "false",
+        }
+        if attrs:
+            default_attrs.update(attrs)
+
+        super(MarkdownWidget, self).__init__(default_attrs)
+
+    def render(self, name, value, attrs=None):
+        return super(MarkdownWidget, self).render(name, value, attrs)
+
