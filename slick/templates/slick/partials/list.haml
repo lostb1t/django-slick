@@ -2,7 +2,8 @@
 %ul.list-group
     - for object, row in rows
         %li.list-group-item
-            %h4= row.0
+            %h4= row.0.value
             %ul.list-inline.meta.list-group
                 - for col in row|slice:"1:"
-                    %li.list-group-item= col
+                    %li.list-group-item 
+                    	{{col.label|lower}} {{col.value|lower}}

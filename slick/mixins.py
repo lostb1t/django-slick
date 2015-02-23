@@ -28,10 +28,45 @@ class PermissionRequiredMixin(UserCheckMixin):
 
 
 class ListMixin(TableMixin):
+    def prepare_list_display(self):
+        retval = []
+        for field in self.get_list_display():
+            label = None
+            if isinstance(field, tuple):
+                label = field[1]
+                field = field[0]
+            
+            for source in self.field_sources:
+                column = source(self, field)
+                if column.valid():
+                    column.label = label
+                    retval.append(column)
+                    break
+
+        return retval
+
+    def get_cells(self, obj, list_display):
+        for field in list_display:
+            try:
+                retval = field.value(obj)
+            except Exception as ex:
+                print (type(ex), ex)
+                retval = mark_safe(u"<i style='color:darkred;' " + \
+                    u"class='glyphicon glyphicon-exclamation-sign' " + \
+                    u"title='{}: {}'></i>".format(type(ex).__name__, escape(str(ex))))
+
+            if retval is None:
+                retval = "_"
+
+            label = field.label if field.label is not None else field.header()
+            yield field.original, retval, label
+
     def get_row(self, obj, list_display):
         list_display_links = self.get_list_display_links()
         cells = []
-        for name, cell in self.get_cells(obj, list_display):
+        #print list_display
+        for name, cell, label in self.get_cells(obj, list_display):
+            #print name
             if cell == '':
                 # if the the list_display_link is an empty string and it's the only one...
                 # it makes it impossible for a user to select fixing here by adding text.
@@ -39,7 +74,7 @@ class ListMixin(TableMixin):
 
             if name in list_display_links:
                 cell = u"<a href='{}'>{}</a>".format(self.get_detail_link(obj), escape(cell))
-                cells.append(mark_safe(cell))
+                cells.append({'label': label, 'value': mark_safe(cell)})
             else:
-                cells.append(cell)
+                cells.append({'label': label, 'value': cell})
         return cells

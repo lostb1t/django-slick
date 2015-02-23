@@ -42,13 +42,13 @@
                     %i.fa.fa-navicon.fa-lg
                   
 
-              %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
+              %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button", :style => "display: none;"}
                 %span.icon-bar
                 %span.icon-bar
                 %span.icon-bar
                
              - block object-tools
-              .nav.navbar-nav.navbar-right
+              .nav.navbar-right
                 %ul.list-inline
                   - block object-tools-items
                   - block list-tools-items
