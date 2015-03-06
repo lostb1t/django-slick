@@ -35,10 +35,11 @@ class ListMixin(TableMixin):
             if isinstance(field, tuple):
                 label = field[1]
                 field = field[0]
-            
+
             for source in self.field_sources:
                 column = source(self, field)
                 if column.valid():
+                    #print column.field.verbose_name
                     column.label = label
                     retval.append(column)
                     break

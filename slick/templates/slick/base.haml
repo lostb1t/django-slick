@@ -62,7 +62,6 @@
 
 
         #content.content
-
           - block messages
             - if messages
               
@@ -72,6 +71,9 @@
 
 
           - block content
+    #footer
+      - include "slick/partials/footer.html"
+
     - block javascripts
       %script{src: "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"}
       %script{src: "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"}
