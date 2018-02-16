@@ -1,2 +1,2 @@
 message tags to semantic ui colors
-breadcrumb builder?
+add page tools block as compliment to object tools

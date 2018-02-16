@@ -5,7 +5,7 @@
         <i class="save icon"></i> {% trans 'Save' %}
     </button>
     {% endif %}
-    <div class="ui bottom left pointing floating dropdown icon button">
+    <div class="ui floating dropdown icon button">
         <i class="dropdown icon"></i>
 
         <div class="menu">
@@ -17,12 +17,13 @@
 
             {% if show_save_and_add_another %}
             <button type="submit" class="item" value="{% trans 'Save and add another' %}" name="_addanother">
-                <i class="plus green icon"></i> {% trans 'Save and add another' %}
+                <i class="plus icon"></i> {% trans 'Save and add another' %}
             </button>
             {% endif %}
+
             {% if show_save_and_continue %}
             <button type="submit" class="item" value="{% trans 'Save and continue editing' %}" name="_continue">
-                <i class="pencil yellow icon"></i> {% trans 'Save and continue editing' %}
+                <i class="pencil icon"></i> {% trans 'Save and continue editing' %}
             </button>
             {% endif %}
 

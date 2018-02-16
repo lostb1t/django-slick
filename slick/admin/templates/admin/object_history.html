@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_urls humanize %}
+{% load i18n admin_urls %}
 
 {% block breadcrumbs %}
 <div class="ui small breadcrumb">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="content">
                     <div class="summary">
-                        <a href="{% url 'admin:auth_user_change' action.user.pk %}" >{{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}</a> 
+                        {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
 
                         <i class="{% if action.is_addition %}green plus{% endif %}{% if action.is_change %}yellow pencil{% endif %}{% if action.is_deletion %}remove{% endif %} disabled icon"></i>
 
@@ -51,7 +51,7 @@
 
                         <div data-content="{{ action.action_time|date:'DATETIME_FORMAT' }}" class="popup date">
                             <i class="clock icon"></i>
-                            {{action.action_time|naturaltime}} </div>
+                            {{action.action_time}} </div>
 
                         </div>
                         <div class="extra text">
