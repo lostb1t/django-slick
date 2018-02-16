@@ -1,0 +1,7 @@
+{% load i18n %}
+<h3 class="ui head">{% trans "Summary" %}</h3>
+<ul class="ui list">
+    {% for model_name, object_count in model_count %}
+    <li class="item">{{ model_name|capfirst }}: {{ object_count }}</li>
+    {% endfor %}
+</ul>

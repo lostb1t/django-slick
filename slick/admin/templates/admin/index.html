@@ -1,0 +1,76 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <div class="twelve wide column">
+        {% if app_list %}
+        <div class="ui link list">
+            {% for app in app_list %}
+            <div class="item">
+                <a class="header" href="{{ app.app_url }}">{% trans app.name %}</a>
+                <div class="ui link list">
+                    {% for model in app.models %}
+                    {% if model.admin_url %}
+                    <div class="item"><a href="{{ model.admin_url }}">{{ model.name }}</a>
+                        <div class="right floated content">
+                            <a href="{{ model.add_url }}" data-content="{% trans 'Add' %} {{model.name}}" class="popup"><i class="plus green icon"></i></a>
+                            <a href="{{ model.admin_url }}" data-content="{% trans 'Change' %} {{model.name}}" class="popup"><i class="pencil yellow icon"></i></a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="item">{{ model.name }}</div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>{% trans "You don't have permission to edit anything." %}</p>
+        {% endif %}
+    </div>
+    
+
+    
+    <div class="four wide column">
+        <div class="module" id="recent-actions-module">
+            <h3>{% trans 'Recent Actions' %}</h3>
+            <h4>{% trans 'My Actions' %}</h4>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% trans 'None available' %}</p>
+            {% else %}
+            <div class="ui list">
+                {% for entry in admin_log %}
+                <div class="item">
+                    <i class="{% if entry.is_addition %}green plus{% endif %}{% if entry.is_change %}yellow pencil{% endif %}{% if entry.is_deletion %}remove{% endif %} disabled icon"></i>
+                    <div class="content">
+                        {% if entry.is_deletion or not entry.get_admin_url %}
+                        {{ entry.object_repr }}
+                        {% else %}
+                        <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                        {% endif %}
+                        <br/>
+                        {% if entry.content_type %}
+                        <span class="mini quiet">{% filter capfirst %}{{ entry.content_type }}{% endfilter %}</span>
+                        {% else %}
+                        <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

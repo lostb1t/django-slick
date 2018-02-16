@@ -1,0 +1,65 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static errorlist placehold  %}
+{% block extrastyle %}{{ block.super }}{% endblock %}
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+{% block usertools %}{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block content_title %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="ui two column centered grid">
+    <div class="column">
+        <h2 class="ui center aligned icon header">
+            <i class="settings icon"></i>
+            <div class="content">{% trans "Please, log in" %} <div class="sub header">{% trans "Please, enter your username and password to access the administrative resource." %}</div>
+        </div>
+    </h2>
+
+    {% if form.errors and not form.non_field_errors %}
+    <p class="ui attached red message">
+        <i class="warning sign icon"></i>{% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+    </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+    <div class="ui red message">
+        <i class="warning sign icon"></i>
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div id="content-main">
+        <form class="ui form" action="{{ app_path }}" method="post" id="login-form">
+            <div class="ui {% if form.errors %} attached {% endif %} fluid segment">
+                {% csrf_token %}
+                <div class="field {{form.username.css_classes}} {% if form.username.errors %}error{% endif %}">
+                    {{ form.username.label_tag }} 
+                    {{ form.username|help_text_as_placeholder }}
+                    {{ form.username.errors|as_pointing_label }}
+                </div>
+                <div class="field {{form.password.css_classes}} {% if form.password.errors %}error{% endif %}">
+                    {{ form.password.label_tag }} 
+                    {{ form.password|help_text_as_placeholder }}
+                    {{ form.password.errors|as_pointing_label }}
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+                {% url 'admin_password_reset' as password_reset_url %}
+                {% if password_reset_url %}
+                <i class="question blue icon"></i> <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+                {% endif %}
+            </div>
+            <div class="{% if form.errors %}ui vertical very basic segment{% endif %}">
+                <input class="ui green button" type="submit" value="{% trans 'Log in' %}" />
+            </div>
+        </form>
+
+        <script type="text/javascript">
+            document.getElementById('id_username').focus()
+        </script>
+    </div>
+</div>
+</div>
+{% endblock %}

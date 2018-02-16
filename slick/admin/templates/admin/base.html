@@ -1,0 +1,128 @@
+{% load i18n admin_static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "slick/css/slick.css" %}" />
+    {% block extrastyle %}{% endblock %}
+    <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% static "admin/css/ie.css" %}{% endblock %}" /><![endif]-->
+    {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
+    <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
+    <script type="text/javascript">window.__admin_utc_offset__ = "{% filter escapejs %}{% now "Z" %}{% endfilter %}";</script>
+    {% block extrahead %}{% endblock %}
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="pushable {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+
+    <!-- Container -->
+    <div class="pusher">
+        <div class="full height">
+        {% if not is_popup %}
+        <div class="nav">
+            <div class="ui vertical sticky menu" id="nav">
+                    {{app_list}} hoi
+                    <div class="header item">{% block branding %}{% endblock %}</div>
+                    {% if site_url %}
+                    <a class="item" href="{{ site_url }}"><i class="external icon"></i>{% trans 'View site' %}</a>
+                    {% endif %}
+                    <div class="right menu">
+                        {% block usertools %}
+                        {% if has_permission %}
+                        <div class="ui dropdown item">
+                            {% block welcome-msg %}
+                            {% trans 'Welcome,' %}
+                            <strong>{% firstof user.get_short_name user.get_username %}</strong>
+                            <i class="dropdown icon"></i>
+                            {% endblock %}
+                            <div class="menu">
+                                {% block userlinks %}
+                                {% if user.is_active and user.is_staff %}
+                                {% url 'django-admindocs-docroot' as docsroot %}
+                                {% if docsroot %}
+                                <a class="item" href="{{ docsroot }}">{% trans 'Documentation' %}</a>
+                                {% endif %}
+                                {% endif %}
+                                {% if user.has_usable_password %}
+                                <a class="item" href="{% url 'admin:password_change' %}"><i class="privacy icon"></i>{% trans 'Change password' %}</a>
+                                {% endif %}
+                                <a class="item" href="{% url 'admin:logout' %}"><i class="sign out icon"></i>{% trans 'Log out' %}</a>
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endblock %}
+                
+            </div>
+        </div>
+
+        {% endif %}
+
+        
+            {% block nav-global %}{% endblock %}
+
+            <!-- Content -->
+            <div id="content" class="{% block coltype %}ui vertical basic segment{% endblock %}">
+                <div class="ui masthead vertical segment">
+                    <div class="ui container">
+                        {% block pretitle %}{% endblock %}
+                        {% block content_title %}
+                        {% if title %}
+                        <h1 class="ui header">
+                            <div class="sub header">
+                                {% block breadcrumbs %}
+                                <div class="ui small breadcrumb">
+                                    <a class="section" href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+                                    {% if title %} 
+                                    <i class="divider"> / </i> 
+                                    <div class="section active">{{ title }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endblock breadcrumbs %}
+                            </div>
+                            <div class="content">{{ title }}</div>
+                        </h1>
+                        {% endif %}
+                        {% endblock content_title %}
+                    </div>
+                </div>
+
+                <div class="ui main container">
+                    {% block messages %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div {% if message.tags %} class="ui {{ message.tags }} message"{% endif %}>
+                        {% ifequal message.tags 'success'%}
+                        <i class="check positive icon"></i>
+                        {% endifequal %}
+                        <strong> {% trans 'Saved successfully' %}! </strong>
+                        {{ message|capfirst }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endblock messages %}
+
+                    <div class="ui container">
+                    {% block content %}
+                    {% block object-tools %}{% endblock %}
+                    {{ content }}
+                    {% endblock %}
+                    {% block sidebar %}{% endblock %}
+                    </div>
+                </div>
+              
+            </div>
+            <!-- END Content -->
+ 
+        {% block footer %}
+
+        {% endblock %}
+    </div>
+    </div>
+    <!-- END Container -->
+    {% block javascript %}{% endblock %}
+</body>
+</html>

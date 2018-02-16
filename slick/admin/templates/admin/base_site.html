@@ -1,0 +1,8 @@
+{% extends "slick/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block bodyclass %}
+  {% if is_popup %}popup {% endif %}
+{% endblock %}

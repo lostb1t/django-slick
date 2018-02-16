@@ -1,0 +1,16 @@
+- load activelink slick_tags
+
+- get_app_list as app_list
+
+%div.item.branding
+  - block branding
+    Django Slick
+- for app in app_list
+  %div.item
+    .header
+      {{app.name}}
+    .menu
+      - for model in app.models
+        .item
+          %a{:href => "{{model.admin_url}}"}
+            {{ model.name }}

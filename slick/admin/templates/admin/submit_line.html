@@ -1,0 +1,36 @@
+{% load i18n admin_urls %}
+<div class="ui small green buttons">
+    {% if show_save %}
+    <button type="submit" class="ui button" value="{% trans 'Save' %}" name="_save">
+        <i class="save icon"></i> {% trans 'Save' %}
+    </button>
+    {% endif %}
+    <div class="ui bottom left pointing floating dropdown icon button">
+        <i class="dropdown icon"></i>
+
+        <div class="menu">
+            {% if show_save_as_new %}
+            <button type="submit" value="{% trans 'Save as new' %}" name="_saveasnew" class="item">
+                <i class="plus icon"></i> {% trans 'Save as new' %}
+            </button>
+            {% endif %}
+
+            {% if show_save_and_add_another %}
+            <button type="submit" class="item" value="{% trans 'Save and add another' %}" name="_addanother">
+                <i class="plus green icon"></i> {% trans 'Save and add another' %}
+            </button>
+            {% endif %}
+            {% if show_save_and_continue %}
+            <button type="submit" class="item" value="{% trans 'Save and continue editing' %}" name="_continue">
+                <i class="pencil yellow icon"></i> {% trans 'Save and continue editing' %}
+            </button>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% if show_delete_link %}
+{% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+<a href="{% add_preserved_filters delete_url %}" class="ui small red basic button right floated"><i class="trash red icon"></i> {% trans "Delete" %}</a>
+{% endif %}

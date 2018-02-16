@@ -8,7 +8,7 @@ def read(fname):
 setup(
     name='django-slick',
     version=__import__('slick').VERSION,
-    description='Slick responsive theme for Django.',
+    description='Slick responsive theme for Django Admin.',
     long_description=read('README.rst'),
     author='Sjoerd Arendsen',
     author_email='subscribe@optixdesigns.com',
@@ -35,6 +35,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "django-classy-tags",
-        #"https://bitbucket.org/freakypie/django-viewsets/get/master.zip"
+        "django-hamlpy",
+        "django-activelink"
     ],
 )

@@ -1,0 +1,24 @@
+{% load i18n slick_admin_tags %}
+
+<div class="ui dropdown labeled icon button">
+    <i class="filter icon"></i>
+    <span class="text">{% blocktrans with filter_title=title|lower %} {{ choices|get_selected_choice }} {{ filter_title }} {% endblocktrans %}</span>
+    <div class="menu">
+	    <div class="ui icon search input">
+	      <i class="search icon"></i>
+	      <input type="text" placeholder="Search {{ title|lower }}...">
+	    </div>
+	    <div class="divider"></div>
+	    <div class="header">
+	      <i class="tags icon"></i>
+	      {{ title|lower }}
+	    </div>
+	    <div class="scrolling menu">
+	    {% for choice in choices %}
+	    	<div class="item">
+	        	<a href="{{ choice.query_string|iriencode }}" class="{% if choice.selected %} active {% endif %} item">{{ choice.display }}</a>
+	        </div>
+	    {% endfor %}
+		</div>
+    </div>
+</div>

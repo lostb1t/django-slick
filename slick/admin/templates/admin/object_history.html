@@ -1,0 +1,70 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls humanize %}
+
+{% block breadcrumbs %}
+<div class="ui small breadcrumb">
+    <a href="{% url 'admin:index' %}" class="section">{% trans 'Home' %}</a>
+    <i class="right angle icon divider"></i>
+    <a href="{% url 'admin:app_list' app_label=opts.app_label %}" class="section">{% trans opts.app_config.verbose_name %}</a>
+    <i class="right angle icon divider"></i>
+    <a href="{% url opts|admin_urlname:'changelist' %}" class="section">{{ opts.verbose_name_plural|capfirst }}</a>
+    <i class="right angle icon divider"></i>
+    <a href="{% url opts|admin_urlname:'change' object.pk|admin_urlquote %}">{{ object|truncatewords:"18" }}</a>
+    <i class="right angle icon divider"></i>
+    {% trans 'History' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+
+        {% if action_list %}
+        <div class="ui feed">
+            {% for action in action_list %}
+            <div class="event">
+                <div class="label">
+                    <img src="http://placehold.it/35x35"><!-- User profile image -->
+                </div>
+                <div class="content">
+                    <div class="summary">
+                        <a href="{% url 'admin:auth_user_change' action.user.pk %}" >{{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}</a> 
+
+                        <i class="{% if action.is_addition %}green plus{% endif %}{% if action.is_change %}yellow pencil{% endif %}{% if action.is_deletion %}remove{% endif %} disabled icon"></i>
+
+                        {% if action.is_addition %} {% trans 'added' %} {% trans 'a' %}
+                        {% elif action.is_change %} {% trans 'changed' %} {% trans 'a' %}
+                        {% elif action.is_deletion %} {% trans 'removed' %} {% trans 'a' %}
+                        {% endif %}
+
+                        {% if action.content_type %}
+                        {% filter capfirst %}{{ action.content_type }}{% endfilter %}
+                        {% else %}
+                        {% trans 'Unknown content' %}
+                        {% endif %}:
+
+                        {% if action.is_deletion or not action.get_admin_url %}
+                        {{ action.object_repr }}
+                        {% else %}
+                        <a href="{{ action.get_admin_url }}">{{ action.object_repr }}</a>
+                        {% endif %}
+
+                        <div data-content="{{ action.action_time|date:'DATETIME_FORMAT' }}" class="popup date">
+                            <i class="clock icon"></i>
+                            {{action.action_time|naturaltime}} </div>
+
+                        </div>
+                        <div class="extra text">
+                            {{ action.change_message }}
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>{% trans "This object doesn't have a change history. It probably wasn't added via this admin site." %}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}

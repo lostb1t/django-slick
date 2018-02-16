@@ -1,0 +1,31 @@
+{% load i18n paginator %}
+
+<div class="ui right floated very basic compact menu">
+    {% first_link cl %}
+    {% previous_link cl %}
+
+    {% if pagination_required %}
+    {% for i in page_range %}
+    {% paginator_number cl i %}
+    {% endfor %}
+    {% endif %}
+
+    {% next_link cl %}
+    {% last_link cl %}
+
+    <div class="item">
+        {{ cl.result_count }} 
+        {% ifequal cl.result_count 1 %}
+        {{ cl.opts.verbose_name }}
+        {% else %}
+        {{ cl.opts.verbose_name_plural }}
+        {% endifequal %}
+        {% if show_all_url %}
+        (<a href="{{ show_all_url }}">{% trans 'Show all' %}</a>)
+        {% endif %}
+    </div>
+
+    {% if cl.formset and cl.result_count %}
+    <input type="submit" name="_save" class="default" value="{% trans 'Save' %}"/>
+    {% endif %}
+</div>
