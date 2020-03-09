@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% with title|capfirst as filter_title %}
+	<select data-live-search='true' data-header='{% trans filter_title %}' class='selectpicker filter-choice input-xs'>
+		{% for choice in choices %}
+			{% if choice.selected %}
+				<option value='{{ choice.query_string|iriencode }}' selected='selected' title='<strong>{% trans filter_title %}:</strong>  {{ choice.display }}'>
+					{{ choice.display }}
+
+				</option>
+			{% else %}
+				<option value='{{ choice.query_string|iriencode }}' title='<strong>{% trans filter_title %}:</strong> {{ choice.display }}'>
+					{{ choice.display }}
+				</option>
+			{% endif %}
+		{% endfor %}
+	</select>
+{% endwith %}

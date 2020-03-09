@@ -2,6 +2,8 @@ import os
 from setuptools import setup
 
 
+# DEV pakcages: django-hamlpy pyScss honcho watchdog
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 

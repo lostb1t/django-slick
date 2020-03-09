@@ -1,0 +1,43 @@
+- extends "admin/base.html"
+- load i18n slick_tags log
+
+- block content
+	- get_app_list as app_list
+		.row
+			.col-md-8
+				- for app in app_list
+					.panel.panel-inverse
+						.panel-heading
+							%a{:href => "{{app.app_url}}"}
+								- trans app.name
+						%ul.list-group
+							- for model in app.models
+								%li.list-group-item
+									- if model.admin_url
+										%a{:href => "{{model.admin_url}}"}
+											{{ model.name }}
+									- else
+										{{ model.name }}
+
+									- if model.description
+										%small
+											{{model.description}}
+			.col-md-4
+				.panel.panel-inverse
+					.panel-heading
+						- trans 'My Actions'
+					%ul.list-group
+						- get_admin_log 10 as admin_log for_user user
+							- for entry in admin_log
+								%li.list-group-item
+								    %i{:class => "{% if entry.is_addition %} fa fa-plus-circle{% endif %}{% if entry.is_change %}fa fa-edit{% endif %}{% if entry.is_deletion %}fa fa-remove{% endif %}"}
+									- if model.admin_url
+										%a{:href => "{{ entry.get_admin_url }}"}
+											{{ entry.object_repr }}
+									- else
+										{{ entry.object_repr }}
+
+									%small
+										- trans entry.content_type.name 
+
+

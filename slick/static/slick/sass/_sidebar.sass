@@ -1,180 +1,103 @@
 
-
 .sidebar
-    position: fixed
-    margin-top: 50px
-    width: $aside-width
-    left: 0
-    top: 0
-    bottom: 0
-    z-index: 10
-    
-    // @media (max-width: $screen-sm-min)
-    //     left: -210px
-    //     position: absolute
-    //     z-index: 9999
+	width: 210px
+	position: fixed
+	left: 0
+	top: 0
+	bottom: 0
+	padding-top: 55px
+	background: #2d353c
+	z-index: 10
 
-    .sidebar-nav
-        height: 100%
-        overflow-y: auto
-        background-color: #2f343b
+	@media (max-width: $screen-sm-min)
+		left: -210px
+		position: absolute
+		z-index: 9999
 
-        &.toggled
-            left: 0
+	&.toggled
+		left: 0
 
-        .nav
-            ul
-                list-style: none
-                padding: 0
-            li
-                border-bottom: 0px
+	.nav
+		>li>a
+			padding: 8px 20px
+			line-height: 20px
+			color: #a8acb1
 
-                &.active
-                    //font-weight: 600
-                    //background: #232a2f
-                    > a
-                        font-weight: 600
-                        color: white
+			&:focus,
+			&:hover
+				background: #232a2f
+				color: #a8acb1
 
-
-                a
-                    display: block
-                    font-weight: 300
-                    padding: 12px 20px
-                    color: #acaeb1
-                    -webkit-transition: background-color .5s,color .5s,box-shadow .5s
-                    transition: background-color .5s,color .5s,box-shadow .5s
-
-                    &:focus,
-                    &:hover,
-                    &:active,
-                    &.active,
-                        //font-weight: 600
-                        background: #232a2f
-                        color: white
-                        text-decoration: none
-
-                    i
-                        padding: 0 10px 0 0
-
-                li
-                    a
-                        padding: 12px 20px 12px 45px
-
-            .menu-popover
-                left: 40px !important
-                background-color: #232a2f
-                border: 0
-                border-radius: 0 0 0 0
-                box-shadow: none
-                //display: block !important
-                width: $aside-width - $aside-width-sm
-                padding: 0
-                
-                .popover-title
-                    background-color: #2f343b
-                    border: 0
-                    border-radius: 0
-                    font-weight: 300
-                    padding: 12px 20px
-                    color: #acaeb1
-                
-                .popover-content
-                    padding: 0
-
-                li
-                    &.active
-                        a
-                            background-color: transparent
-                    a
-                        background-color: transparent
-
-            >li.nav-account
-                padding: 17px 20px
-                background-color: #1a2229
-                height: 57px
-                font-size: 18px
-                font-weight: 500
-                a
-                    padding: 0
-
-            li.nav-header
-                margin: 0
-                padding: 10px 20px
-                line-height: 20px
-                font-size: 11px
-                color: #6d7983
-  
+			.caret
+				margin-top: 9px
+			i
+				float: left
+				margin-right: 15px
+				width: 14px
+				text-align: center
+				line-height: 22px
+				font-size: 12px
 
 
+		>li.nav-account
+			padding: 17px 20px
+			background-color: #1a2229
+			height: 57px
+			font-size: 18px
+			font-weight: 500
 
-        // .sub-menu
-        //  list-style-type: none
-        //  padding: 10px 0 10px 30px
-        //  margin: 0
-        //  background: #1a2229
-        //  position: relative
+			a
+				padding: 0
 
-        //  >li>a
-        //      padding: 5px 20px
-        //      display: block
-        //      font-weight: 300
-        //      color: #889097
-        //      text-decoration: none
-        //      position: relative
+		li.nav-header
+			margin: 0
+			padding: 10px 20px
+			line-height: 20px
+			font-size: 11px
+			color: #6d7983
 
-        //      &:before
-        //          content: '\f10c'
-        //          font-family: FontAwesome
-        //          position: absolute
-        //          left: 0
-        //          font-size: 7px
-        //          color: #889097
-        //          top: 50%
-        //          margin-top: -4px
-        //          margin-left: -6px
+		>li.active>a
+			background-color: $btn-success-bg
+			color: $btn-success-color
 
-        //  >li.active>a
-        //      color: #fff
+	.sub-menu
+		list-style-type: none
+		padding: 10px 0 10px 30px
+		margin: 0
+		background: #1a2229
+		position: relative
 
-        //      &:before
-        //          color: $btn-success-bg
+		>li>a
+			padding: 5px 20px
+			display: block
+			font-weight: 300
+			color: #889097
+			text-decoration: none
+			position: relative
 
-        //  &:before
-        //      content: ''
-        //      position: absolute
-        //      left: 26px
-        //      top: 0
-        //      bottom: 0
-        //      width: 2px
-        //      background: #10181F
+			&:before
+				content: '\f10c'
+				font-family: FontAwesome
+				position: absolute
+				left: 0
+				font-size: 7px
+				color: #889097
+				top: 50%
+				margin-top: -4px
+				margin-left: -6px
 
-// Side bar sm overrides
+		>li.active>a
+			color: #fff
 
-.sidebar-sm
-    .sidebar
-        width: $aside-width-sm
-        .nav-title
-            display: none
-        .nav-header
-            display: none
-        .arrow
-            display: none
+			&:before
+				color: $btn-success-bg
 
-        .submenu
-            display: none
+		&:before
+			content: ''
+			position: absolute
+			left: 26px
+			top: 0
+			bottom: 0
+			width: 2px
+			background: #10181F
 
-        .nav
-            > li
-                &.active
-                    //font-weight: 600
-                    background: $brand-primary
-                    a
-                        &:focus,
-                        &:hover,
-                        &:active,
-                        &.active,
-                            background-color: transparent
-
-    #footer
-        left: $aside-width-sm

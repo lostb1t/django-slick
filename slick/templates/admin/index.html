@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+{% load i18n slick_tags log %}
+
+{% block content %}
+	{% get_app_list as app_list %}
+		<div class='row'>
+			<div class='col-md-8'>
+				{% for app in app_list %}
+					<div class='panel panel-inverse'>
+						<div class='panel-heading'>
+							<a href='{{app.app_url}}'>
+								{% trans app.name %}
+							</a>
+						</div>
+						<ul class='list-group'>
+							{% for model in app.models %}
+								<li class='list-group-item'>
+									{% if model.admin_url %}
+										<a href='{{model.admin_url}}'>
+											{{ model.name }}
+										</a>
+									{% else %}
+										{{ model.name }}
+
+									{% endif %}
+									{% if model.description %}
+										<small>
+											{{model.description}}
+										</small>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endfor %}
+			</div>
+			<div class='col-md-4'>
+				<div class='panel panel-inverse'>
+					<div class='panel-heading'>
+						{% trans 'My Actions' %}
+					</div>
+					<ul class='list-group'>
+						{% get_admin_log 10 as admin_log for_user user %}
+							{% for entry in admin_log %}
+								<li class='list-group-item'>
+												<i class='{% if entry.is_addition %} fa fa-plus-circle{% endif %}{% if entry.is_change %}fa fa-edit{% endif %}{% if entry.is_deletion %}fa fa-remove{% endif %}'></i>
+									{% if model.admin_url %}
+										<a href='{{ entry.get_admin_url }}'>
+											{{ entry.object_repr }}
+										</a>
+									{% else %}
+										{{ entry.object_repr }}
+
+									{% endif %}
+									<small>
+										{% trans entry.content_type.name %}
+
+
+									</small>
+								</li>
+							{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+{% endblock %}

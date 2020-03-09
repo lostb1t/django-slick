@@ -1,0 +1,86 @@
+- extends "admin/base.html"
+- load admin_modify i18n admin_urls
+
+
+- block javascripts
+	{{ block.super }}
+	{{ media }}
+
+
+- block breadcrumbs
+	- if not is_popup
+		%li 
+			%a{:href => "{% url 'admin:app_list' app_label=opts.app_label %}"}
+				{% trans app_label|capfirst|escape %}
+		%li
+			- if has_change_permission
+				%a{:href => "{% url opts|admin_urlname:'changelist' %}"}
+					{{ opts.verbose_name_plural|capfirst }}
+			- else
+				{{ opts.verbose_name_plural|capfirst }}
+
+
+- block object-tools-items
+	- if has_add_permission
+		%li
+			- if not is_popup and save_as and change
+				%button.btn.btn-default{:name => "_saveasnew", :type => "submit", :value => "{% trans 'Duplicate' %}", :form => "{{ opts.model_name }}{{ opts.module_name }}_form"}
+					{% trans 'Duplicate' %}
+			%button.btn.btn-primary.btn{:name => "_save", :type => "submit", :form => "{{ opts.model_name }}{{ opts.module_name }}_form"}
+				{% trans 'Save' %}
+
+
+
+- block content
+
+	.row
+		%form{:action => "", :method => "post", :id => "{{ opts.model_name }}{{ opts.module_name }}_form", :role => "form"}
+			- csrf_token
+			- if errors
+				.col-md-12
+					.note.note-danger
+						{% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+						- if adminform.form.non_field_errors
+							%ul.errorlist
+								- for error in adminform.form.non_field_errors
+									%li
+										{{ error }}
+
+			{% block field_sets %}
+			{% for fieldset in adminform %}
+				- if fieldset.name or fieldset.description
+					.col-md-2.col-lg-3
+						- if fieldset.name
+							%h4
+								{{ fieldset.name }}
+
+						- if fieldset.description
+							%p
+								%small 
+									{{ fieldset.description|safe }}
+
+					.col-md-10.col-lg-9
+						{% include "admin/includes/fieldset.html" %}
+				- else
+					.col-md-12
+						{% include "admin/includes/fieldset.html" %}
+
+			{% endfor %}
+			{% endblock %}
+
+			{% block after_field_sets %}{% endblock %}
+
+			{% block inline_field_sets %}
+			{% for inline_admin_formset in inline_admin_formsets %}
+				.col-md-12
+					{% include inline_admin_formset.opts.template %}
+			{% endfor %}
+			{% endblock %}
+
+			{% block after_related_objects %}{% endblock %}
+			
+			.form-actions.col-md-12
+				- block submit_buttons_bottom
+					- submit_row
+
+			{% prepopulated_fields_js %}

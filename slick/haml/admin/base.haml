@@ -1,0 +1,73 @@
+- load static slick_tags
+!!!
+%html{lang: "{{LANGUAGE_CODE}}"}
+  %head
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}
+    %meta{content: "", name: "description"}
+    %meta{content: "", name: "author"}
+    %title Admin
+    - block stylesheets
+      %link{href: "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", rel: "stylesheet"}
+      %link{href: "{% static 'slick/plugins/bootstrap-select-1.6.3/css/bootstrap-select.min.css' %}", rel: "stylesheet"}
+      %link{href: "{% static 'slick/css/slick.css' %}", rel: "stylesheet"}
+      %link{href: "{% static 'slick/plugins/metisMenu/metisMenu.min.css' %}", rel: "stylesheet"}
+      
+    - block javascripts
+      :javascript
+        var slick = {};
+      %script{src: "https://code.jquery.com/jquery-3.3.1.slim.min.js"}
+      %script{src: "{% static 'slick/plugins/bootstrap-4.3.1/bootstrap.bundle.min.js' %}"}
+      %script{src: "{% static 'slick/plugins/metisMenu/metisMenu.min.js' %}"}
+      %script{src: "{% static 'slick/plugins/bootstrap-select-1.6.3/js/bootstrap-select.min.js' %}"}
+      %script{src: "{% static 'slick/js/slick.js' %}"}
+
+      :javascript
+        (function($) {
+          $(document).ready(function() {
+            slick.initSidebar();
+          });
+        })(slk.jQuery);
+    
+    - block extrahead
+
+  %body{class: ""}
+    #header.header.navbar.navbar-light.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          - block branding
+            %a.navbar-brand
+              - block admin_title
+                - slick_admin_title
+          %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          
+        - block object-tools
+        .nav.navbar-nav.navbar-right
+          %ul.list-inline
+            - block object-tools-items
+
+    #container-fluid
+      .row
+        #sidebar.sidebar.col-md-2
+          .sidebar-sticky
+            - include "admin/includes/sidebar.html"
+        
+        #content.content.col-md-9
+            %ul#breadcrumbs.list-inline.pull-right
+              - block breadcrumbs
+              - if title
+                %li
+                  {{ title|capfirst }}
+
+            %h1.content-title
+              - block content_title
+                - if title
+                  {{ title }}
+
+            - block content
+            
+    
+    - block footer

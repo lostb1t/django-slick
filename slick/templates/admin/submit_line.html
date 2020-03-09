@@ -1,0 +1,20 @@
+{% load i18n admin_urls %}
+
+<div class='pull-left'>
+	{% if show_delete_link %}
+		<a href='delete/' class='btn btn-danger deletelink'>
+			{% trans "Delete" %}
+		</a>
+	{% endif %}
+</div>
+<div class='pull-right'>
+	{% if show_save_and_add_another %}
+		<input name='_addanother' type='submit' value='{% trans 'Save and add another' %}' class='btn btn-default'>
+	{% endif %}
+	{% if show_save_and_continue %}
+		<input name='_continue' type='submit' value='{% trans 'Save and continue editing' %}' class='btn btn-default'>
+	{% endif %}
+	{% if show_save %}
+		<input name='_save' type='submit' value='{% trans 'Save' %}' class='btn btn-primary default'>
+	{% endif %}
+</div>

@@ -1,0 +1,16 @@
+{% load i18n static %}
+
+{% if cl.search_fields %}
+	<div class='input-group input-group-sm'>
+		<input name='{{ search_var }}' type='text' value='{{ cl.query }}' placeholder='{% trans 'Search' %}' class='form-control search-query'>
+		<span class='input-group-btn'>
+			<button type='button' class='btn btn-default'>
+				{% trans 'Search' %}
+
+			</button>
+		</span>
+	</div>
+	{% for pair in cl.params.items %}
+		{% ifnotequal pair.0 search_var %}<input name='' type='hidden' value=''>		{% endifnotequal %}
+	{% endfor %}
+{% endif %}
