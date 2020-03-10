@@ -3,35 +3,37 @@
 {% get_app_list as app_list %}
 
 {% if app_list %}
-  <ul id='metis'>
-    <h6 class='sidebar-heading'>
-      <span>
-        {% trans "Navigation" %}
-      </span>
-    </h6>
-    {% for app in available_apps %}
-      {% is_active_path app.admin_url 1 1 as active %}
-      <li>
-        <a class='has-arrow'>
-          {{ app.name }}
-        </a>
-        <ul class='nav flex-column'>
-          {% for model in app.models %}
-            {% is_active_path model.admin_url 1 1 as active %}
-            <li class='{% if active %}active{% endif %}'>
-              {% if model.admin_url %}
-                <a href='{{ model.admin_url }}' class='nav-link'>
-                  {{ model.name }}
-                </a>
-              {% else %}
-                <a href='#' class='nav-link'>
-                  {{ model.name }}
-                </a>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
-  </ul>
+  <div id='sidebar-menu'>
+    <ul id='metis'>
+      <h6 class='sidebar-heading'>
+        <span>
+          {% trans "Navigation" %}
+        </span>
+      </h6>
+      {% for app in available_apps %}
+        {% is_active_path app.admin_url 1 1 as active %}
+        <li class='{% if active %}mm-active{% endif %}'>
+          <a class='has-arrow'>
+            {{ app.name }}
+          </a>
+          <ul class='flex-column'>
+            {% for model in app.models %}
+              {% is_active_path model.admin_url 1 1 as active %}
+              <li class='{% if active %}mm-active{% endif %}'>
+                {% if model.admin_url %}
+                  <a href='{{ model.admin_url }}' class='nav-link'>
+                    {{ model.name }}
+                  </a>
+                {% else %}
+                  <a href='#' class='nav-link'>
+                    {{ model.name }}
+                  </a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endif %}
