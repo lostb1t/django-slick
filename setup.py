@@ -10,8 +10,9 @@ def read(fname):
 setup(
     name='django-slick',
     version=__import__('slick').VERSION,
-    description='Slick responsive theme for Django.',
-    long_description=read('README.rst'),
+    description='Slick responsive theme for Django admin.',
+    long_description=read('README.md'),
+    long_description_content_type="text/markdown",
     author='Sjoerd Arendsen',
     author_email='subscribe@optixdesigns.com',
     packages=['slick', 'slick.templatetags'],
