@@ -1,0 +1,14 @@
+{% if not is_popup %}
+  {% if app_opts %}
+    <li class='breadcrumb-item'>
+        <a href='{% url 'admin:app_list' app_label=app_opts.app_label %}'>
+            {{app_opts.app_config.verbose_name}}
+        </a>
+    </li>
+    <li class='breadcrumb-item'>
+        <a href='{% url 'admin:app_list' app_label=app_opts.app_label %}'>
+            {{ app_opts.verbose_name_plural|capfirst }}
+        </a>
+    </li>
+  {% endif %}
+{% endif %}

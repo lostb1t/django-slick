@@ -9,24 +9,10 @@
 
 {% endblock %}
 {% block breadcrumbs %}
-	{% if not is_popup %}
-		<li>
-			<a href='{% url 'admin:app_list' app_label=opts.app_label %}'>
-				{% trans app_label|capfirst|escape %}
-			</a>
-		</li>
-		<li>
-			{% if has_change_permission %}
-				<a href='{% url opts|admin_urlname:'changelist' %}'>
-					{{ opts.verbose_name_plural|capfirst }}
-				</a>
-			{% else %}
-				{{ opts.verbose_name_plural|capfirst }}
+	{% include "admin/includes/breadcrumbs.html" with app_opts=opts %}
 
 
-			{% endif %}
-		</li>
-	{% endif %}
+
 {% endblock %}
 {% block object-tools-items %}
 	{% if has_add_permission %}

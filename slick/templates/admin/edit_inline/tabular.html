@@ -4,11 +4,11 @@
 	<div class='{% if forloop.last %}last-related{% endif %} tabular inline-related'>
 		{{ inline_admin_formset.formset.management_form }}
 
-		<div class='panel panel-inverse'>
-			<div class='panel-heading'>
+		<div class='card'>
+			<div class='card-heading'>
 				{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
 			</div>
-			<div class='panel-body'>
+			<div class='card-body'>
 				<table class='table table-striped'>
 					<thead>
 						<tr>

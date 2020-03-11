@@ -37,34 +37,23 @@
 
   </head>
   <body class=''>
-    <div class='header navbar navbar-light navbar-fixed-top' id='header'>
-      <div class='container-fluid'>
-        <div class='navbar-header'>
-          {% block branding %}
-            <a class='navbar-brand'>
+    <header class='navbar special-navbar navbar-expand flex-column flex-md-row'>
+
+        <div class='brand-box col-md-2'>
+          <a class='navbar-brand'>
+            {% block branding %}
               {% block admin_title %}
                 {% slick_admin_title %}
               {% endblock %}
-            </a>
-          {% endblock %}
-          <button data-click='sidebar-toggle' type='button' class='navbar-toggle'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </button>
-        </div>
-        {% block object-tools %}
-        {% endblock %}
-        <div class='nav navbar-nav navbar-right'>
-          <ul class='list-inline'>
-            {% block object-tools-items %}
-
             {% endblock %}
-
-          </ul>
+          </a>
         </div>
-      </div>
-    </div>
+        <div class='navbar-nav ml-md-auto'>
+          {% firstof user.get_short_name user.get_username %}
+
+        </div>
+
+    </header>
     <div id='container-fluid'>
       <div class='row'>
         <div class='sidebar col-md-2' id='sidebar'>
@@ -74,16 +63,8 @@
           </div>
         </div>
         <div class='content col-md-9 ml-sm-auto col-lg-10 px-4' id='content'>
-            <ul class='list-inline pull-right' id='breadcrumbs'>
-              {% block breadcrumbs %}
-              {% endblock %}
-              {% if title %}
-                <li>
-                  {{ title|capfirst }}
+          <div class='container-fluid'>
 
-                </li>
-              {% endif %}
-            </ul>
             <h1 class='content-title'>
               {% block content_title %}
                 {% if title %}
@@ -98,6 +79,7 @@
             {% endblock %}
 
 
+          </div>
         </div>
       </div>
     </div>

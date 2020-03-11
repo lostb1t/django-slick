@@ -1,12 +1,12 @@
 - load slick_tags
 
 - if field.is_checkbox
-	.checkbox
-		%label
-			{{ field.field }} {{ field.label_tag }}
-		- if field.field.help_text
-			%span.help-block
-				{{ field.field.help_text|safe }}
+	.form-check
+		%label.form-check-label
+			{{ field.field |render_field:"class:form-check-input" }} {{ field.label_tag }}
+		-# - if field.field.help_text
+		-# 	%span.help-block
+		-# 		{{ field.field.help_text|safe }}
 - elif field.is_select
 	hoi
 - else

@@ -1,13 +1,11 @@
 {% load admin_modify i18n slick_tags %}
 
-<div class='{{ fieldset.classes }} panel panel-inverse aligned'>
-	<div class='panel-body'>
+<div class='{{ fieldset.classes }} card aligned'>
+	<div class='card-body'>
 		{% for line in fieldset %}
 			{% for field in line %}
 				{% slick_field field %}
-
 			{% endfor %}
 		{% endfor %}
 	</div>
 </div>
-<hr>

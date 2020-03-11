@@ -4003,7 +4003,7 @@ tbody.collapse.show {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   color: #6c757d;
-  content: "/";
+  content: ">";
 }
 .breadcrumb-item + .breadcrumb-item:hover::before {
   text-decoration: underline;
@@ -8236,13 +8236,10 @@ h3 {
 }
 .sidebar {
   position: fixed;
-  top: 0;
   bottom: 0;
   left: 0;
   z-index: 100;
-  /* Behind the navbar */
-  padding: 48px 0 0;
-  /* Height of navbar */
+  padding: 0px;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   background-color: white;
 }
@@ -8250,7 +8247,7 @@ h3 {
 .sidebar-sticky {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 70px);
   padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto;
@@ -8270,7 +8267,7 @@ h3 {
 #sidebar-menu > ul > li > a {
   color: #6e768e;
   display: block;
-  padding: 13px 20px;
+  padding: 13px 30px 13px 20px;
   position: relative;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
@@ -8285,6 +8282,10 @@ h3 {
   position: relative;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
+}
+
+#sidebar-menu .has-arrow::after {
+  right: 20px;
 }
 
 .metismenu {
@@ -8315,6 +8316,52 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
+}
+
+.special-navbar {
+  color: #6e768e;
+  z-index: 100;
+  padding: 0px;
+  min-height: 4rem;
+}
+
+.brand-box {
+  background-color: white;
+  padding: 10px;
+  display: block;
+  text-align: center;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav {
+  padding: 20px;
+}
+
+.card {
+  background-color: #fff;
+  background-clip: border-box;
+  -webkit-box-shadow: 0 0 13px 0 rgba(82, 63, 105, 0.05);
+  box-shadow: 0 0 13px 0 rgba(82, 63, 105, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 24px;
+  border-radius: 0.25rem;
+}
+
+.content-title {
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 60px;
+  color: #323a46;
+  font-weight: 600;
+}
+
+#breadcrumbs a {
+  padding: 0 0.35rem 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #959cb6;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 /*# sourceMappingURL=slick.css.map */

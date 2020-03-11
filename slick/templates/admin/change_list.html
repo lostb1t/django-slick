@@ -13,13 +13,12 @@
 {% endblock %}
 {% block breadcrumbs %}
 	{% if not is_popup %}
-		<li>
-			<i class='fa fa-app-default fa-app-{{cl.opts.app_label|lower}} fa-fw'></i>
+		<li class='breadcrumb-item'>
 			<a href='{% url 'admin:app_list' app_label=cl.opts.app_label %}'>
-				{% trans app_label|capfirst|escape %}
+				{{cl.opts.app_config.verbose_name}}
 			</a>
 		</li>
-		<li>
+		<li class='breadcrumb-item'>
 			<a href='{% url 'admin:app_list' app_label=cl.opts.app_label %}'>
 				{{ cl.opts.verbose_name_plural|capfirst }}
 

@@ -1,12 +1,62 @@
 // slick.scss
 
+$breadcrumb-divider: quote(">");
+
 @import "../../bootstrap/scss/bootstrap";
 
 @import "_sidebar.scss";
 
+
 body {
+    // background-color: #f9f9fc;
     background-color: #f5f6f8;
+    // background-color: #fafbfe;
     font-size: .875rem;
     font-weight: 400;
     line-height: 1.5;
+}
+
+.special-navbar {
+    color: #6e768e;
+    z-index: 100;
+    padding: 0px;
+    min-height: 4rem;
+}
+.brand-box {
+    background-color: white;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav {
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    background-clip: border-box;
+    -webkit-box-shadow: 0 0 13px 0 rgba(82,63,105,.05);
+    box-shadow: 0 0 13px 0 rgba(82,63,105,.05);
+    padding: 1.5rem;
+    margin-bottom: 24px;
+    border-radius: .25rem;
+}
+
+.content-title {
+    font-size: 1.1rem;
+    margin: 0;
+    line-height: 60px;
+    color: #323a46;
+    font-weight: 600;
+}
+
+#breadcrumbs a {
+    padding: 0 .35rem 0 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #959cb6;
+    -webkit-transition: all .3s;
+    transition: all .3s;
 }

@@ -4,10 +4,10 @@
 	.tabular.inline-related{:class => "{% if forloop.last %}last-related{% endif %}"}
 		{{ inline_admin_formset.formset.management_form }}
 
-		.panel.panel-inverse
-			.panel-heading
+		.card
+			.card-heading
 				{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
-			.panel-body
+			.card-body
 				%table.table.table-striped
 					%thead
 						%tr

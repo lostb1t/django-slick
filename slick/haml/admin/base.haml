@@ -32,22 +32,24 @@
     - block extrahead
 
   %body{class: ""}
-    #header.header.navbar.navbar-light.navbar-fixed-top
-      .container-fluid
-        .navbar-header
-          - block branding
-            %a.navbar-brand
+    %header.navbar.special-navbar.navbar-expand.flex-column.flex-md-row
+        
+        .brand-box.col-md-2
+          %a.navbar-brand
+            - block branding
               - block admin_title
                 - slick_admin_title
-          %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
+        .navbar-nav.ml-md-auto
+          - firstof user.get_short_name user.get_username
+          -# %button.navbar-toggle{:data-click => "sidebar-toggle", :type => "button"}
+          -#   %span.icon-bar
+          -#   %span.icon-bar
+          -#   %span.icon-bar
           
-        - block object-tools
-        .nav.navbar-nav.navbar-right
-          %ul.list-inline
-            - block object-tools-items
+        -# - block object-tools
+        -# .nav.navbar-nav.navbar-right
+        -#   %ul.list-inline
+        -#     - block object-tools-items
 
     #container-fluid
       .row
@@ -56,11 +58,13 @@
             - include "admin/includes/sidebar.html"
         
         #content.content.col-md-9.ml-sm-auto.col-lg-10.px-4
-            %ul#breadcrumbs.list-inline.pull-right
-              - block breadcrumbs
-              - if title
-                %li
-                  {{ title|capfirst }}
+          .container-fluid
+            -# %nav{:aria-label => "breadcrumb"}
+            -#   %ol.breadcrumb
+            -#     - block breadcrumbs
+            -#     - if title
+            -#       %li.breadcrumb-item
+            -#         {{ title|capfirst }}
 
             %h1.content-title
               - block content_title

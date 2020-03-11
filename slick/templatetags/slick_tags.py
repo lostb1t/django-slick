@@ -44,6 +44,7 @@ def is_active_path(context, name, by_path=False, on_subpath=False):
 
 @register.simple_tag(takes_context=True)
 def get_app_list(context):
+    return context['available_apps']
     #print(context['available_apps'])
     request = context["request"]
     app_dict = {}
