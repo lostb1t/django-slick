@@ -3,7 +3,17 @@
 {% get_app_list as app_list %}
 
 {% if app_list %}
+  <div class='brand-box'>
+    <a class='navbar-brand'>
+      {% block branding %}
+        {% block admin_title %}
+          {% slick_admin_title %}
+        {% endblock %}
+      {% endblock %}
+    </a>
+  </div>
   <div id='sidebar-menu'>
+
     <ul id='metis'>
       <h6 class='sidebar-heading'>
         <span>

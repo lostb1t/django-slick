@@ -37,32 +37,30 @@
 
   </head>
   <body class=''>
-    <header class='navbar special-navbar navbar-expand flex-column flex-md-row'>
-
-        <div class='brand-box col-md-2'>
-          <a class='navbar-brand'>
-            {% block branding %}
-              {% block admin_title %}
-                {% slick_admin_title %}
-              {% endblock %}
-            {% endblock %}
-          </a>
-        </div>
-        <div class='navbar-nav ml-md-auto'>
-          {% firstof user.get_short_name user.get_username %}
-
-        </div>
-
-    </header>
     <div id='container-fluid'>
       <div class='row'>
-        <div class='sidebar col-md-2' id='sidebar'>
+        <div aria-expanded='true' class='sidebar col-md-2' id='sidebar'>
           <div class='sidebar-sticky'>
             {% include "admin/includes/sidebar.html" %}
 
           </div>
         </div>
         <div class='content col-md-9 ml-sm-auto col-lg-10 px-4' id='content'>
+          <div class='navbar special-navbar navbar-light flex-column flex-md-row'>
+
+
+            <ul class='navbar-nav flex-row'>
+              <li>
+                <button data-target='#sidebar' data-toggle='collapse' class='navbar-toggler'>
+                  <span class='navbar-toggler-icon'></span>
+                </button>
+              </li>
+            </ul>
+            <div class='navbar-nav ml-md-auto'>
+              {% firstof user.get_short_name user.get_username %}
+
+            </div>
+          </div>
           <div class='container-fluid'>
 
             <h1 class='content-title'>

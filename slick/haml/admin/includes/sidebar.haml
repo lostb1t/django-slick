@@ -5,7 +5,13 @@
 - if app_list
   -# %li.nav-account
   -#   - firstof user.get_short_name user.get_username
+  .brand-box
+    %a.navbar-brand
+      - block branding
+        - block admin_title
+          - slick_admin_title
   #sidebar-menu
+
     %ul#metis
       %h6.sidebar-heading
         %span
