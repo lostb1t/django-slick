@@ -35,8 +35,4 @@ setup(
         'Topic :: Software Development :: User Interfaces',
     ],
     zip_safe=False,
-    install_requires=[
-        "django-classy-tags",
-        #"https://bitbucket.org/freakypie/django-viewsets/get/master.zip"
-    ],
 )
