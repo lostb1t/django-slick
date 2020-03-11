@@ -24,7 +24,15 @@ var django = {
 
 	slick.initSidebar = function () {
 		$('#metis').metisMenu();
+		
+    	$("[data-click='sidebar-toggle']").click(function (e) {
+			e.stopPropagation();
+			$("#sidebar").toggleClass("collapse");
+			$("#content").toggleClass("ml-sm-auto");
+			
+		});
     };
+
 	
     // slick.initSidebar = function() {
     // 	$("[data-click='sidebar-toggle']").click(function (e) {
