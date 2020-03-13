@@ -65,9 +65,7 @@
           %nav{:aria-label => "breadcrumb"}
             %ol.breadcrumb
               - block breadcrumbs
-              - if title
-                %li.breadcrumb-item
-                  {{ title|capfirst }}
+                  - include "admin/includes/breadcrumbs.html" with app_opts=opts
 
           %h1.content-title
             - block content_title

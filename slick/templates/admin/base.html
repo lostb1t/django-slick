@@ -64,13 +64,9 @@
           <nav aria-label='breadcrumb'>
             <ol class='breadcrumb'>
               {% block breadcrumbs %}
-              {% endblock %}
-              {% if title %}
-                <li class='breadcrumb-item'>
-                  {{ title|capfirst }}
+                  {% include "admin/includes/breadcrumbs.html" with app_opts=opts %}
 
-                </li>
-              {% endif %}
+              {% endblock %}
             </ol>
           </nav>
           <h1 class='content-title'>

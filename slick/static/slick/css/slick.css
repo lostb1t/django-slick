@@ -8339,6 +8339,11 @@ body {
   min-height: 4rem;
 }
 
+.breadcrumb {
+  background-color: unset;
+  padding: 0;
+}
+
 .brand-box {
   padding: 10px;
   display: block;

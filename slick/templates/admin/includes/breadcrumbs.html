@@ -10,5 +10,10 @@
             {{ app_opts.verbose_name_plural|capfirst }}
         </a>
     </li>
+    {% if title %}
+      <li class='breadcrumb-item'>
+        {{ title|capfirst }}
+      </li>
+    {% endif %}
   {% endif %}
 {% endif %}
