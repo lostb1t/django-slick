@@ -10,10 +10,6 @@
 			});
 		})(slk.jQuery);
 
-- block page_title
-	%li
-		{{ title|capfirst }}
-
 - block object-tools-items
 	- if has_add_permission
 		%li
@@ -23,25 +19,23 @@
 - block content
 	.row
 		- block result_list
-			.col-md-9
+			.col-md-12
 				{% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-				.card
+				.card.card-table
 					.card-heading
-						{{ cl.opts.verbose_name_plural|capfirst }}
 
 					.card-body
 						.row
 							.col-lg-12
 								- block search
 									- search_form cl
+								- if cl.has_filters
+									{% for spec in cl.filter_specs %}
+										{% admin_list_filter cl spec %}
+									{% endfor %}
 
 						- result_list cl
 					
 					{% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
 
 
-			.col-md-2
-				- if cl.has_filters
-					{% for spec in cl.filter_specs %}
-						{% admin_list_filter cl spec %}
-					{% endfor %}

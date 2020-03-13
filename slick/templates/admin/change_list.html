@@ -11,12 +11,6 @@
 	  })(slk.jQuery);
 	</script>
 {% endblock %}
-{% block page_title %}
-	<li>
-		{{ title|capfirst }}
-
-	</li>
-{% endblock %}
 {% block object-tools-items %}
 	{% if has_add_permission %}
 		<li>
@@ -30,20 +24,22 @@
 {% block content %}
 	<div class='row'>
 		{% block result_list %}
-			<div class='col-md-9'>
+			<div class='col-md-12'>
 				{% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-				<div class='card'>
-					<div class='card-heading'>
-						{{ cl.opts.verbose_name_plural|capfirst }}
-
-					</div>
+				<div class='card card-table'>
+					<div class='card-heading'></div>
 					<div class='card-body'>
 						<div class='row'>
 							<div class='col-lg-12'>
 								{% block search %}
 									{% search_form cl %}
-
 								{% endblock %}
+								{% if cl.has_filters %}
+									{% for spec in cl.filter_specs %}
+										{% admin_list_filter cl spec %}
+									{% endfor %}
+
+								{% endif %}
 							</div>
 						</div>
 						{% result_list cl %}
@@ -53,13 +49,6 @@
 
 
 				</div>
-			</div>
-			<div class='col-md-2'>
-				{% if cl.has_filters %}
-					{% for spec in cl.filter_specs %}
-						{% admin_list_filter cl spec %}
-					{% endfor %}
-				{% endif %}
 			</div>
 		{% endblock %}
 	</div>
