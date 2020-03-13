@@ -8322,6 +8322,11 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
+  color: #6e768e;
+}
+
+a {
+  color: #6e768e;
 }
 
 .page-container {
@@ -8376,15 +8381,6 @@ body {
   line-height: 60px;
   color: #323a46;
   font-weight: 600;
-}
-
-#breadcrumbs a {
-  padding: 0 0.35rem 0 0;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #959cb6;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
 }
 
 /*# sourceMappingURL=slick.css.map */
