@@ -27,9 +27,7 @@ var django = {
 		
     	$("[data-click='sidebar-toggle']").click(function (e) {
 			e.stopPropagation();
-			$("#sidebar").toggleClass("collapse");
-			$("#content").toggleClass("ml-sm-auto");
-			
+			$(".page-container").toggleClass("sidebar-collapsed");	
 		});
     };
 

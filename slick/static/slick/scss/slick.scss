@@ -16,6 +16,14 @@ body {
     line-height: 1.5;
 }
 
+.page-container {
+    padding-left: 225px;
+}
+
+.page-container.sidebar-collapsed {
+    padding-left: 0px
+}
+
 .special-navbar {
     color: #6e768e;
     z-index: 100;

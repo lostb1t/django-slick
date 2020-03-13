@@ -37,47 +37,56 @@
 
   </head>
   <body class=''>
-    <div id='container-fluid'>
-      <div class='row'>
-        <div aria-expanded='true' class='sidebar col-md-2' id='sidebar'>
-          <div class='sidebar-sticky'>
-            {% include "admin/includes/sidebar.html" %}
+    <div class='page-container'>
+      <div aria-expanded='true' class='sidebar' id='sidebar'>
+        <div class='sidebar-sticky'>
+          {% include "admin/includes/sidebar.html" %}
+
+        </div>
+      </div>
+      <div class='content px-4' id='content'>
+        <div class='navbar special-navbar navbar-light flex-column flex-md-row'>
+
+
+          <ul class='navbar-nav flex-row'>
+            <li>
+              <button data-click='sidebar-toggle' class='navbar-toggler'>
+                <span class='navbar-toggler-icon'></span>
+              </button>
+            </li>
+          </ul>
+          <div class='navbar-nav ml-md-auto'>
+            {% firstof user.get_short_name user.get_username %}
 
           </div>
         </div>
-        <div class='content col-md-9 ml-sm-auto col-lg-10 px-4' id='content'>
-          <div class='navbar special-navbar navbar-light flex-column flex-md-row'>
-
-
-            <ul class='navbar-nav flex-row'>
-              <li>
-                <button data-click='sidebar-toggle' class='navbar-toggler'>
-                  <span class='navbar-toggler-icon'></span>
-                </button>
-              </li>
-            </ul>
-            <div class='navbar-nav ml-md-auto'>
-              {% firstof user.get_short_name user.get_username %}
-
-            </div>
-          </div>
-          <div class='container-fluid'>
-
-            <h1 class='content-title'>
-              {% block content_title %}
-                {% if title %}
-                  {{ title }}
-
-                {% endif %}
+        <div class='container-fluid'>
+          <nav aria-label='breadcrumb'>
+            <ol class='breadcrumb'>
+              {% block breadcrumbs %}
               {% endblock %}
-            </h1>
-            {% block content %}
+              {% if title %}
+                <li class='breadcrumb-item'>
+                  {{ title|capfirst }}
 
+                </li>
+              {% endif %}
+            </ol>
+          </nav>
+          <h1 class='content-title'>
+            {% block content_title %}
+              {% if title %}
+                {{ title }}
 
+              {% endif %}
             {% endblock %}
+          </h1>
+          {% block content %}
 
 
-          </div>
+          {% endblock %}
+
+
         </div>
       </div>
     </div>

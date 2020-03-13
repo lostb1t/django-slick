@@ -32,48 +32,49 @@
     - block extrahead
 
   %body{class: ""}
-    #container-fluid
-      .row
-        #sidebar.sidebar.col-md-2{:aria-expanded => "true"}
-          .sidebar-sticky
-            - include "admin/includes/sidebar.html"
+    .page-container
+      -# #container-fluid
+      -#   .row
+      #sidebar.sidebar{:aria-expanded => "true"}
+        .sidebar-sticky
+          - include "admin/includes/sidebar.html"
+          
+      #content.content.px-4
+        .navbar.special-navbar.navbar-light.flex-column.flex-md-row
+      
+          -# .brand-box.col-md-2
+          -#   %a.navbar-brand
+          -#     - block branding
+          -#       - block admin_title
+          -#         - slick_admin_title
+
+          %ul.navbar-nav.flex-row
+            %li
+              %button.navbar-toggler{:data-click => "sidebar-toggle"}
+                %span.navbar-toggler-icon
+          
+
+          .navbar-nav.ml-md-auto
+            - firstof user.get_short_name user.get_username
+
+          -# - block object-tools
+          -# .nav.navbar-nav.navbar-right
+          -#   %ul.list-inline
+          -#     - block object-tools-items
+        .container-fluid
+          %nav{:aria-label => "breadcrumb"}
+            %ol.breadcrumb
+              - block breadcrumbs
+              - if title
+                %li.breadcrumb-item
+                  {{ title|capfirst }}
+
+          %h1.content-title
+            - block content_title
+              - if title
+                {{ title }}
+
+          - block content
         
-        #content.content.col-md-9.ml-sm-auto.col-lg-10.px-4
-          .navbar.special-navbar.navbar-light.flex-column.flex-md-row
-        
-            -# .brand-box.col-md-2
-            -#   %a.navbar-brand
-            -#     - block branding
-            -#       - block admin_title
-            -#         - slick_admin_title
-
-            %ul.navbar-nav.flex-row
-              %li
-                %button.navbar-toggler{:data-click => "sidebar-toggle"}
-                  %span.navbar-toggler-icon
-            
-
-            .navbar-nav.ml-md-auto
-              - firstof user.get_short_name user.get_username
-
-            -# - block object-tools
-            -# .nav.navbar-nav.navbar-right
-            -#   %ul.list-inline
-            -#     - block object-tools-items
-          .container-fluid
-            -# %nav{:aria-label => "breadcrumb"}
-            -#   %ol.breadcrumb
-            -#     - block breadcrumbs
-            -#     - if title
-            -#       %li.breadcrumb-item
-            -#         {{ title|capfirst }}
-
-            %h1.content-title
-              - block content_title
-                - if title
-                  {{ title }}
-
-            - block content
-            
     
     - block footer

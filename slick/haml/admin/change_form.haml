@@ -51,7 +51,7 @@
 			{% block field_sets %}
 			{% for fieldset in adminform %}
 				- if fieldset.name or fieldset.description
-					.col-md-2.col-lg-3
+					.col-md-12
 						- if fieldset.name
 							%h4
 								{{ fieldset.name }}
@@ -61,7 +61,7 @@
 								%small 
 									{{ fieldset.description|safe }}
 
-					.col-md-10.col-lg-9
+					.col-md-12
 						{% include "admin/includes/fieldset.html" %}
 				- else
 					.col-md-12
